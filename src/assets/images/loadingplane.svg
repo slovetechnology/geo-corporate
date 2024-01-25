@@ -1,0 +1,7 @@
+<svg id="Group_24579" data-name="Group 24579" xmlns="http://www.w3.org/2000/svg" width="49.268" height="47.859" viewBox="0 0 49.268 47.859">
+  <g id="Ellipse_5070" data-name="Ellipse 5070" transform="translate(7.624 6.215)" fill="none" stroke="#9cd7f5" stroke-linecap="round" stroke-width="2" stroke-dasharray="5">
+    <circle cx="20.822" cy="20.822" r="20.822" stroke="none"/>
+    <circle cx="20.822" cy="20.822" r="19.822" fill="none"/>
+  </g>
+  <path id="Icon_ionic-md-airplane" data-name="Icon ionic-md-airplane" d="M19.31,14.482V12.471l-8.046-5.23V1.569a1.61,1.61,0,0,0-3.218,0V7.241L0,12.471v2.011l8.046-2.414v5.713L5.632,19.35v1.569l4.023-.8,4.023.8V19.35l-2.414-1.569V12.069Z" transform="translate(13.654 28.446) rotate(-135)" fill="#2e61e6"/>
+</svg>
