@@ -18,15 +18,11 @@ export const Enviroments = {
     local: `http://localhost:5173/`
 }
 
-const auth = `/authenticate/`
+const auth = `/corporates/`
 
 
 const auth_urls = {
-    login: auth + `token`,
-    role: auth + `role`,
-    staff: auth + `staff`,
-    onboard: auth + `onboard`,
-    validate_email: auth + `validate-email/`,
+    login: auth + `organization/login`,
 }
 
 export const MainApi = {
