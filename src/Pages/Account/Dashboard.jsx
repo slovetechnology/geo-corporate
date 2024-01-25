@@ -18,12 +18,18 @@ import DashboardTransactions from './DashboardTransactions'
 const Dashboard = () => {
     return (
         <GeoLayout>
+        <div className="flex items-center pt-8 px-4 rounded-xl w-11/12 mx-auto gap-3">
+            <img src={man} alt="" className="w-16 rounded-full object-cover shadow-2xl" />
+            <div className="">
+                <div className="text-2xl text-zinc-500"><span className="font-bold text-black">Organization Name</span> </div>
+            </div>
+        </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 mt-10 w-11/12 mx-auto gap-8">
                 <div className="lg:col-span-2">
                     <div className="flex items-center bg-white py-8 px-4 rounded-xl shadow-2xl gap-3">
                         <img src={man} alt="" className="w-16 rounded-full object-cover shadow-2xl" />
                         <div className="">
-                            <div className="text-2xl text-zinc-500">Hi, <span className="font-bold text-black">Organization Name</span> </div>
+                            <div className="text-2xl text-zinc-500">Hi, <span className="font-bold text-black">Kelechi</span> </div>
                             <div className="text-zinc-500 text-sm">Last Logged in: <span className="font-bold">10/20/2024 05:20:10AM</span> </div>
                         </div>
                     </div>
