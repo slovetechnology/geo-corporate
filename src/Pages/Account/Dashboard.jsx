@@ -8,6 +8,13 @@ import { BsHourglassSplit } from 'react-icons/bs'
 import Flightcard from '../../components/flight/Flightcard'
 import DashboardTransactions from './DashboardTransactions'
 
+// Aging color code
+
+// Green if average aging is < 50% of avg aging Max (example if Max is 10 days and aging is 3 days. This should be green because it is less than 50% of Max.
+
+// Amber if avg aging is between 50% and 70% of avg aging Max
+
+// Red if avg aging is above 70% of avg Aging Max
 const Dashboard = () => {
     return (
         <GeoLayout>
@@ -23,7 +30,7 @@ const Dashboard = () => {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 lg:col-span-3">
                     <div className="bg-white rounded-lg px-4 py-6 grid grid-cols-2 gap-3">
-                        <div className="bg-red-400/30 text-red-500 border border-red-500 w-fit p-3 rounded-xl text-5xl"> <SlWallet /> </div>
+                        <div className="bg-red-400/30 text-red-500 border border-red-500 w-fit h-fit p-3 rounded-xl text-5xl"> <SlWallet /> </div>
                         <div className="">
                             <div className="text-right font-bold text-2xl text-red-500 break-words">{NairaSign}500,000,000</div>
                             <div className="font-semibold text-right text-zinc-500">Postpaid Balance</div>
@@ -35,7 +42,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="bg-white rounded-lg px-4 py-6 grid grid-cols-2 gap-3">
-                        <div className="bg-green-400/30 text-green-500 border border-green-500 w-fit p-3 rounded-xl text-5xl"> <BsHourglassSplit /> </div>
+                        <div className="bg-green-400/30 text-green-500 border border-green-500 w-fit h-fit p-3 rounded-xl text-5xl"> <BsHourglassSplit /> </div>
                         <div className="">
                             <div className="text-right font-bold text-2xl text-green-500">30</div>
                             <div className="font-semibold text-right text-zinc-500">Average Aging</div>
