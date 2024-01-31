@@ -8,7 +8,7 @@ import FlightLoader from "/src/components/flight/flightLoader";
 import { useNavigate } from "react-router-dom";
 import Tripsummary from "./tripsummary";
 import Payment from "./payment";
-import Success from "./success";
+// import Success from "./success";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAllAddons } from '/src/app/dataSlice';
@@ -433,9 +433,9 @@ function Flight({ onDeals }) {
         {pageItem === 3 && <div>
           <Payment changePage={(item) => setPageItem(item)} flightDetails={singleFlight} />
         </div>}
-        {pageItem === 4 && <div>
+        {/* {pageItem === 4 && <div>
           <Success changePage={(item) => setPageItem(item)} flightDetails={singleFlight} />
-        </div>}
+        </div>} */}
         {/*----------------------------PAGES----------------------------- */}
       </GeoLayout>
     </div>

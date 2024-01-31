@@ -35,7 +35,7 @@ const GeoNavbar = (props) => {
 
   const confirmLogoutHandler = async () => {
     setLoading(true)
-    navigate('/login')
+    navigate('/')
     Cookies.remove(MainToken)
     // try {
     //   const res = await deleteUrl(`auth/sessions`)

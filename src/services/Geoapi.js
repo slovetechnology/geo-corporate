@@ -24,6 +24,7 @@ const auth = `/corporates/`
 
 const auth_urls = {
     login: auth + `organization/login`,
+    profile: auth + `organization/view/{id}`,
 }
 
 export const MainApi = {
