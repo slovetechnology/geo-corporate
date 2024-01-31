@@ -1,4 +1,5 @@
-import { onlinesitename } from "./functions";
+import { onlinesitename } from "/src/services/Geoapi";
+
 
 
 export const Redirect = [

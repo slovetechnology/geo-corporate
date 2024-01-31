@@ -1,13 +1,12 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import barcode from "/src/assets/icons/barcode.png";
-import plane from "/src/assets/icons/plane.svg";
+import plane from "/src/assets/images/plane.svg";
 import moment from 'moment/moment'
 import { SlEnvolope, SlPhone } from 'react-icons/sl';
 import Barcode from 'react-barcode';
-import { formatAirport, timeFormatBare } from '/src/components/utils/functions';
-import { WebDateFormat } from '/src/components/utils/functions';
+import { formatAirport, timeFormatBare } from '/src/components/functions';
+import { WebDateFormat } from '/src/components/functions';
 
 const ReservationTicket = (props) => {
   const { flight } = props

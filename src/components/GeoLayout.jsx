@@ -38,7 +38,7 @@ const GeoLayout = ({ children }) => {
           <div className='h-[10vh]'>
             <GeoNavbar openSidebar={() => setViewSide(true)} />
           </div>
-          <div className='h-[90vh] overflow-y-auto scrolls scrollsdown bg-zinc-100/60 pb-20'>{children}</div>
+          <div className='h-[90vh] overflow-y-auto scrolls mainbody scrollsdown bg-zinc-100/60 pb-20'>{children}</div>
         </div>
       </div>
     </Fragment>

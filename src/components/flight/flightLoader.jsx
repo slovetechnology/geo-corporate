@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import comparearrows from "/src/assets/icons/comparearrows.svg";
-import loadingplane from '/src/assets/icons/planeloading.svg'
-import loadingbg from '/src/assets/icons/loadingbg.png'
+import comparearrows from "/src/assets/images/comparearrows.svg";
+import loadingplane from '/src/assets/images/planeloading.svg'
+import loadingbg from '/src/assets/images/loadingbg.png'
 import { FaMinus } from "react-icons/fa";
-import { FlightNumber } from "/src/pages/GeneralPages/flight/store";
+import { FlightNumber } from "./store";
 import {useAtom} from 'jotai'
 
 function FlightLoader({ loading }) {

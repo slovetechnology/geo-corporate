@@ -1,11 +1,11 @@
 
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react'
-import { FilterByAny, FilterByCode } from "/src/components/airports";
+import { FilterByAny, FilterByCode } from "../airports";
 import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { AlertWarning } from '/src/components/functions';
+import { AlertWarning } from '../functions';
 import { useDispatch } from 'react-redux';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { useAtom } from 'jotai'
@@ -14,7 +14,6 @@ import styled from 'styled-components';
 import { DatePicker } from "antd";
 import botharrow from "/src/assets/images/botharrow.svg";
 import PopularAirports from './PopularAirports';
-import { FLIGHTDATES } from './store';
 dayjs.extend(customParseFormat);
 export const dateFormat = 'YYYY/MM/DD';
 
@@ -23,7 +22,7 @@ export const disabledDate = (current) => {
 };
 
 const SingleMultiFlightOption = (props) => {
-    const { i, item, CloseExtra, multies, setMulties, color } = props
+    const { i, item, CloseExtra, multies, setMulties, dates, setDates } = props
     const dispatch = useDispatch()
     const [togview, setTogview] = useState(false)
     const [togview2, setTogview2] = useState(false)
@@ -37,20 +36,16 @@ const SingleMultiFlightOption = (props) => {
     const recentCities = JSON.parse(localStorage.getItem('recent-cities'))
     const [flighterror, setFlightError] = useState()
     const [rolls, setRolls] = useState(false)
-    const [dates, setDates] = useAtom(FLIGHTDATES)
     const [flightData, setFlightData] = useState({
         origin: item.origin || '',
         destination: item.destination || '',
         departureDate: item.departureDate || ''
     })
-    const findLastDate = multies[dates.length - 1]
-
 
     const disabledDates = (current) => {
-        if (findLastDate) {
-            return current < moment(findLastDate)
-        }
-        return current < moment().subtract(1, 'day')
+        const previousDate = multies[i - 1]?.departureDate
+        if(previousDate === undefined)return current < moment().subtract(1, 'day')
+        return current < moment(previousDate)
     };
 
     const disabledDate2 = (current) => {
@@ -211,6 +206,8 @@ const SingleMultiFlightOption = (props) => {
         });
         setRolls(!rolls)
     }
+
+    
     return (
         <div className={`grid grid-cols-1 ${i > 0 ? 'md:grid-cols-7' : 'md:grid-cols-6'} col-span-2 gap-3 w-full`}>
             <ItemWrapper className='mb-3 col-span-3'>
@@ -403,7 +400,7 @@ const SingleMultiFlightOption = (props) => {
                     {item.errors.includes('third') && <FaExclamationCircle className='absolute right-5 text-red-600 top-4' />}
                 </DateWrapper>
             </ItemWrapper>
-            {i > 0 && <div className="w-fit mx-auto"><button type="button" onClick={() => CloseExtra(item.id)} className={`${!window.location.pathname.includes('/selectFlight') ? 'text-white' : 'text-mainblue'} text-4xl`}> <LiaTimesSolid /></button></div>}
+            {i > 0 && <div className="w-fit mx-auto"><button type="button" onClick={() => CloseExtra(item.id)} className={`text-mainblue text-4xl`}> <LiaTimesSolid /></button></div>}
         </div>
     )
 }

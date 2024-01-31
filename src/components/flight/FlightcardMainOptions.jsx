@@ -3,18 +3,18 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react'
 import { FaExclamationCircle, FaMinus } from 'react-icons/fa';
 import styled from 'styled-components';
+import { FilterByAny, FilterByCode } from "../airports";
 import { DatePicker } from "antd";
 import botharrow from "/src/assets/images/botharrow.svg";
 import PopularAirports from './PopularAirports';
 import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { AlertWarning } from '/src/components/functions';
+import { AlertWarning } from '../functions';
+import { dispatchPageItem } from '/src/app/dataSlice';
 import { useDispatch } from 'react-redux';
 import { FlightRequest } from './Flightcard';
 import {useAtom} from 'jotai'
-import { FilterByCode, FilterByAny } from '/src/components/airports';
-import { dispatchPageItem } from '/src/app/dataSlice';
 import { FlightDelay } from './store';
 dayjs.extend(customParseFormat);
 export const dateFormat = 'YYYY/MM/DD';

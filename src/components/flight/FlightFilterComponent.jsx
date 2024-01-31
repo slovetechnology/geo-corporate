@@ -2,11 +2,11 @@ import React, { Suspense, useState } from 'react'
 import styled from 'styled-components';
 import FilterByAirline from './filterByAirline';
 import FilterStops from './filterStops';
-import downarrow from "/src/assets/icons/downarrow.svg";
+import downarrow from "/src/assets/images/downarrow.svg";
 import { FaTimes } from 'react-icons/fa';
 import FilterRefundables from './FilterRefundables';
-import { TripName } from './flightcard';
-import MainPriceRanger from '/src/components/utils/MainPriceRanger';
+import { TripName } from './Flightcard';
+import MainPriceRanger from '/src/components/MainPriceRanger';
 import FilterMulticityAirlines from './FilterMulticityAirlines';
 
 const FlightFilterComponent = (props) => {

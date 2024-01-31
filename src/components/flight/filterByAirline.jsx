@@ -1,8 +1,8 @@
 
 import { FaCheck } from 'react-icons/fa'
-import { NairaSign } from '/src/components/utils/functions'
+import { NairaSign } from '/src/components/functions'
 import React, { useRef, useState } from 'react'
-import { TripName } from './flightcard'
+import { TripName } from './Flightcard'
 
 const filterByAirline = ({ flightList, storeAirline }) => {
     const dataArr = []

@@ -1,19 +1,19 @@
+
 import { useState } from 'react';
 import SingleMultiFlightOption from './SingleMultiFlightOption';
 import { useAtom } from 'jotai'
 import { detectEmptyFields } from '../functions';
 import { FlightRequest } from './Flightcard';
 import { FlightDelay } from './store';
-import { FLIGHTDATES } from './store';
 
 
 const FlightcardMultiOptions = (props) => {
     const { exploreFlight, color } = props
     const [btnloader, ] = useAtom(FlightDelay)
     const locals = JSON.parse(localStorage.getItem(FlightRequest))
-    const [dates, setDates] = useAtom(FLIGHTDATES)
+    const [dates, setDates] = useState([])
     const [multies, setMulties] = useState(locals?.destinations || [
-        { origin: '', destination: '', departureDate: `${dates[0].value}`, id: 1, errors: [] },
+        { origin: '', destination: '', departureDate: ``, id: 1, errors: [] },
         // { origin: '', destination: '', departureDate: ``, id: 2, errors: [] },
     ])
 
@@ -106,6 +106,8 @@ const FlightcardMultiOptions = (props) => {
                             item={item}
                             multies={multies}
                             setMulties={setMulties}
+                            dates={dates}
+                            setDates={setDates}
                             CloseExtra={CloseExtra}
                             color={color}
                         />

@@ -1,26 +1,22 @@
 
-import { AlertWarning, calcTotalInboundDuration, calcTotalOutboundDuration, formatAirportSubtitle } from "/src/components/functions";
-import moment from "moment";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import downplane from "/src/assets/images/downplane.svg";
+
+import { calcTotalInboundDuration, calcTotalOutboundDuration, formatAirportSubtitle, timeFormatBare } from "/src/components/functions";
+import moment from "moment";
+import { BackToTop } from "/src/components/functions";
 import { TripName } from "./Flightcard";
-import { timeFormatBare } from "/src/components/functions";
 
-
-
-function PayCard(props) {
-  const { activeTab, flightDetails } = props
+function Costcard(props) {
+  const { activeTab, changePage, flightDetails } = props
   const { selectedAddons } = useSelector(state => state.data)
   const localTrip = JSON.parse(localStorage.getItem(TripName))
 
   const HandleButtonEvent = async () => {
-    try {
-      props.BookFlightTicket()
-    } catch (error) {
-      return AlertWarning(error)
-    }
+    changePage(3)
+    BackToTop()
   }
   return (
     <div>
@@ -97,8 +93,8 @@ function PayCard(props) {
                   </ImgSection> : <div className="-ml-[1.3rem]">
                     <Img src={downplane} className="rotate-180" />
                   </div>}
-                  <div className={`w-full ${index === 0 ? '' : `ml-4`}`}>
-                    <GeneralTitle>{index === 0 ? `Depart` : 'Connecting Flights'}</GeneralTitle>
+                  <div className={`w-full ${index === 0 ? `` : `ml-4`}`}>
+                    <GeneralTitle>{index === 0 ? `Depart` : `Connecting Flights`}</GeneralTitle>
                     <div>
                       <DepartureWrapper className="border-b-2 w-full border-dotted pb-2 mb-2">
                         <DepatureItems className="w-full">
@@ -144,7 +140,7 @@ function PayCard(props) {
                   <CostPer>&#8358; {(item.price / 100).toLocaleString()}</CostPer>
                 </PriceHold>
               ))}
-              {flightDetails.deal?._id && <PriceHold>
+              {flightDetails?.deal?._id && <PriceHold>
                 <Per>Discount</Per>
                 <CostPer>{flightDetails.deal.discountValue}% off</CostPer>
               </PriceHold>}
@@ -162,7 +158,7 @@ function PayCard(props) {
   );
 }
 
-export default PayCard;
+export default Costcard;
 
 const RightContentItem = styled.div`
   background: #fff;
@@ -227,6 +223,12 @@ const GeneralTitle = styled.h4`
   font-size: 14px;
   margin-bottom: 5px;
 `;
+
+
+
+
+
+
 const InfoTitle = styled.h4`
   font-size: 18px;
   margin-bottom: 5px;

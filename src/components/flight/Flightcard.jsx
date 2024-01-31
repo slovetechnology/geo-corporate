@@ -1,5 +1,5 @@
 
-import downarrow from "../../assets/images/downarrow.svg";
+import downarrow from "/src/assets/images/downarrow.svg";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useRef, useState } from "react";
@@ -28,8 +28,6 @@ dayjs.extend(customParseFormat);
 
 export const FlightRequest = 'flight-request'
 export const TripName = "trip"
-
-
 function Flightcard(props) {
   const { handleFilterForMobile, reloadFlight } = props;
   const [searchParams] = useSearchParams();
@@ -127,17 +125,17 @@ function Flightcard(props) {
       }
     }
     localStorage.removeItem(FlightRequest)
-    // setTimeout(() => {
-    //   localStorage.setItem(FlightRequest, JSON.stringify(flightExtra))
-    //   newLink = `/selectFlight`;
-    //   setTimeout(() => {
-    //     if (location.pathname === '/selectFlight') {
-    //       reloadFlight()
-    //     }
-    //     setLoads(false)
-    //     navigate(newLink);
-    //   }, 1000);
-    // }, 1000);
+    setTimeout(() => {
+      localStorage.setItem(FlightRequest, JSON.stringify(flightExtra))
+      newLink = `/geo/selectFlight`;
+      setTimeout(() => {
+        if (location.pathname === '/geo/selectFlight') {
+          reloadFlight()
+        }
+        setLoads(false)
+        navigate(newLink);
+      }, 1000);
+    }, 1000);
 
   };
   // ADULTS, CHILDREN, INFANTS COUNTER
@@ -269,7 +267,7 @@ function Flightcard(props) {
             color="text-white"
           />}
 
-        {location.pathname === "/selectFlight" && (
+        {location.pathname === "/geo/selectFlight" && (
           <div className='mt-10'>
             <div
               onClick={handleFilterForMobile}

@@ -2,14 +2,14 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Dialcodes } from "/src/components/utils/countrycodes";
+import { Dialcodes } from "/src/components/countrycodes";
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useSelector } from 'react-redux';
-import { AlertError, GoodAlert } from '/src/components/utils/functions';
-import SelectOptions from '/src/components/modals/SelectOptions';
-import TermsModal from '/src/components/modals/TermsModal';
+import { AlertError, GoodAlert } from '/src/components/functions';
+import SelectOptions from '/src/components/SelectOptions';
+import TermsModal from '/src/components/flight/TermsModal';
 dayjs.extend(customParseFormat);
 const dateFormat = 'YYYY/MM/DD';
 

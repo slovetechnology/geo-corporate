@@ -1,21 +1,11 @@
 
 import { toast } from 'react-hot-toast'
 import airports from "./airports.json";
-import { Enviroments } from '../services/Geoapi';
 
 export const TokenName = "geo-travel"
 export const MainToken = 'geo-main'
 export const toastId = "toastId";
 export const updateId = "toastId";
-
-export const localsitename = "http://localhost:5173/";
-
-export let onlinesitename;
-// if (window.location.origin.includes('gowithgeo.com')) {
-//   onlinesitename = Enviroments.live
-// } else {
-//   onlinesitename = Enviroments.staging
-// }
 
 
 export const EditorModules = {
@@ -134,8 +124,6 @@ export const FirebaseImage = (data) => {
 export const getDiscount = (price, discount) => {
   return (discount / 100) * price;
 };
-
-export const AffiliateConfirmationLink = `${onlinesitename}affiliate/confirmation/`
 
 export const getFlightDealActiveness = deal => {
   return (
