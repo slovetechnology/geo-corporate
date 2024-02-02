@@ -8,6 +8,7 @@ import { BsHourglassSplit } from 'react-icons/bs'
 import Flightcard from '../../components/flight/Flightcard'
 import DashboardTransactions from './DashboardTransactions'
 
+
 // Aging color code
 
 // Green if average aging is < 50% of avg aging Max (example if Max is 10 days and aging is 3 days. This should be green because it is less than 50% of Max.
