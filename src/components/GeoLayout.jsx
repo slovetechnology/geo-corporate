@@ -3,6 +3,7 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import GeoSidebar from "./GeoSidebar";
 import GeoNavbar from "./GeoNavbar";
+import {useSelector} from 'react-redux'
 
 const GeoLayout = ({ children }) => {
   const togref = useRef();

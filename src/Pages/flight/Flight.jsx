@@ -21,8 +21,6 @@ import { FlightRequest } from "/src/components/flight/Flightcard";
 import moment from "moment";
 import { FilterMultiCityRefundables } from "/src/components/functions";
 import { TripName } from "/src/components/flight/Flightcard";
-import { FirebaseImage } from "/src/components/functions";
-import { BannerTypes } from "/src/components/functions";
 import { dispatchSelectedAddons, storePassenger } from "/src/app/dataSlice";
 import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";

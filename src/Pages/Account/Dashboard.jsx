@@ -2,7 +2,7 @@ import React from 'react'
 import GeoLayout from '../../components/GeoLayout'
 import { NairaSign } from '../../components/functions'
 import { SlWallet } from 'react-icons/sl'
-import { ImUser } from 'react-icons/im'
+import {useSelector} from 'react-redux'
 import man from '../../assets/images/man.png'
 import { BsHourglassSplit } from 'react-icons/bs'
 import Flightcard from '../../components/flight/Flightcard'
@@ -17,6 +17,7 @@ import DashboardTransactions from './DashboardTransactions'
 
 // Red if avg aging is above 70% of avg Aging Max
 const Dashboard = () => {
+    const {user} = useSelector(state => state.data)
     return (
         <GeoLayout>
         <div className="flex items-center pt-8 px-4 rounded-xl w-11/12 mx-auto gap-3">

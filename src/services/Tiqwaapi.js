@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import Cookies from 'js-cookie'
-import { TokenName } from "../components/functions";
+import { MainToken } from "../components/functions";
 
 export let webUrl;
 if (window.location.origin.includes('gowithgeo.com')) {
@@ -111,7 +111,7 @@ const HttpServices = {
 };
 
 export const fetchUrl = async urlSubPath => {
-  const webToken = Cookies.get(TokenName)
+  const webToken = Cookies.get(MainToken)
 
   const response = await fetch(`${webUrl}/${urlSubPath}`, {
     headers: {
@@ -134,7 +134,7 @@ export const fetchUrl = async urlSubPath => {
   return data.data;
 }
 export const postUrl = async (urlSubPath, bodyData, method) => {
-  const webToken = Cookies.get(TokenName)
+  const webToken = Cookies.get(MainToken)
 
   const response = await fetch(`${webUrl}/${urlSubPath}`, {
     headers: {
@@ -160,7 +160,7 @@ export const postUrl = async (urlSubPath, bodyData, method) => {
   return data.data;
 };
 export const deleteUrl = async urlSubPath => {
-  const webToken = Cookies.get(TokenName)
+  const webToken = Cookies.get(MainToken)
 
   const response = await fetch(`${webUrl}/${urlSubPath}`, {
     headers: {
@@ -182,7 +182,7 @@ export const deleteUrl = async urlSubPath => {
 };
 
 export const postFormData = async (urlSubPath, bodyData, method) => {
-  const webToken = Cookies.get(TokenName)
+  const webToken = Cookies.get(MainToken)
 
   const response = await fetch(`${webUrl}/${urlSubPath}`, {
     headers: {

@@ -2,7 +2,7 @@
 import { toast } from 'react-hot-toast'
 import airports from "./airports.json";
 
-export const TokenName = "geo-travel"
+export const USERID = 'ssid'
 export const MainToken = 'geo-main'
 export const toastId = "toastId";
 export const updateId = "toastId";
@@ -399,11 +399,3 @@ export const CalculateDealAtDiscount = (price, discount, discountType) => {
   }
   return NairaSign+sum?.toLocaleString()
 }
-
- export const BannerTypes = [
-  "BANNER",
-  "HOME",
-  "FLIGHT",
- ]
-
-export const GeoServers = ['gowithgeo.com', 'geo-retails', 'geottravelv2', 'localhost']

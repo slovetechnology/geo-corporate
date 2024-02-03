@@ -37,16 +37,10 @@ const GeoNavbar = (props) => {
     setLoading(true)
     navigate('/')
     Cookies.remove(MainToken)
-    // try {
-    //   const res = await deleteUrl(`auth/sessions`)
-    //   if (res.success) {
-    //     Cookies.remove(TokenName)
-    //   }
-    // } catch (error) {
-    //   AlertError(`${error}`)
-    // } finally {
-    //   setLoading(false)
-    // }
+  }
+
+  const HandleToggling = () => {
+    setTypes(!types)
   }
   return (
     <div className='flex items-center justify-between p-6'>
@@ -83,7 +77,7 @@ const GeoNavbar = (props) => {
         <div className="flex items-center gap-4">
           <div className="transition-all">{types ? 'Postpaid' : 'Prepaid'}</div>
           <div title="Toggle Account Type" className="relative w-[4.2rem] h-[1.8rem] border border-slate-400 rounded-full">
-            <div onClick={() => setTypes(!types)} className={`absolute top-[1px] ${types ? 'right-[0.2rem] bg-mainblue' : 'left-[0.2rem] bg-orange-400'} transition-all w-6 cursor-pointer h-6 rounded-full `}></div>
+            <div onClick={() => HandleToggling()} className={`absolute top-[1px] ${types ? 'right-[0.2rem] bg-mainblue' : 'left-[0.2rem] bg-orange-400'} transition-all w-6 cursor-pointer h-6 rounded-full `}></div>
           </div>
         </div>
         <div onClick={() => setLogs(!logs)} className='flex items-center gap-5 cursor-pointer'>
