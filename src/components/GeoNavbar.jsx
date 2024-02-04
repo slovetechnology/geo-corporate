@@ -7,8 +7,23 @@ import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loading from './Loading'
 import { ImUser } from 'react-icons/im'
-import { MainToken } from './functions'
+import { AlertError, MainToken } from './functions'
+import Disconnect from './Disconnect'
 
+const TYPES = [
+  {
+    account_type: 'PREPAID',
+    color: 'left-[0.2rem] bg-orange-400'
+  },
+  {
+    account_type: 'POSTPAID',
+    color: 'right-[0.2rem] bg-mainblue'
+  },
+  {
+    account_type: 'BOTH',
+    color: ''
+  },
+]
 const GeoNavbar = (props) => {
   const { user } = useSelector(state => state.data)
   const navigate = useNavigate()
@@ -17,7 +32,11 @@ const GeoNavbar = (props) => {
   const logref = useRef()
   const logref2 = useRef()
   const [loading, setLoading] = useState(false)
-  const [types, setTypes] = useState(false)
+  const [view, setView] = useState({
+    status: false,
+    title: ''
+  })
+  const [types, setTypes] = useState(TYPES.find(ele => ele.account_type === user.account_type))
 
   useEffect(() => {
     logref && window.addEventListener('click', (e) => {
@@ -40,11 +59,15 @@ const GeoNavbar = (props) => {
   }
 
   const HandleToggling = () => {
-    setTypes(!types)
+    // setTypes(!types)
+    if(user.account_type === TYPES[0].account_type) return setView({ status: true, title:`Sorry, your organization is not enabled for Postpaid booking. Please click here to start the process for Postpaid`})
+    if(user.account_type === TYPES[1].account_type) return setView({ status: true, title:`Sorry, your organization is not enabled for Prepaid booking. Please click here to start the process for Prepaid`})
+    console.log('halo', user, types)
   }
   return (
     <div className='flex items-center justify-between p-6'>
       {loading && <Loading />}
+     {view.status && <Disconnect closeView={() => setView({...view, status: !view.status})} title={view.title} />}
       {/* modal to confirm admin logout */}
       <div className={`bg-black/50 fixed w-full h-screen top-0 left-0 z-[15] flex items-center justify-center ${logs2 ? '' : 'hidden'}`}>
         <div ref={logref2} className='w-11/12 max-w-xl mx-auto rounded-lg bg-white p-4'>
@@ -75,9 +98,9 @@ const GeoNavbar = (props) => {
       </div>
       <div className='flex items-center gap-8'>
         <div className="flex items-center gap-4">
-          <div className="transition-all">{types ? 'Postpaid' : 'Prepaid'}</div>
+          <div className="transition-all">{types.account_type}</div>
           <div title="Toggle Account Type" className="relative w-[4.2rem] h-[1.8rem] border border-slate-400 rounded-full">
-            <div onClick={() => HandleToggling()} className={`absolute top-[1px] ${types ? 'right-[0.2rem] bg-mainblue' : 'left-[0.2rem] bg-orange-400'} transition-all w-6 cursor-pointer h-6 rounded-full `}></div>
+            <div onClick={() => HandleToggling()} className={`absolute top-[1px] ${types.color} transition-all w-6 cursor-pointer h-6 rounded-full `}></div>
           </div>
         </div>
         <div onClick={() => setLogs(!logs)} className='flex items-center gap-5 cursor-pointer'>

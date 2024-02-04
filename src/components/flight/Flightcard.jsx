@@ -17,10 +17,10 @@ import {
   SelectedDiv0,
   Wrapper,
 } from "./Styles";
+import {useSelector} from 'react-redux'
 import SelectPassengers from "./SelectPassengers";
 import FlightcardMultiOptions from "./FlightcardMultiOptions";
 import moment from "moment";
-import { FlightDataStore } from "./store";
 import { FlightNumber } from "./store";
 import { FlightDelay } from "./store";
 dayjs.extend(customParseFormat);
@@ -28,6 +28,7 @@ dayjs.extend(customParseFormat);
 
 export const FlightRequest = 'flight-request'
 export const TripName = "trip"
+
 function Flightcard(props) {
   const { handleFilterForMobile, reloadFlight } = props;
   const [searchParams] = useSearchParams();
@@ -45,8 +46,7 @@ function Flightcard(props) {
   const [cabinState, setCabinState] = useState(false);
   const [num, setNum] = useAtom(FlightNumber)
   const [loads, setLoads] = useAtom(FlightDelay)
-
-  const [flightCentral, setFlightCentral] = useAtom(FlightDataStore)
+  const {user} = useSelector(state => state.data)
   useEffect(() => {
     togtrip &&
       window.addEventListener(
@@ -165,6 +165,9 @@ function Flightcard(props) {
   return (
     <Wrapper className="z-[99]">
       <CardHolder>
+        <div className="border border-mainblue mb-5 text-mainblue rounded-lg py-1.5 px-3 text-sm w-fit">
+          {user.account_type}
+        </div>
         <RoutesWrapper className='mb-6'>
           <RouteItem>
             <SelectDiv onClick={() => setTripState(!tripState)} className=''>
