@@ -10,7 +10,7 @@ import DepartPlaneIcon from "/src/assets/images/departureplane.svg";
 import ReturnPlaneIcon from "/src/assets/images/returnplane.svg";
 import Costcard from "/src/components/flight/costcard";
 import { BackToTop } from "/src/components/functions";
-import { TripName } from "/src/components/flight/flightcard";
+import { TripName } from "/src/components/flight/Flightcard";
 import { formatAirportName } from "/src/components/functions";
 
 

@@ -8,7 +8,7 @@ import PassengersFlightForm from "/src/components/flight/PassengersFlightForm";
 import moment from "moment";
 import { AlertError, BackToTop, calcTotalInboundDuration, calcTotalOutboundDuration, convertKoboToNaira, convertKoboToNairaString, formatAirportSubtitle } from "/src/components/functions";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import { TripName } from "/src/components/flight/flightcard";
+import { TripName } from "/src/components/flight/Flightcard";
 import { timeFormatBare } from "/src/components/functions";
 import { NairaSign } from "/src/components/functions";
 

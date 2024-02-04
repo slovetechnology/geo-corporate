@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import AllPagination from '/src/components/AllPagination';
 import avif from '/src/assets/images/vif.jpg'
-import { TripName } from '/src/components/flight/flightcard';
+import { TripName } from '/src/components/flight/Flightcard';
 import { FilterMultiCityRefundables, formatAirportName, formatAirportTitle } from '/src/components/functions';
 import { NairaSign } from '/src/components/functions';
 // import AllAirlines from './AllAirlines';

@@ -10,7 +10,7 @@ import { FaMinus } from "react-icons/fa";
 import { AlertError } from "/src/components/functions";
 import Loading from "/src/components/Loading";
 import { NairaSign } from "/src/components/functions";
-import { TripName } from "/src/components/flight/flightcard";
+import { TripName } from "/src/components/flight/Flightcard";
 import { formatAirportName, formatAirportTitle } from "/src/components/functions";
 import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
