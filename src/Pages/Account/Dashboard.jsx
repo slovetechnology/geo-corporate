@@ -88,17 +88,19 @@ const Dashboard = () => {
                                 <div className="font-semibold text-zinc-500 text-sm">Last Amount Paid</div>
                                 <div className={`text-right font-bold text-lg`}>{NairaSign}{user.last_paid_amount?.toLocaleString()}</div>
                             </div>
-                            <div className="grid grid-cols-2">
-                                <div className="font-semibold text-zinc-500 text-sm">Last Transaction</div>
-                                <div className={`text-right font-bold text-lg`}>{user.last_trsnaction}</div>
-                            </div>
+                            {user.account_type === 'POSTPAID' && <>
                             <div className="grid grid-cols-2">
                                 <div className="font-semibold text-zinc-500 text-sm">Amount Owing</div>
-                                <div className={`text-right font-bold text-lg text-red-600`}>{NairaSign}{user.amount_owing?.toLocaleString()}</div>
+                                <div className={`text-right font-bold text-lg`}>{NairaSign}{user.amount_owing?.toLocaleString()}</div>
                             </div>
                             <div className="grid grid-cols-2">
                                 <div className="font-semibold text-zinc-500 text-sm">Postpaid Balance</div>
                                 <div className={`text-right font-bold text-lg`}>{NairaSign}{user.post_paid_balance?.toLocaleString()}</div>
+                            </div>
+                            </>}
+                            <div className="grid grid-cols-2">
+                                <div className="font-semibold text-zinc-500 text-sm">Last Transaction</div>
+                                <div className={`text-right font-bold text-lg`}>{user.last_trsnaction}</div>
                             </div>
                         </div>
                         {user.account_type === 'POSTPAID' && 

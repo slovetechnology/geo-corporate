@@ -10,7 +10,7 @@ import Tripsummary from "./tripsummary";
 import Payment from "./payment";
 // import Success from "./success";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAddons } from '/src/app/dataSlice';
 import FlightFilterComponent from "/src/components/flight/FlightFilterComponent"
 import FlightOffer from "./flightOffer";
@@ -25,6 +25,7 @@ import { dispatchSelectedAddons, storePassenger } from "/src/app/dataSlice";
 import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
 import GeoLayout from "/src/components/GeoLayout";
+import PayModal from "/src/components/flight/PayModal";
 const Passengerdetail = React.lazy(() => import("./passengerdetail"))
 
 
@@ -41,7 +42,8 @@ function Flight({ onDeals }) {
   const [pageItem, setPageItem] = useState(0)
   const [loadflight, setLoadflight] = useState(true)
   const [singleFlight, setSingleFlight] = useState({})
-  const [ads, setAds] = useState([])
+  const {user} = useSelector(state => state.data)
+  const [paymodal, setPaymodal] = useState(false)
   const [displayed_flight, set_displayed_flight] = useState({
     open: false,
     data: null,
@@ -158,6 +160,7 @@ function Flight({ onDeals }) {
 
 
   const displayFlight = async (flight) => {
+    if(user.account_type === 'POSTPAID' && user.post_paid_balance <= flight.pricing.payable) return setPaymodal(true)
     let isRefundable;
     setSingleFlight({})
     if (localTrip !== 'multi-city') {
@@ -326,6 +329,7 @@ function Flight({ onDeals }) {
 
   return (
     <div>
+    {paymodal &&  <PayModal onclose={() => setPaymodal(!paymodal)} />}
       <GeoLayout>
         <FlightLoader loading={flightLoading} />
         {!loadflight && flightList2?.length > 0 && <div className={`${mobile ? '' : 'hidden'} fixed w-full h-screen bg-black/60 left-0 top-0 z-[99] overflow-y-auto scrolls lg:hidden`}>

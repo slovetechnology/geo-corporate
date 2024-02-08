@@ -11,12 +11,15 @@ import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { TripName } from "/src/components/flight/Flightcard";
 import { timeFormatBare } from "/src/components/functions";
 import { NairaSign } from "/src/components/functions";
+import ConfirmPassengersStorage from "/src/components/flight/ConfirmPassengersStorage";
+import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 
 function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
   const [localData, setLocalData] = useState([])
   const { alladdons } = useSelector(state => state.data)
   const [addonscheck, setAddonscheck] = useState([])
   const localTrip = JSON.parse(localStorage.getItem(TripName))
+  const [view, setView] = useState(false)
 
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0)
@@ -30,26 +33,56 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
   }, [flightDetails])
 
   const getFormDetails = () => {
-    // make sure there is a passenger detail filled
-    let dataArr = []
-    let addonsArr = []
-    flightDetails.priceSummary.map((item) => {
-      return new Array(item.quantity).fill().map((item, i) => {
-        return dataArr.push(i)
+    setView(!view)
+  }
+  const handleManagement = (tag) => {
+    try {
+      if(tag === 'yes') {
+        localData.map(async ele => {
+          const body = {
+            title: ele.title,
+            first_name: ele.firstName,
+            last_name: ele.lastName,
+            middle_name: ele?.middleName,
+            gender: ele.gender,
+            date_of_birth: ele.dob,
+            email_address: ele.email,
+            phone: ele.phoneNumber,
+            country_of_origin: ele?.documents?.nationalityCountry,
+            passport_number: ele?.documents?.number,
+            issue_date: ele?.documents?.issuingDate,
+            expiry_date: ele?.documents?.expiryDate,
+            issuing_authority: ele?.documents?.issuingCountry,
+          }
+          await AuthPostApi(MainApi.passengers.create, body)
+        })
+      }
+      // make sure there is a passenger detail filled
+      let dataArr = []
+      let addonsArr = []
+      flightDetails.priceSummary.map((item) => {
+        return new Array(item.quantity).fill().map((item, i) => {
+          return dataArr.push(i)
+        })
       })
-    })
-    if (localData.length > dataArr.length) return AlertError(`Invalid Extra passenger's information detected`)
-    if (localData.length < dataArr.length) return AlertError(`Incomplete passenger's information detected, kindly fill out all passengers information to proceed`)
-    if (localData.length < 1) return AlertError('Your passenger\'s information is required to be filled out')
-    // book this flight
-    addonscheck.map((item) => {
-      return addonsArr.push(item._id)
-    })
-    dispatch(dispatchSelectedAddons(addonscheck))
-    setFlightDetails({ ...flightDetails, amount: total, addons: addonsArr })
-    dispatch(storePassenger(localData))
-    changePage(2)
-    BackToTop()
+      if (localData.length > dataArr.length) return AlertError(`Invalid Extra passenger's information detected`)
+      if (localData.length < dataArr.length) return AlertError(`Incomplete passenger's information detected, kindly fill out all passengers information to proceed`)
+      if (localData.length < 1) return AlertError('Your passenger\'s information is required to be filled out')
+      // book this flight
+      addonscheck.map((item) => {
+        return addonsArr.push(item._id)
+      })
+      dispatch(dispatchSelectedAddons(addonscheck))
+      setFlightDetails({ ...flightDetails, amount: total, addons: addonsArr })
+      dispatch(storePassenger(localData))
+      // if tag === yes then save details
+    } catch (error) {
+      console.log(error)
+    }finally {
+      changePage(2)
+      BackToTop()
+      setView(false)
+    }
   }
 
   const handleSelection = id => {
@@ -74,7 +107,7 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
 
   return (
     <div>
-      {/* <Navbar /> */}
+     {view && <ConfirmPassengersStorage onclose={() => setView(!view)} handleManagement={handleManagement} />}
       <Wrapper>
         <WrapContent>Passenger Details</WrapContent>
       </Wrapper>
