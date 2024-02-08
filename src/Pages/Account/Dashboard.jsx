@@ -73,15 +73,15 @@ const Dashboard = () => {
                         <div className="">
                             <div className="grid grid-cols-2">
                             <div className="font-semibold text-zinc-500 text-sm">Average Aging</div>
-                            <div className={`text-right font-bold text-lg ${agingColor.color}`}>{user.average_aging}</div>
+                            <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.average_aging}</div>
                             </div>
                             <div className="grid grid-cols-2">
                             <div className="font-semibold text-zinc-500 text-sm">Average Aging Max</div>
-                            <div className={`text-right font-bold text-lg ${agingColor.color}`}>{user.average_aging_max}</div>
+                            <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.average_aging_max}</div>
                             </div>
                             <div className="grid grid-cols-2">
                             <div className="font-semibold text-zinc-500 text-sm">Aging Percentage</div>
-                            <div className={`text-right font-bold text-lg ${agingColor.color}`}>{user.aging_percentage}</div>
+                            <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.aging_percentage}</div>
                             </div>
                         </div>
                     </div>
