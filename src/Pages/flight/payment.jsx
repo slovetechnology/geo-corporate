@@ -18,10 +18,11 @@ import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
 import Loading from "/src/components/Loading";
 import { onlinesitename } from "/src/services/Geoapi";
+import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 
 function Payment({changePage, flightDetails}) {
   const [loading, setLoading] = useState(false);
-  const { selectedAddons, passengers } = useSelector(state => state.data);
+  const { selectedAddons, passengers, user } = useSelector(state => state.data);
   const copyref = useRef()
   const [booked, setBooked] = useState(false)
   const priceLimit = 500000
@@ -120,9 +121,26 @@ function Payment({changePage, flightDetails}) {
           ...forms,
           phoneNumber: `${forms.phoneCode}${forms.phoneNumber}`
         },
-        redirectUrl: `${onlinesitename}geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
+        redirectUrl: `http://localhost:5174/geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
+        // redirectUrl: `${onlinesitename}geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
       };
       await HttpServices.post(ApiRoutes.payment.initialize_payment, info);
+
+      // call geo payment api for prepaid account on bank transfer
+      if(user.account_type === 'PREPAID') {
+        const formbody = {
+          amount: invoiceData.amount,
+          email: passengers[0].email || "",
+          name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
+          phonenumber: passengers[0].phoneNumber.split(' ')[1] || "",
+          booking_code: bookedData.bookingCode,
+          status: 'PENDING',
+          reference: bookedData.reference,
+          module: 'BANK TRANSFER',
+          organization: user.id
+        }
+         await AuthPostApi(MainApi.auth.payment, formbody)
+      }
       localStorage.removeItem('passengers')
       setActiveTab({ tag: 3, text: '' })
       BackToTop()

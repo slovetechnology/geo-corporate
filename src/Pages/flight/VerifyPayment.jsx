@@ -10,6 +10,8 @@ import { AlertError } from "/src/components/functions";
 import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
 import GeoLayout from "/src/components/GeoLayout";
+import { AuthPostApi, MainApi } from "/src/services/Geoapi";
+import {useSelector} from 'react-redux'
 
 
 const VerifyPayment = () => {
@@ -20,6 +22,7 @@ const VerifyPayment = () => {
   const [detail, setDetail] = useState({});
   const [flight, setFlight] = useState({})
   const { bookingCode } = useParams()
+  const {user} = useSelector(state => state.data)
 
   const getSearchParams = useCallback(
     (val = "") => {
@@ -50,6 +53,21 @@ const VerifyPayment = () => {
         const payload = result.data.data;
         setLoaded("success");
         setDetail(payload);
+        // call geo payment api for prepaid account on bank transfer
+        // if(UserActivation.account_type === 'PREPAID') {
+        //   const formbody = {
+        //     amount: invoiceData.amount,
+        //     email: passengers[0].email || "",
+        //     name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
+        //     phonenumber: passengers[0].phoneNumber.split(' ')[1] || "",
+        //     booking_code: bookedData.bookingCode,
+        //     status: 'PENDING',
+        //     reference: bookedData.reference,
+        //     module: 'BANK TRANSFER',
+        //     organization: user.id
+        //   }
+        //   await AuthPostApi(MainApi.auth.payment, formbody)
+        // }
       }
     } catch (error) {
       return AlertError(`${error}`)

@@ -4,14 +4,14 @@ import { MainToken } from "../components/functions";
 
 export const Enviroments = {
     staging: `https://geo-corporate.netlify.app/`,
-    live: `https://corporates.gowithgeo.com/`,
+    live: `https://corporate.gowithgeo.com/`,
     local: `http://localhost:5173/`
 }
 // const baseUrl = 
 export let baseUrl;
 export const localsitename = "http://localhost:5173/";
 export let onlinesitename;
-if (window.location.origin.includes('corporates.gowithgeo.com')) {
+if (window.location.origin.includes('corporate.gowithgeo.com')) {
     baseUrl = `https://api.gowithgeo.com`
     onlinesitename = Enviroments.live
 } else {
@@ -19,16 +19,26 @@ if (window.location.origin.includes('corporates.gowithgeo.com')) {
     onlinesitename = Enviroments.staging
 }
 
-const auth = `/corporates/`
+const auth = `/corporates/`,
+pass = `/passengers/`
+
 
 
 const auth_urls = {
     login: auth + `organization/login`,
     profile: auth + `organization/view`,
+    payment: auth+`corporate-payment/`
 }
+
+const passenger_urls = {
+    create: pass + `create`,
+    list: pass + `list`,
+}
+
 
 export const MainApi = {
     auth: auth_urls,
+    passengers: passenger_urls,
 }
 
 
