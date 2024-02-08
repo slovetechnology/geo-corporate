@@ -12,6 +12,7 @@ import ApiRoutes from "/src/services/ApiRoutes";
 import GeoLayout from "/src/components/GeoLayout";
 import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 import { useSelector } from 'react-redux'
+import { AuthGetApi } from "/src/services/Geoapi";
 
 
 const VerifyPayment = () => {
@@ -67,7 +68,11 @@ const VerifyPayment = () => {
               module: 'CARD PAYMENT',
               organization: user.id
             }
-            await AuthPostApi(MainApi.auth.payment, formbody)
+            const allres = await AuthGetApi(`${MainApi.auth.all_payments}/${user.id}`)
+            const findRes = allres.data.find(ele => ele.book_code === payload.bookingCode)
+            if(!findRes) {
+              await AuthPostApi(MainApi.auth.payment, formbody)
+            } 
           }
         }
       } catch (error) {
