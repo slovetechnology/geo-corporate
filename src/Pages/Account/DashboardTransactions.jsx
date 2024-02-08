@@ -4,6 +4,7 @@ import { AuthGetApi, MainApi } from '/src/services/Geoapi'
 import {useSelector} from 'react-redux'
 import SingleTransaction from './SingleTransaction'
 import ViewTicket from '/src/components/flight/ViewTicket'
+import { AlertError } from '/src/components/functions'
 
 
 const TableHeaders = [
@@ -41,10 +42,13 @@ const DashboardTransactions = () => {
         FetchTransactions()
     }, [])
     const HandleTicketViewing = (data) => {
-        setSingle({
-            status: true,
-            data: data
-        })
+        if(Object.keys(data).length > 0) {
+            return setSingle({
+                status: true,
+                data: data
+            })
+        }
+        return AlertError('Looks like this transaction is not connected to a flight ticket')
     }
     return (
         <div className='mt-10'>

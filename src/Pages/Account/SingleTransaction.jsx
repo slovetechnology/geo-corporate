@@ -11,11 +11,14 @@ const SingleTransaction = ({ item, HandleTicketViewing}) => {
     useEffect(() => {
         const FetchFlight = async () => {
             try {
+                if(item.booking_code) {
+
                 const result = await HttpServices.get(
                     `${ApiRoutes.flights.manage_booking}/${item.booking_code}`
                 );
                 const payload = result.data.data;
                 if(result.data.success) return setFlight(payload)
+                }
             } catch (error) {
                 //
             }
