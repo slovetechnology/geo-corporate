@@ -18,6 +18,19 @@ import DashboardTransactions from './DashboardTransactions'
 // Amber if avg aging is between 50% and 70% of avg aging Max
 
 // Red if avg aging is above 70% of avg Aging Max
+
+
+
+// Postpaid Max is the maximum amount an organisation can be serviced on credit
+
+// Postpaid balance is (amount owing+Last payment)
+
+// Amount owing is total unpaid transaction per organisation
+
+// Average Aging Max is the maximum duration an organisation is allowed to owe. 
+
+// Average Aging: This is calculated by the average number of days all transaction remained unpaid, as compared to Aging Max for the organisation. Example: If there are 3 unpaid transactions. transaction 1 have remained unpaid for 3 day, transaction 2 for 5 days, transaction 3 for 6 days. The average duration for unpaid transaction is total number of days of unpaid trnsaction/number of unpaid transaction. That is (3+5+6)/3 = 3days (Approximate to whole number)
+
 const COLORTYPES = [
     {
         color: 'text-green-500',
@@ -37,7 +50,7 @@ const COLORTYPES = [
 ]
 const Dashboard = () => {
     const { user } = useSelector(state => state.data)
-    const [agingColor, setAgingColor] = useState(COLORTYPES.find(ele => ele.min <= user.aging_percentage && ele.max >= user.aging_percentage ))
+    const [agingColor, setAgingColor] = useState(COLORTYPES.find(ele => ele.min <= user.aging_percentage && ele.max >= user.aging_percentage))
     return (
         <GeoLayout>
             <div className="flex items-center pt-8 px-4 rounded-xl w-11/12 mx-auto gap-3">
@@ -69,28 +82,47 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 lg:col-span-3">
-                    <div className="bg-white rounded-lg px-4 py-6 shadow-2xl col-span-2">
-                        <div className="">
+                    <div className="col-span-2">
+                       <div className="bg-white rounded-lg px-4 py-6 shadow-2xl mb-4">
                             <div className="grid grid-cols-2">
-                            <div className="font-semibold text-zinc-500 text-sm">Average Aging</div>
-                            <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.average_aging}</div>
+                                <div className="font-semibold text-zinc-500 text-sm">Last Amount Paid</div>
+                                <div className={`text-right font-bold text-lg`}>{NairaSign}{user.last_paid_amount?.toLocaleString()}</div>
                             </div>
                             <div className="grid grid-cols-2">
-                            <div className="font-semibold text-zinc-500 text-sm">Average Aging Max</div>
-                            <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.average_aging_max}</div>
+                                <div className="font-semibold text-zinc-500 text-sm">Last Transaction</div>
+                                <div className={`text-right font-bold text-lg`}>{user.last_trsnaction}</div>
                             </div>
                             <div className="grid grid-cols-2">
-                            <div className="font-semibold text-zinc-500 text-sm">Aging Percentage</div>
-                            <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.aging_percentage}</div>
+                                <div className="font-semibold text-zinc-500 text-sm">Amount Owing</div>
+                                <div className={`text-right font-bold text-lg text-red-600`}>{NairaSign}{user.amount_owing?.toLocaleString()}</div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <div className="font-semibold text-zinc-500 text-sm">Postpaid Balance</div>
+                                <div className={`text-right font-bold text-lg`}>{NairaSign}{user.post_paid_balance?.toLocaleString()}</div>
                             </div>
                         </div>
+                        {user.account_type === 'POSTPAID' && 
+                        <div className="bg-white rounded-lg px-4 py-6 shadow-2xl mb-4">
+                            <div className="grid grid-cols-2">
+                                <div className="font-semibold text-zinc-500 text-sm">Average Aging</div>
+                                <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.average_aging}</div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <div className="font-semibold text-zinc-500 text-sm">Average Aging Max</div>
+                                <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.average_aging_max}</div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <div className="font-semibold text-zinc-500 text-sm">Aging Percentage</div>
+                                <div className={`text-right font-bold text-lg ${agingColor?.color}`}>{user.aging_percentage}</div>
+                            </div>
+                        </div>}
                     </div>
                     <div className="bg-white rounded-lg shadow-2xl px-4 pt-6 pb-2">
                         <div className=" grid grid-cols-4 gap-3">
                             <div className="bg-red-400/30 text-red-500 border col-span-1 border-red-500 w-fit h-fit p-3 rounded-xl text-3xl"> <SlWallet /> </div>
                             <div className="col-span-3">
-                                <div className="text-right font-bold text-lg text-red-500 break-words">{NairaSign}{user.postpaid_margin?.toLocaleString()}</div>
-                                <div className="font-semibold text-right text-zinc-500 text-sm">Postpaid Margin</div>
+                                <div className="text-right font-bold text-lg text-red-500 break-words">{NairaSign}{(user.account_type === 'PREPAID' ? user.prepaid_margin : user.postpaid_margin)?.toLocaleString()}</div>
+                                <div className="font-semibold text-right text-zinc-500 text-xs lg:text-sm">{user.account_type === 'PREPAID' ? 'Prepaid' : 'Postpaid'} Margin</div>
                                 <div className="w-fit ml-auto mt-2">
                                     <div className="relative w-32 h-2 rounded-full bg-zinc-300">
                                         <div className="bg-absolute top-0 left-0 w-4/5 h-2 rounded-full bg-red-400"></div>
@@ -98,10 +130,10 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 border-t pt-1 mt-2">
+                       {user.account_type === 'POSTPAID' && <div className="grid grid-cols-2 border-t pt-1 mt-2">
                             <div className="">Postpaid Max:</div>
                             <div className="text-right">{user.postpaid_max}</div>
-                        </div>
+                        </div>}
                     </div>
                     <div className="bg-white rounded-lg px-4 py-6 shadow-2xl grid grid-cols-4 gap-3">
                         <div className="bg-purple-400/30 text-purple-500 border col-span-1 border-purple-500 w-fit h-fit p-3 rounded-xl text-3xl"><IoStatsChartOutline /> </div>
