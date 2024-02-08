@@ -24,7 +24,7 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
 
   React.useEffect(() => {
     const UpdateAmount = () => {
-      setTotal(flightDetails.amount)
+      setTotal(flightDetails.pricing.payable)
     }
     UpdateAmount()
   }, [flightDetails])

@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthGetApi, MainApi } from '/src/services/Geoapi'
+import {useSelector} from 'react-redux'
+import SingleTransaction from './SingleTransaction'
+import ViewTicket from '/src/components/flight/ViewTicket'
 
 
 const TableHeaders = [
     "Traveller's Name",
+    "Amount Paid",
     "Origin",
     "Destination",
     "Origin Date/Time",
@@ -12,8 +17,38 @@ const TableHeaders = [
     "---",
 ]
 const DashboardTransactions = () => {
+    const {user} = useSelector(state => state.data)
+    const [loading, setLoading] = useState(true)
+    const [items, setItems] = useState([])
+    const [single, setSingle] = useState({
+        status: false,
+        data: {}
+    })
+    useEffect(() => {
+        const FetchTransactions = async () => {
+            setLoading(false)
+            try {
+                const response = await AuthGetApi(`${MainApi.auth.all_payments}/${user.id}`)
+                if(response.status === 200) {
+                    setItems(response.data)
+                }
+            } catch (error) {
+                //
+            }finally {
+                setLoading(false)
+            }
+        }
+        FetchTransactions()
+    }, [])
+    const HandleTicketViewing = (data) => {
+        setSingle({
+            status: true,
+            data: data
+        })
+    }
     return (
         <div className='mt-10'>
+        {single.status && <ViewTicket flight={single.data} closeView={() => setSingle({...single, status: false})} /> }
             <div className="grid grid-cols-2 mb-5">
                 <div className="font-bold text-3xl">Latest Transactions</div>
                 <div className="w-fit ml-auto mt-4">
@@ -24,23 +59,15 @@ const DashboardTransactions = () => {
                 <div className="bg-white">
                     <table className="table table-auto w-full border">
                         <thead>
-                            <tr className='border-b bg-zinc-200'>
+                            <tr className='border-b'>
                                 {TableHeaders.map((item, i) => (
-                                    <td className='p-3 border-r last:border-none border-zinc-400 font-bold' key={i}>{item}</td>
+                                    <td className='p-3 border-r last:border-none font-bold' key={i}>{item}</td>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
-                            {new Array(5).fill(0).map((item, i) => (
-                                <tr className='border-b' key={i}>
-                                    <td className='p-3 border-r'>Kalistus Madu</td>
-                                    <td className='p-3 border-r'>Lagos</td>
-                                    <td className='p-3 border-r'>Abuja</td>
-                                    <td className='p-3 border-r'>10/20/2024 05:10:20AM</td>
-                                    <td className='p-3 border-r'>Organization Name</td>
-                                    <td className='p-3 border-r'>Organization Staff</td>
-                                    <td className='p-3'>View Ticket</td>
-                                </tr>
+                            {!loading && items.length > 0 && items.slice(0, 5).map((item, i) => (
+                                <SingleTransaction key={i} item={item} HandleTicketViewing={HandleTicketViewing} />
                             ))}
                         </tbody>
                     </table>

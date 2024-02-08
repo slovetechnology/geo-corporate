@@ -26,7 +26,7 @@ function Payment({changePage, flightDetails}) {
   const copyref = useRef()
   const [booked, setBooked] = useState(false)
   const priceLimit = 500000
-  const priceAction =  parseInt(flightDetails.amount) > priceLimit
+  const priceAction =  parseInt(flightDetails.pricing.payable) > priceLimit
   const [activeTab, setActiveTab] = useState(!priceAction ? { tag: 1, text: "Make Payment" } : { tag: 2, text: "Submit request" });
 
   const [forms, setForms] = useState({
@@ -121,15 +121,14 @@ function Payment({changePage, flightDetails}) {
           ...forms,
           phoneNumber: `${forms.phoneCode}${forms.phoneNumber}`
         },
-        redirectUrl: `http://localhost:5174/geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
-        // redirectUrl: `${onlinesitename}geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
+        redirectUrl: `${onlinesitename}geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
       };
       await HttpServices.post(ApiRoutes.payment.initialize_payment, info);
 
       // call geo payment api for prepaid account on bank transfer
       if(user.account_type === 'PREPAID') {
         const formbody = {
-          amount: invoiceData.amount,
+          amount: parseInt(invoiceData.amount),
           email: passengers[0].email || "",
           name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
           phonenumber: passengers[0].phoneNumber.split(' ')[1] || "",
@@ -276,10 +275,10 @@ function Payment({changePage, flightDetails}) {
               <BankSection>
                 <CardContent>
                   <Cost>
-                    {NairaSign}{parseInt(flightDetails.amount).toLocaleString()}
+                    {NairaSign}{parseInt(flightDetails.pricing.payable).toLocaleString()}
                   </Cost>
                   <Desc className="text-center">
-                  Please pay the total amount of <span className="text-mainblue">{NairaSign}{parseInt(flightDetails.amount).toLocaleString()}</span> to the provided bank details and share the payment confirmation via WhatsApp to 09087675823. Kindly note that this reservation will be valid for 1 hour
+                  Please pay the total amount of <span className="text-mainblue">{NairaSign}{parseInt(flightDetails.pricing.payable).toLocaleString()}</span> to the provided bank details and share the payment confirmation via WhatsApp to 09087675823. Kindly note that this reservation will be valid for 1 hour
                   </Desc>
 
                   <DetailsWrapper>
@@ -332,7 +331,7 @@ function Payment({changePage, flightDetails}) {
                   <div>Awaiting payment confirmation.</div>
                   <Cost>
                     {NairaSign}
-                    {parseInt(flightDetails.amount).toLocaleString()}
+                    {parseInt(flightDetails.pricing.payable).toLocaleString()}
                   </Cost>
 
                   <div className="bg-slate-100 p-3 rounded-md">

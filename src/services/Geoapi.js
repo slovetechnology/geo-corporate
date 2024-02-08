@@ -27,7 +27,8 @@ pass = `/passengers/`
 const auth_urls = {
     login: auth + `organization/login`,
     profile: auth + `organization/view`,
-    payment: auth+`corporate-payment/`
+    all_payments: auth + `organization/payments`,
+    payment: auth+`corporate-payment/`,
 }
 
 const passenger_urls = {

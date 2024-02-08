@@ -149,7 +149,7 @@ function Costcard(props) {
         </BottomSection>
         <AmountWrapper>
           <Total>Actual Total Amount </Total>
-          <TotalCost>&#8358; {parseInt(flightDetails.amount).toLocaleString()}</TotalCost>
+          <TotalCost>&#8358; {parseInt(flightDetails.pricing.payable).toLocaleString()}</TotalCost>
         </AmountWrapper>
 
         {activeTab.tag !== 3 ? <AmountBtn className='flex items-center gap-3' onClick={HandleButtonEvent}> {activeTab?.text} </AmountBtn> : null}

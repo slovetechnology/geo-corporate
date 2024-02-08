@@ -54,20 +54,20 @@ const VerifyPayment = () => {
         setLoaded("success");
         setDetail(payload);
         // call geo payment api for prepaid account on bank transfer
-        // if(UserActivation.account_type === 'PREPAID') {
-        //   const formbody = {
-        //     amount: invoiceData.amount,
-        //     email: passengers[0].email || "",
-        //     name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
-        //     phonenumber: passengers[0].phoneNumber.split(' ')[1] || "",
-        //     booking_code: bookedData.bookingCode,
-        //     status: 'PENDING',
-        //     reference: bookedData.reference,
-        //     module: 'BANK TRANSFER',
-        //     organization: user.id
-        //   }
-        //   await AuthPostApi(MainApi.auth.payment, formbody)
-        // }
+        if(user.account_type === 'PREPAID') {
+          const formbody = {
+            amount: parseInt(res.data.data.amount),
+            email: payload.passengers[0].email || "",
+            name: `${payload.passengers[0].title} ${payload.passengers[0].firstName} ${payload.passengers[0].lastName}` || "",
+            phonenumber: payload.passengers[0].phoneNumber.split(' ')[1] || "",
+            booking_code: payload.bookingCode,
+            status: payload.paymentStatus,
+            reference: payload.reference,
+            module: 'CARD PAYMENT',
+            organization: user.id
+          }
+          await AuthPostApi(MainApi.auth.payment, formbody)
+        }
       }
     } catch (error) {
       return AlertError(`${error}`)
