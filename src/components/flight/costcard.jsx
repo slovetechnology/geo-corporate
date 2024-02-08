@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import downplane from "/src/assets/images/downplane.svg";
@@ -8,18 +8,129 @@ import { calcTotalInboundDuration, calcTotalOutboundDuration, formatAirportSubti
 import moment from "moment";
 import { BackToTop } from "/src/components/functions";
 import { TripName } from "./Flightcard";
+import { onlinesitename } from "/src/services/Geoapi";
+import HttpServices from "/src/services/Tiqwaapi";
+import ApiRoutes from "/src/services/ApiRoutes";
+import Swal from "sweetalert2";
+import { AlertError } from "/src/components/functions";
+import { AuthPostApi, MainApi } from "/src/services/Geoapi";
+import Loading from "/src/components/Loading";
+import {useNavigate} from 'react-router-dom'
 
 function Costcard(props) {
   const { activeTab, changePage, flightDetails } = props
-  const { selectedAddons } = useSelector(state => state.data)
+  const { selectedAddons, user, passengers } = useSelector(state => state.data)
   const localTrip = JSON.parse(localStorage.getItem(TripName))
+  const [booked, setBooked] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const HandleButtonEvent = async () => {
-    changePage(3)
-    BackToTop()
+    if(user.account_type === 'PREPAID') {
+      changePage(3)
+      return BackToTop()
+    }
+    BookFlightTicket()
+  }
+  
+  // book the flight now in order to generate the ivoice for accepting payments
+  const BookFlightTicket = async () => {
+    if (!booked) {
+      const addonsArr = []
+
+      selectedAddons.map((item) => {
+        return addonsArr.push(item._id)
+      })
+      const passengersData = {
+        addons: [
+          ...addonsArr
+        ],
+        bookAtDealPrice: flightDetails.deal?._id ? true : false,
+        invoiceUrl: `${onlinesitename}flight-invoice/`,
+        passengers: [...passengers]
+      }
+
+      setLoading(true)
+      try {
+        const response = await HttpServices.post(
+          `${ApiRoutes.flights.book_flight}/${flightDetails.id}`,
+          passengersData
+        )
+        const { data } = response
+        if (data.success) {
+          const payload = data
+          const invoiceRes = await HttpServices.get(
+            `${ApiRoutes.invoice.get_invoice_details}/${payload.data.invoice}`
+          )
+          setBooked(true)
+          if (invoiceRes.data.success) {
+            BankTransfer({ bookedData: payload.data, invoiceData: invoiceRes.data.data })
+          }
+        } else {
+          Swal.fire({
+            title: 'Request failed',
+            text: `${data.message?.message || data.message?.description}`,
+            icon: 'error',
+            showConfirmButton: false
+          })
+        }
+      } catch (error) {
+        AlertError(`${error.message}`)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      Swal.fire({
+        title: 'Request failed',
+        text: 'Looks like an action has already been taken on this ticket',
+        icon: 'error',
+        showConfirmButton: false
+      })
+    }
+  }
+  
+  const BankTransfer = async ({ bookedData, invoiceData }) => {
+    setLoading(true);
+    try {
+      const info = {
+        invoiceCode: invoiceData.invoiceCode,
+        paymentChannel: "TRANSFER",
+        customer: {
+          email: passengers[0].email || "",
+          name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
+          phoneCode: passengers[0].phoneNumber.split(' ')[0] || Dialcodes[0].dial_code,
+          phoneNumber: `${passengers[0].phoneCode}${passengers[0].phoneNumber}`
+        },
+        redirectUrl: `${onlinesitename}geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,
+      };
+      await HttpServices.post(ApiRoutes.payment.initialize_payment, info);
+
+      // call geo payment api for prepaid account on bank transfer
+      if(user.account_type === 'POSTPAID') {
+        const formbody = {
+          amount: parseInt(invoiceData.amount),
+          email: passengers[0].email || "",
+          name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
+          phonenumber: passengers[0].phoneNumber.split(' ')[1] || "",
+          booking_code: bookedData.bookingCode,
+          status: 'APPROVED UNPAID',
+          reference: bookedData.reference,
+          module: 'POSTPAID',
+          organization: user.id
+        }
+         await AuthPostApi(MainApi.auth.payment, formbody)
+      }
+      localStorage.removeItem('passengers')
+      navigate(`/geo/verify-payment/${bookedData.bookingCode}?expand=addons,invoice`,)
+    } catch (error) {
+      return AlertError(`${error.message}`)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <div>
+     {loading && <Loading />}
       <RightContentItem>
         <CostPrice>Cost</CostPrice>
         {localTrip !== 'multi-city' ? <TopSection>
@@ -152,7 +263,7 @@ function Costcard(props) {
           <TotalCost>&#8358; {parseInt(flightDetails.pricing.payable).toLocaleString()}</TotalCost>
         </AmountWrapper>
 
-        {activeTab.tag !== 3 ? <AmountBtn className='flex items-center gap-3' onClick={HandleButtonEvent}> {activeTab?.text} </AmountBtn> : null}
+        {activeTab.tag !== 3 ? <AmountBtn className='flex items-center gap-3' onClick={HandleButtonEvent}> {user.account_type === 'PREPAID' ? activeTab?.text : 'Book Now'} </AmountBtn> : null}
       </RightContentItem>
     </div>
   );

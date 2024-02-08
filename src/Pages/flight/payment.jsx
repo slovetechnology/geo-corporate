@@ -96,7 +96,7 @@ function Payment({changePage, flightDetails}) {
           })
         }
       } catch (error) {
-        AlertError.log(`${ErrorMessage}`)
+        AlertError(`${error.message}`)
       } finally {
         setLoading(false)
       }
@@ -133,7 +133,7 @@ function Payment({changePage, flightDetails}) {
           name: `${passengers[0].title} ${passengers[0].firstName} ${passengers[0].lastName}` || "",
           phonenumber: passengers[0].phoneNumber.split(' ')[1] || "",
           booking_code: bookedData.bookingCode,
-          status: 'PENDING',
+          status: 'UNPAID',
           reference: bookedData.reference,
           module: 'BANK TRANSFER',
           organization: user.id

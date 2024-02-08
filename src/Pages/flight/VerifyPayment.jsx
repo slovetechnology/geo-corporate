@@ -11,7 +11,7 @@ import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
 import GeoLayout from "/src/components/GeoLayout";
 import { AuthPostApi, MainApi } from "/src/services/Geoapi";
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 
 const VerifyPayment = () => {
@@ -22,7 +22,7 @@ const VerifyPayment = () => {
   const [detail, setDetail] = useState({});
   const [flight, setFlight] = useState({})
   const { bookingCode } = useParams()
-  const {user} = useSelector(state => state.data)
+  const { user } = useSelector(state => state.data)
 
   const getSearchParams = useCallback(
     (val = "") => {
@@ -33,46 +33,58 @@ const VerifyPayment = () => {
   );
 
   const confirmTransaction = useCallback(async () => {
-    if (getSearchParams("status") === "cancelled") {
-      return setTimeout(() => {
-        setLoading(false);
-        setLoaded("error");
-      }, 3000);
-    }
-    try {
-      const res = await HttpServices.get(
-        `${ApiRoutes.payment.verify_payment}/${getSearchParams("transaction_id")}`
-      );
-      if (!res.data.success) {
-        setLoaded("error");
-        return false;
-      } else {
-        const result = await HttpServices.get(
-          `${ApiRoutes.flights.manage_booking}/${bookingCode}`
-        );
-        const payload = result.data.data;
-        setLoaded("success");
-        setDetail(payload);
-        // call geo payment api for prepaid account on bank transfer
-        if(user.account_type === 'PREPAID') {
-          const formbody = {
-            amount: parseInt(res.data.data.amount),
-            email: payload.passengers[0].email || "",
-            name: `${payload.passengers[0].title} ${payload.passengers[0].firstName} ${payload.passengers[0].lastName}` || "",
-            phonenumber: payload.passengers[0].phoneNumber.split(' ')[1] || "",
-            booking_code: payload.bookingCode,
-            status: payload.paymentStatus,
-            reference: payload.reference,
-            module: 'CARD PAYMENT',
-            organization: user.id
-          }
-          await AuthPostApi(MainApi.auth.payment, formbody)
-        }
+    if (user.account_type === 'PREPAID') {
+      if (getSearchParams("status") === "cancelled") {
+        return setTimeout(() => {
+          setLoading(false);
+          setLoaded("error");
+        }, 3000);
       }
-    } catch (error) {
-      return AlertError(`${error}`)
-    } finally {
-      setLoading(false)
+      try {
+        const res = await HttpServices.get(
+          `${ApiRoutes.payment.verify_payment}/${getSearchParams("transaction_id")}`
+        );
+        if (!res.data.success) {
+          setLoaded("error");
+          return false;
+        } else {
+          const result = await HttpServices.get(
+            `${ApiRoutes.flights.manage_booking}/${bookingCode}`
+          );
+          const payload = result.data.data;
+          setLoaded("success");
+          setDetail(payload);
+          // call geo payment api for prepaid account on bank transfer
+          if (user.account_type === 'PREPAID') {
+            const formbody = {
+              amount: parseInt(res.data.data.amount),
+              email: payload.passengers[0].email || "",
+              name: `${payload.passengers[0].title} ${payload.passengers[0].firstName} ${payload.passengers[0].lastName}` || "",
+              phonenumber: payload.passengers[0].phoneNumber.split(' ')[1] || "",
+              booking_code: payload.bookingCode,
+              status: payload.paymentStatus,
+              reference: payload.reference,
+              module: 'CARD PAYMENT',
+              organization: user.id
+            }
+            await AuthPostApi(MainApi.auth.payment, formbody)
+          }
+        }
+      } catch (error) {
+        return AlertError(`${error}`)
+      } finally {
+        setLoading(false)
+      }
+    }else {
+      const result = await HttpServices.get(
+        `${ApiRoutes.flights.manage_booking}/${bookingCode}`
+      );
+      const payload = result.data.data;
+      setLoaded("success");
+      setDetail(payload);
+      setTimeout(() => {
+        setLoading(false)
+      }, 4000);
     }
   }, [getSearchParams]);
 
