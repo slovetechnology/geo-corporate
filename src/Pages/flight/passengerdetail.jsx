@@ -53,6 +53,7 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
             issue_date: ele?.documents?.issuingDate,
             expiry_date: ele?.documents?.expiryDate,
             issuing_authority: ele?.documents?.issuingCountry,
+            organization: user.id
           }
           await AuthPostApi(MainApi.passengers.create, body)
         })
