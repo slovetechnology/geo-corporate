@@ -912,3 +912,13 @@ main {
   transition: all 50ms ease-in-out;
 }
 
+
+.modalbefore::before {
+  content: '';
+  position: absolute;
+  bottom: -2.9rem;
+  left: 30%;
+  border-width: 2rem;
+  border-style: solid;
+  border-color: white transparent transparent white;
+}

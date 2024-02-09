@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Cookies from 'js-cookie'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ClientPostApi, MainApi } from "../services/Geoapi";
-import { AlertError, GoodAlert, MainToken, USERID } from "../components/functions";
+import { AlertError, GoodAlert, MainToken, USERID, USERNAME } from "../components/functions";
 import FormLayout from "../components/FormLayout";
 import Loading from "../components/Loading";
 
@@ -40,6 +40,7 @@ export const Login = () => {
       if (mainRes.status === 200) {
         Cookies.set(MainToken, mainRes.data.tokens.access)
         Cookies.set(USERID, mainRes.data.tokens.organization_id)
+        Cookies.set(USERNAME, mainRes.data.tokens.username)
         GoodAlert(`Account Logged in Successfully`)
         navigate(`/geo/board`)
       } else {

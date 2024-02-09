@@ -16,7 +16,7 @@ import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 
 function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
   const [localData, setLocalData] = useState([])
-  const { alladdons } = useSelector(state => state.data)
+  const { alladdons, pdetails } = useSelector(state => state.data)
   const [addonscheck, setAddonscheck] = useState([])
   const localTrip = JSON.parse(localStorage.getItem(TripName))
   const [view, setView] = useState(false)
@@ -131,6 +131,7 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
                   </div>
                   <div className={`capitalize w-fit text-xs ${flightDetails.documentRequired ? 'bg-teal-200' : 'bg-orange-200'} rounded-md py-2 px-3 font-semibold`}>{!flightDetails.documentRequired ? 'local flight' : 'international flight'}</div>
                   <InfoTitle className="font-bold mb-3">Personal Information  </InfoTitle>
+                  <div className="mt-5">You can auto fill previously saved information by entering the first (3) characters of either the passenger's first name, middle name, last name, email address or phone number.</div>
                 </SmallWrapper>
               </TitleSection>
 

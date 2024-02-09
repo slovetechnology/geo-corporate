@@ -3,6 +3,7 @@ import { toast } from 'react-hot-toast'
 import airports from "./airports.json";
 
 export const USERID = 'ssid'
+export const USERNAME = 'ssn'
 export const MainToken = 'geo-main'
 export const toastId = "toastId";
 export const updateId = "toastId";

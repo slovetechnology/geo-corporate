@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { AlertError, GoodAlert } from '/src/components/functions';
 import SelectOptions from '/src/components/SelectOptions';
 import TermsModal from '/src/components/flight/TermsModal';
+import ApplyPassengersAutoFill from './ApplyPassengersAutoFill';
 dayjs.extend(customParseFormat);
 const dateFormat = 'YYYY/MM/DD';
 
@@ -31,6 +32,12 @@ const PassengersFlightForm = (props) => {
     const findData = localData.find((item) => item.dataType === userType)
     const [terms, setTerms] = useState(false)
     const [agree, setAgree] = useState(false)
+    const { pdetails } = useSelector(state => state.data)
+    const [open, setOpen] = useState({
+        status: false,
+        ignore: false,
+        data: {}
+    })
 
     const [personalData, setPersonalData] = useState({
         passengerType: flight.passengerType,
@@ -114,8 +121,8 @@ const PassengersFlightForm = (props) => {
         }
         GoodAlert('Details saved')
         setView(!view)
-        
-        if(props.indexs + 1 === total) {
+
+        if (props.indexs + 1 === total) {
             setNextPage(true)
         }
     }
@@ -124,13 +131,88 @@ const PassengersFlightForm = (props) => {
         setTerms(!terms)
     }
 
+    const SearchPassengerDetails = (val, tag) => {
+        if (open.ignore === false) {
+            if (val.length > 2 && val.length < 4) {
+                let result;
+                if (tag === 1) {
+                    result = pdetails.find(ele => ele.first_name.toLowerCase().startsWith(val.toLowerCase()))
+                }
+                if (tag === 2) {
+                    result = pdetails.find(ele => ele.middle_name.toLowerCase().startsWith(val.toLowerCase()))
+                }
+                if (tag === 3) {
+                    result = pdetails.find(ele => ele.last_name.toLowerCase().startsWith(val.toLowerCase()))
+                }
+                if (tag === 4) {
+                    result = pdetails.find(ele => ele.email_address.toLowerCase().startsWith(val.toLowerCase()))
+                }
+                if (tag === 5) {
+                    result = pdetails.find(ele => ele.phone_number.toLowerCase().startsWith(`${personalData.phoneNumber} ${val.toLowerCase()}`))
+                }
+                if (Object.keys(result).length > 0) {
+                    setOpen({
+                        ...open,
+                        status: true,
+                        data: result
+                    })
+                }
+            }
+        }
+    }
+
+    const ApplyAutofill = (tag) => {
+        if (tag === 'no') {
+            setOpen({
+                data: {},
+                status: false,
+                ignore: true
+            })
+        } else {
+            const data = open.data
+            console.log(tag, moment(new Date(data?.date_of_birth)).format('YYYY-MM-DD'))
+            setPersonalData({
+                ...personalData,
+                firstName: data?.first_name || '',
+                middleName: data?.middle_name || '',
+                lastName: data?.last_name || '',
+                dob: moment(new Date(data?.date_of_birth)).format('YYYY-MM-DD') || '',
+                gender: data?.gender || '',
+                title: data?.title || '',
+                email: data?.email_address || '',
+                phoneCode: data?.phone?.split(' ')[0] || Dialcodes[0].dial_code,
+                phoneNumber: data?.phone?.split(' ')[1] || "",
+            })
+            setpassengerData({
+                ...passengerData,
+                number: data?.passport_number || "",
+                issuingDate: data?.issue_date || "",
+                expiryDate: data?.expiry_date || "",
+                issuingCountry: data?.issuing_country || '',
+                nationalityCountry: data?.country_of_origin || Dialcodes[0].name,
+            });
+            setAgree(true)
+
+            setOpen({
+                data: {},
+                status: false,
+                ignore: false
+            })
+        }
+    }
+
     return (
         <div>
             {terms && <TermsModal closeView={() => setTerms(!terms)} />}
+            {open.status && <ApplyPassengersAutoFill
+                onclose={() => setOpen({ ...open, status: false })}
+                ApplyAutofill={ApplyAutofill}
+                data={open.data}
+            />}
             <div>
                 <div className='flex ites-center justify-between p-3 border-b last:border-none'>
                     <div className='capitalize'>Passenger {flight.passengerType} (No. {props.indexs + 1})</div>
-                    <div onClick={() => {setView(!view); setNextPage(false)}} className='cursor-pointer'> <Icon /> </div>
+                    <div onClick={() => { setView(!view); setNextPage(false) }} className='cursor-pointer'> <Icon /> </div>
                 </div>
                 {view ?
                     <FormSection className='mb-10'>
@@ -153,6 +235,7 @@ const PassengersFlightForm = (props) => {
                                     name="firstName"
                                     value={personalData.firstName}
                                     onChange={handlePersonalData}
+                                    onKeyUp={e => SearchPassengerDetails(e.target.value, 1)}
                                 />
                             </div>
                             <div className="">
@@ -162,6 +245,7 @@ const PassengersFlightForm = (props) => {
                                     name='middleName'
                                     value={personalData.middleName}
                                     onChange={handlePersonalData}
+                                    onKeyUp={e => SearchPassengerDetails(e.target.value, 2)}
                                 />
                             </div>
                         </div>
@@ -173,6 +257,7 @@ const PassengersFlightForm = (props) => {
                                     name='lastName'
                                     value={personalData.lastName}
                                     onChange={handlePersonalData}
+                                    onKeyUp={e => SearchPassengerDetails(e.target.value, 3)}
                                 />
                             </div>
                             <div className="">
@@ -222,6 +307,7 @@ const PassengersFlightForm = (props) => {
                                     name="email"
                                     value={personalData.email}
                                     onChange={handlePersonalData}
+                                    onKeyUp={e => SearchPassengerDetails(e.target.value, 4)}
                                 />
                             </div>
                         </div>
@@ -246,6 +332,7 @@ const PassengersFlightForm = (props) => {
                                     name="phoneNumber"
                                     value={personalData.phoneNumber}
                                     onChange={handlePersonalData}
+                                    onKeyUp={e => SearchPassengerDetails(e.target.value, 5)}
                                 />
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import GeoLayout from '../../components/GeoLayout'
 import { NairaSign } from '../../components/functions'
-import { SlWallet } from 'react-icons/sl'
+import { SlPhone, SlUser, SlWallet } from 'react-icons/sl'
 import { useSelector } from 'react-redux'
 import man from '../../assets/images/man.png'
 import { BsHourglassSplit } from 'react-icons/bs'
@@ -9,6 +9,8 @@ import { GiReceiveMoney } from 'react-icons/gi'
 import { IoStatsChartOutline } from 'react-icons/io5'
 import Flightcard from '../../components/flight/Flightcard'
 import DashboardTransactions from './DashboardTransactions'
+import { PiUserLight } from 'react-icons/pi'
+import { RiVerifiedBadgeFill } from 'react-icons/ri'
 
 
 // Aging color code
@@ -49,23 +51,23 @@ const COLORTYPES = [
     },
 ]
 const Dashboard = () => {
-    const { user } = useSelector(state => state.data)
+    const { user, profile } = useSelector(state => state.data)
     const [agingColor, setAgingColor] = useState(COLORTYPES.find(ele => ele.min <= user.aging_percentage && ele.max >= user.aging_percentage))
     return (
         <GeoLayout>
             <div className="flex items-center pt-8 px-4 rounded-xl w-11/12 mx-auto gap-3">
                 <img src={man} alt="" className="w-16 rounded-full object-cover shadow-2xl" />
                 <div className="">
-                    <div className="text-2xl text-zinc-500"><span className="font-bold text-black">Organization Name</span> </div>
+                    <div className="text-2xl text-zinc-500"><span className="font-bold text-black">{user.organization_name || 'Not Available'}</span> </div>
                 </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 mt-10 w-11/12 mx-auto gap-8">
                 <div className="lg:col-span-2">
                     <div className="flex items-center mb-3 bg-white py-8 px-4 rounded-xl shadow-2xl gap-3">
-                        <img src={man} alt="" className="w-16 rounded-full object-cover shadow-2xl" />
+                        <div className="border rounded-full p-3 text-3xl bg-mainblue/20 border-mainblue text-mainblue"><PiUserLight /></div>
                         <div className="">
-                            <div className="text-2xl text-zinc-500">Hi, <span className="font-bold text-black">Thompson</span> </div>
-                            <div className="text-zinc-500 text-sm">Last Logged in: <span className="font-bold">10/20/2024 05:20:10AM</span> </div>
+                            <div className="text-2xl text-zinc-500 flex">Hi, <span className="font-bold ml-3 text-black">{profile.username}</span>{profile.is_verified && <RiVerifiedBadgeFill className='text-mainblue' /> }</div>
+                            <div className="text-zinc-500 text-sm flex items-center gap-2"> <SlPhone /> <span className="font-bold">{profile.phone_number}</span> </div>
                         </div>
                     </div>
                     <div className="bg-white rounded-lg px-4 py-6 shadow-2xl grid grid-cols-4 gap-3">

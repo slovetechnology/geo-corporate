@@ -21,7 +21,7 @@ const PayModal = ({onclose}) => {
                 <img src={avif} alt="" className="" />
             </div>
             <div className="font-bold mb-4 text-3xl text-center">Unable to book</div>
-            <div className="font-light flex items-center justify-center gap-2">please fund your <div onClick={Redirect} className="text-mainblue cursor-pointer font-bold">here</div> to offset you postpaid bill</div>
+            <div className="font-light flex items-center justify-center gap-2">please fund <div onClick={Redirect} className="text-mainblue cursor-pointer font-bold">here</div> to offset you postpaid bill</div>
         </div>
     </div>
   )

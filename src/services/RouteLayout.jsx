@@ -8,12 +8,15 @@ import { isExpired } from 'react-jwt'
 import { AlertError } from '/src/components/functions'
 import { setUserData } from '/src/app/dataSlice'
 import { AuthGetApi, MainApi } from './Geoapi'
+import { USERNAME } from '/src/components/functions'
+import { dispatchProfile } from '/src/app/dataSlice'
 
 const RouteLayout = ({ children }) => {
   const [login, setLogin] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = Cookies.get(USERID)
+  const username = Cookies.get(USERNAME)
 
   const FetchUser = useCallback(async () => {
     const mainToken = Cookies.get(MainToken)
@@ -28,8 +31,10 @@ const RouteLayout = ({ children }) => {
     }
     try {
       const response = await AuthGetApi(`${MainApi.auth.profile}/${user}`)
+      const res = await AuthGetApi(`${MainApi.auth.user}/${username}/`)
       if (response.status === 200) {
         dispatch(setUserData(response.data))
+        dispatch(dispatchProfile(res.data))
         return setLogin(true)
       } else {
         setLogin(false)

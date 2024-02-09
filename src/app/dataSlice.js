@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     flightList: [],
+    pdetails: [],
     passengers: [],
     packimages: [],
     flightBooked: {},
     flightDetails: {},
     invoice: {},
     user: {},
+    profile: {},
     trip: {},
     addons: {},
     alladdons: [],
@@ -53,6 +55,9 @@ export const counterSlice = createSlice({
     setUserData: (state, action) => {
       state.user = action.payload
     },
+    dispatchProfile: (state, action) => {
+      state.profile = action.payload
+    },
     setBookedInvoice: (state, action) => {
       state.invoice = action.payload
     },
@@ -83,10 +88,13 @@ export const counterSlice = createSlice({
     dispatchActivity: (state, action) => {
       state.activity = action.payload
     },
+    dispatchPDetails: (state, action) => {
+      state.pdetails = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { storeFlightDetail, storePassenger, storePackageImages, setFlightBooked, setFlightDetails, setUserData, setBookedInvoice, setTripDetails, setSingleAddons, fetchAllAddons, dispatchRecentCity, dispatchVisaInfo, dispatchSelectedAddons, dispatchRoles, dispatchBlog, dispatchActivity, dispatchLoader, dispatchPageItem, dispatchRefundable } = counterSlice.actions
+export const { storeFlightDetail, dispatchPDetails, storePassenger, dispatchProfile, storePackageImages, setFlightBooked, setFlightDetails, setUserData, setBookedInvoice, setTripDetails, setSingleAddons, fetchAllAddons, dispatchRecentCity, dispatchVisaInfo, dispatchSelectedAddons, dispatchRoles, dispatchBlog, dispatchActivity, dispatchLoader, dispatchPageItem, dispatchRefundable } = counterSlice.actions
 
 export default counterSlice.reducer

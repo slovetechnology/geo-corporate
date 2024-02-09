@@ -26,6 +26,8 @@ import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
 import GeoLayout from "/src/components/GeoLayout";
 import PayModal from "/src/components/flight/PayModal";
+import { AuthGetApi, MainApi } from "/src/services/Geoapi";
+import { dispatchPDetails } from "/src/app/dataSlice";
 const Passengerdetail = React.lazy(() => import("./passengerdetail"))
 
 
@@ -306,7 +308,9 @@ function Flight({ onDeals }) {
       const res = await HttpServices.get(
         ApiRoutes.addons.get_addons
       )
+      const response = await AuthGetApi(MainApi.passengers.list)
       dispatch(fetchAllAddons(res.data.data.addons))
+      dispatch(dispatchPDetails(response.data))
     } catch (error) {
       return AlertError(`${error}`)
     }
