@@ -1,17 +1,25 @@
 import { Dialcodes } from '/src/components/countrycodes'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
-const SelectOptions = ({title, setup}) => {
+const SelectOptions = ({title, setup, defaultValue}) => {
     const [text, setText] = useState('')
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState( '')
     const [codes, setCodes] = useState(Dialcodes || [])
     const togref = useRef()
     const [view, setView] = useState(false)
+
+    const GetContent = useCallback(() => {
+        const findCode = defaultValue && Dialcodes.find(ele => (ele.name === defaultValue || ele.code === defaultValue))
+        if(findCode) {
+            setContent(`${findCode.name} - ${findCode.code}` || '')
+        }
+    }, [defaultValue])
     
     useEffect(() => {
+        GetContent()
         togref && window.addEventListener('click', e => {togref.current !== null && !togref.current.contains(e.target) && setView(false) }, true)
-    }, [])
+    }, [GetContent])
 
     const handleChange = val => {
         setText(val)

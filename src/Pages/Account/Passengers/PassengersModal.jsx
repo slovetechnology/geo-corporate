@@ -76,7 +76,7 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                 phone: `${forms.phoneCode} ${forms.phone}`,
                 organization: user.id
             }
-            const response = data?.id ? await AuthPutApi(`${MainApi.passengers.create}/${data?.id}`, formbody) : await AuthPostApi(MainApi.passengers.create, formbody)
+            const response = data?.id ? await AuthPutApi(`${MainApi.passengers.update}/${data?.id}`, formbody) : await AuthPostApi(MainApi.passengers.create, formbody)
             if(response.status === 201 || response.status === 200) {
                 GoodAlert(`${response.message}`)
                 onclose()
@@ -213,6 +213,7 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                             <div className="relative">
                                 <div className="text-slate-500">Country of Origin</div>
                                 <SelectOptions
+                                defaultValue={forms?.country_of_origin}
                                     title={forms?.country_of_origin || "--Select Country of Origin--"}
                                     setup={(val) => {
                                         setForms({
@@ -279,6 +280,7 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                         <div className="relative">
                             <div className="text-slate-500">Issuing Authority</div>
                             <SelectOptions
+                            defaultValue={forms?.issuing_authority}
                                 title={forms?.issuing_authority || "--Select Issuing Authority--"}
                                 setup={(val) => {
                                     setForms({

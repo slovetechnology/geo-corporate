@@ -29,7 +29,8 @@ const PassengersFlightForm = (props) => {
     const Icon = !view ? SlArrowDown : SlArrowUp
     const { flight, localData, total, setNextPage, setLocalData, flightDetails } = props
     const userType = `${flight.passengerType}${props.indexs + 1}`
-    const findData = localData.find((item) => item.dataType === userType)
+    const [findData, setFindData] = useState(!localData ? {} : localData.find((item) => item.dataType === userType))
+    // const findData = localData.find((item) => item.dataType === userType)
     const [terms, setTerms] = useState(false)
     const [agree, setAgree] = useState(false)
     const { pdetails } = useSelector(state => state.data)
@@ -41,23 +42,23 @@ const PassengersFlightForm = (props) => {
 
     const [personalData, setPersonalData] = useState({
         passengerType: flight.passengerType,
-        firstName: findData ? findData?.firstName : "",
-        middleName: findData ? findData?.middleName : "",
-        lastName: findData ? findData?.lastName : "",
-        dob: findData ? findData?.dob : "",
-        gender: findData ? findData?.gender : "Male",
-        title: findData ? findData?.title : "Mr",
-        email: findData ? findData?.email : "",
-        phoneCode: findData ? findData?.phoneCode : Dialcodes[0].dial_code,
-        phoneNumber: findData ? findData?.phoneNumber.split(' ')[1] : "",
-        dataType: findData ? findData?.dataType : userType
+        firstName: findData?.firstName || "",
+        middleName: findData?.middleName || "",
+        lastName: findData?.lastName || "",
+        dob: findData?.dob || "",
+        gender: findData?.gender || "Male",
+        title: findData?.title || "Mr",
+        email: findData?.email || "",
+        phoneCode: findData?.phoneCode || Dialcodes[0].dial_code,
+        phoneNumber: findData?.phoneNumber.split(' ')[1] || "",
+        dataType: findData?.dataType || userType
     })
     const [passengerData, setpassengerData] = useState({
-        number: findData ? findData?.documents?.number : "",
-        issuingDate: findData ? findData?.documents?.issuingDate : "",
-        expiryDate: findData ? findData?.documents?.expiryDate : "",
-        issuingCountry: findData ? findData?.documents?.issuingCountry : '',
-        nationalityCountry: findData ? findData?.documents?.nationalityCountry : Dialcodes[0].name,
+        number: findData?.documents?.number || "",
+        issuingDate: findData?.documents?.issuingDate || "",
+        expiryDate: findData?.documents?.expiryDate || "",
+        issuingCountry: findData?.documents?.issuingCountry || '',
+        nationalityCountry: findData?.documents?.nationalityCountry || Dialcodes[0].name,
         documentType: "passport",
         holder: true,
     });
@@ -150,7 +151,7 @@ const PassengersFlightForm = (props) => {
                 if (tag === 5) {
                     result = pdetails.find(ele => ele.phone_number.toLowerCase().startsWith(`${personalData.phoneNumber} ${val.toLowerCase()}`))
                 }
-                if (Object.keys(result).length > 0) {
+                if (result && Object.keys(result).length > 0) {
                     setOpen({
                         ...open,
                         status: true,
@@ -170,13 +171,13 @@ const PassengersFlightForm = (props) => {
             })
         } else {
             const data = open.data
-            console.log(tag, moment(new Date(data?.date_of_birth)).format('YYYY-MM-DD'))
+            
             setPersonalData({
                 ...personalData,
                 firstName: data?.first_name || '',
                 middleName: data?.middle_name || '',
                 lastName: data?.last_name || '',
-                dob: moment(new Date(data?.date_of_birth)).format('YYYY-MM-DD') || '',
+                dob: dayjs(data?.date_of_birth, 'YYYY-MM-DD') || '',
                 gender: data?.gender || '',
                 title: data?.title || '',
                 email: data?.email_address || '',
@@ -188,10 +189,11 @@ const PassengersFlightForm = (props) => {
                 number: data?.passport_number || "",
                 issuingDate: data?.issue_date || "",
                 expiryDate: data?.expiry_date || "",
-                issuingCountry: data?.issuing_country || '',
+                issuingCountry: data?.issuing_authority || '',
                 nationalityCountry: data?.country_of_origin || Dialcodes[0].name,
             });
             setAgree(true)
+
 
             setOpen({
                 data: {},
@@ -284,9 +286,9 @@ const PassengersFlightForm = (props) => {
                                 <DatePicker
                                     disabledDate={disabledForwardDate}
                                     className='h-[54px] bg-white border rounded-2 my-3 px-7 w-full outline-none'
-                                    placeholder={`${findData?.dob || `Date-of-Birth ${moment().format('YYYY-MM-DD')}`}`}
+                                    placeholder={`${personalData?.dob || findData?.dob || `Date-of-Birth ${moment().format('YYYY-MM-DD')}`}`}
                                     name="dob"
-                                    defaultValue={findData && findData?.dob && dayjs(findData?.dob, dateFormat)}
+                                    value={personalData?.dob || ''}
                                     format={dateFormat}
                                     onChange={(e) => {
                                         const val = moment(new Date(e)).format('YYYY-MM-DD');
@@ -350,6 +352,7 @@ const PassengersFlightForm = (props) => {
                                 <div className="relative">
                                     <div className="text-slate-500">Country of Origin</div>
                                     <SelectOptions
+                                    defaultValue={passengerData?.nationalityCountry}
                                         title={passengerData?.nationalityCountry || "--Select Country of Origin--"}
                                         setup={(val) => {
                                             setpassengerData({
@@ -375,7 +378,7 @@ const PassengersFlightForm = (props) => {
                                     <DatePicker
                                         disabledDate={disabledForwardDate}
                                         name="issuingDate"
-                                        defaultValue={findData && findData?.documents?.issuingDate && dayjs(findData?.documents?.issuingDate, dateFormat)}
+                                        value={passengerData?.issuingDate ? dayjs(passengerData?.issuingDate, dateFormat) : ''}
                                         format={dateFormat}
                                         className='h-[54px] bg-white border rounded-2 my-3 px-7 w-full outline-none'
                                         placeholder={`Issuing Date ${moment().format('D/MMMM/YYYY')}`}
@@ -397,7 +400,7 @@ const PassengersFlightForm = (props) => {
                                         disabledDate={disabledBackwardDate}
                                         name="expiryDate"
                                         className='h-[54px] bg-white border rounded-2 my-3 px-7 w-full outline-none'
-                                        defaultValue={findData && findData?.documents?.expiryDate && dayjs(findData?.documents?.expiryDate, dateFormat)}
+                                        value={passengerData?.expiryDate ? dayjs(passengerData?.expiryDate, dateFormat) : ''}
                                         format={dateFormat}
                                         placeholder={`Expiry Date ${moment().format('D/MMMM/YYYY')}`}
                                         onChange={(e) => {
@@ -416,6 +419,7 @@ const PassengersFlightForm = (props) => {
                             <div className="relative">
                                 <div className="text-slate-500">Issuing Authority</div>
                                 <SelectOptions
+                                defaultValue={passengerData?.issuingCountry}
                                     title={passengerData?.issuingCountry || "--Select Issuing Authority--"}
                                     setup={(val) => {
                                         setpassengerData({

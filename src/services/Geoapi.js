@@ -34,6 +34,7 @@ const auth_urls = {
 
 const passenger_urls = {
     create: pass + `create`,
+    update: pass + `update`,
     list: pass + `list`,
 }
 
