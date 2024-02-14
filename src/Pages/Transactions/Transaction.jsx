@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux'
 import ViewTicket from '/src/components/flight/ViewTicket'
 import SingleTransaction from '/src/Pages/Account/SingleTransaction'
 import { AlertError } from '/src/components/functions'
+import aeroplaneImg from "/src/assets/images/aeroplane.svg";
 
 
 const TableHeaders = [
@@ -55,6 +56,15 @@ const Transaction = () => {
   return (
     <GeoLayout>
     <div className='mt-10 w-11/12 mx-auto'>
+            <div className='bg-[#272A55] text-white py-12 px-10 relative mb-10'>
+                    <div className="grid grid-cols-1 md:grid-cols-3">
+                        <div className='col-span-2'>
+                            <p className=''>Total Transactions</p>
+                            <p className='text-xl font-semibold'>{items?.length || 0}</p>
+                        </div>
+                    </div>
+                    <img src={aeroplaneImg} alt='aeroplaneImg' className='-z-[0] w-40 absolute right-6 top-8' />
+                </div>
     {single.status && <ViewTicket flight={single.data} closeView={() => setSingle({...single, status: false})} /> }
     <div className="w-full overflow-x-auto scrollsdown">
         <div className="bg-white">

@@ -359,19 +359,6 @@ const PassengersFlightForm = (props) => {
                                         }}
                                     />
                                 </div>
-                                {/* <div className="">
-                                    <div className="text-slate-500">Country of Origin</div>
-                                    <SelectInput
-                                        name="nationalityCountry"
-                                        value={passengerData.nationalityCountry}
-                                        onChange={handlePassengerData}
-                                    >
-                                        <option value="">--Select--</option>
-                                        {Dialcodes.map((item, i) => (
-                                            <option key={i} value={item.name}> {item.name}</option>
-                                        ))}
-                                    </SelectInput>
-                                </div> */}
                                 <div className="">
                                     <div className="text-slate-500">Passport Number</div>
                                     <Input autoComplete="off"

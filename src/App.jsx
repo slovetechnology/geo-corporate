@@ -6,6 +6,7 @@ import Transaction from './Pages/Transactions/Transaction'
 import Flight from './Pages/flight/Flight'
 import VerifyPayment from './Pages/flight/VerifyPayment'
 import RouteLayout from '/src/services/RouteLayout'
+import Passengers from '/src/Pages/Account/Passengers/Passengers'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/geo/board" element={<RouteLayout><Dashboard /> </RouteLayout>} />
+        <Route path="/geo/passengers" element={<RouteLayout><Passengers /> </RouteLayout>} />
           <Route path="/geo/selectflight" element={<RouteLayout><Flight /></RouteLayout>} />
           <Route path="/geo/verify-payment/:bookingCode" element={<RouteLayout><VerifyPayment /></RouteLayout>} />
         <Route path="/geo/transactions" element={<RouteLayout><Transaction /></RouteLayout>} />

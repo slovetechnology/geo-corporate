@@ -1,14 +1,11 @@
 import { BsQrCodeScan, BsWifi } from "react-icons/bs";
 import { ImBullhorn } from "react-icons/im";
-import { SlChart, SlHome, SlMap, SlNotebook, SlPresent, SlTag } from "react-icons/sl";
+import { SlChart, SlHome, SlMap, SlNotebook, SlPeople, SlPresent, SlTag } from "react-icons/sl";
 
 const homeurl = ['/geo/board']
 const finanaceurl = ['/geo/transactions']
-const dealsurl = [
-  "",
-  "",
-  "",
-  ""
+const passengers = [
+  "/geo/passengers",
 ]
 
 export const SidebarUrls = [
@@ -34,19 +31,15 @@ export const SidebarUrls = [
       ]
     },
     {
-      title: `deals`,
-      Icon: SlTag,
+      title: `Passengers`,
+      Icon: SlPeople,
       hasMenu: true,
       url: '',
-      all: '/deal',
+      all: '/passenger',
       menu: [
         {
-          title: `All Deals`,
-          url: dealsurl[0]
-        },
-        {
-          title: `Enquiries`,
-          url: dealsurl[3]
+          title: `Passengers`,
+          url: passengers[0]
         },
       ]
     },
