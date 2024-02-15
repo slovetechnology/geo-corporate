@@ -27,7 +27,6 @@ const Passengers = () => {
         setLoading(true)
         try {
             const response = await AuthGetApi(MainApi.passengers.list)
-            console.log(response.data)
             if (response.status === 200) {
                 setItems(response.data)
             }

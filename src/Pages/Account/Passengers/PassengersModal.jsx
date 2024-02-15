@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { GoodAlert } from '/src/components/functions';
 import { AuthPutApi } from '/src/services/Geoapi';
+import { AuthDeleteApi } from '/src/services/Geoapi';
 dayjs.extend(customParseFormat);
 
 
@@ -88,13 +89,31 @@ const PassengersModal = ({ onclose, refetch, data }) => {
             setLoading(false)
         }
     }
+
+    const SubmitRequestToDelete = async () => {
+        setLoading(true)
+        try {
+            const response =  await AuthDeleteApi(`${MainApi.passengers.delete}/${data?.id}`)
+            console.log(response)
+            // if(response.status === 201 || response.status === 200) {
+            //     GoodAlert(`${response.message}`)
+            //     onclose()
+            //     refetch()
+            // }
+        } catch (error) {
+            return AlertError(`${error.message}`)
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <Popup onclose={onclose}>
             {loading && <Loading />}
             {screen === 1 && <>
                 <form onSubmit={handleSubmission}>
-                    <div className="mb-4 p-4">
+                    <div className="mb-4 p-4 flex items-center gap-5">
                         <div className="font-bold text-xl">Personal Details (Required)</div>
+                        {/* <button type="button" onClick={() => setScreen(2)} className="bg-red-400 py-1 px-4 rounded-md text-white">delete</button> */}
                     </div>
                     <div className="mb-3">
                         <SelectInput
@@ -294,6 +313,15 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                         <button className="w-full bg-mainblue py-3 px-5 rounded-lg text-white capitalize text-sm">save details</button>
                     </div>
                 </form>
+            </>}
+            {screen === 2 && <>
+            <div className="p-3">
+                <div className="text-center mt-5">Are you sure you want to <span className="text-red-600 uppercase">delete</span> this passenger record from your logs</div>
+                <div className="flex items-center justify-between gap-10 mt-10">
+                        <button onClick={() => setScreen(1)} className="w-full bg-slate-300 py-4 px-5 rounded-lg capitalize text-sm">cancel</button>
+                        <button onClick={SubmitRequestToDelete} className="w-full bg-red-600 py-4 px-5 rounded-lg text-white capitalize text-sm">delete details</button>
+                </div>
+            </div>
             </>}
         </Popup>
     )

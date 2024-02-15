@@ -35,6 +35,7 @@ const auth_urls = {
 const passenger_urls = {
     create: pass + `create`,
     update: pass + `update`,
+    delete: pass + `delete`,
     list: pass + `list`,
 }
 
@@ -87,15 +88,12 @@ export const AuthPutApi = async (endpoint, data) => {
 
 export const AuthDeleteApi = async (endpoint, data) => {
     const webToken = Cookies.get(MainToken)
-    const res = await fetch(`${baseUrl}${endpoint}`, {
+    const res = await axios.delete(`${baseUrl}${endpoint}`, data, {
         headers: {
             authorization: `Bearer ${webToken}`,
-        },
-        method: "DELETE",
-        body: data
+        }
     })
-    const result = await res.json()
-    return result
+    return res.data
 }
 
 export const AuthExportApi = async (endpoint) => {
