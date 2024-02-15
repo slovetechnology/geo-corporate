@@ -88,12 +88,15 @@ export const AuthPutApi = async (endpoint, data) => {
 
 export const AuthDeleteApi = async (endpoint, data) => {
     const webToken = Cookies.get(MainToken)
-    const res = await axios.delete(`${baseUrl}${endpoint}`, data, {
+    const res = await fetch(`${baseUrl}${endpoint}`, {
         headers: {
-            authorization: `Bearer ${webToken}`,
-        }
+            authorization: `Bearer ${webToken}`
+        },
+        method: "DELETE",
     })
-    return res.data
+    const result = await res.json()
+    return result
+
 }
 
 export const AuthExportApi = async (endpoint) => {

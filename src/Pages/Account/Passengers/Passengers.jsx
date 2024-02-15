@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { AuthGetApi, MainApi } from '/src/services/Geoapi'
 import aeroplaneImg from "/src/assets/images/aeroplane.svg";
 import PassengersModal from './PassengersModal';
+import {useSelector} from 'react-redux'
 
 const TableHeaders = [
     "Title",
@@ -17,6 +18,7 @@ const TableHeaders = [
 ]
 const Passengers = () => {
     const [loading, setLoading] = useState(true)
+    const {user} = useSelector(state => state.data)
     const [items, setItems] = useState([])
     const [opens, setOpens] = useState({
         status: false,
@@ -26,7 +28,7 @@ const Passengers = () => {
     const FetchPassengers = useCallback(async () => {
         setLoading(true)
         try {
-            const response = await AuthGetApi(MainApi.passengers.list)
+            const response = await AuthGetApi(`${MainApi.passengers.list}?organization=${user.id}`)
             if (response.status === 200) {
                 setItems(response.data)
             }

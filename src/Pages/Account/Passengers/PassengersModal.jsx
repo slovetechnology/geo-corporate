@@ -30,6 +30,8 @@ const disabledBackwardDate = (current) => {
 const PassengersModal = ({ onclose, refetch, data }) => {
     const [loading, setLoading] = useState(false)
     const {user} = useSelector(state => state.data)
+    const [active, setActive] = useState(false)
+    const Icon = active ? SlArrowUp : SlArrowDown
     const [screen, setScreen] = useState(1)
     const [forms, setForms] = useState({
         title: data?.title || 'Mr',
@@ -65,17 +67,40 @@ const PassengersModal = ({ onclose, refetch, data }) => {
         if (!forms.email_address) return AlertError('Email Address is required')
         if (!forms.phoneCode) return AlertError('Country dail code is required')
         if (!forms.phone) return AlertError('Phone Number is required')
-        if (!forms.country_of_origin) return AlertError('Nationality is required')
-        if (!forms.passport_number) return AlertError('Passport number is required')
-        if (!forms.issue_date) return AlertError('Issued date is required')
-        if (!forms.expiry_date) return AlertError('Expiry date is required')
-        if (!forms.issuing_authority) return AlertError('Issuing authority is required')
+        if (active && !forms.country_of_origin) return AlertError('Nationality is required')
+        if (active && !forms.passport_number) return AlertError('Passport number is required')
+        if (active && !forms.issue_date) return AlertError('Issued date is required')
+        if (active && !forms.expiry_date) return AlertError('Expiry date is required')
+        if (active && !forms.issuing_authority) return AlertError('Issuing authority is required')
         setLoading(true)
+    let passports = {}
+    let personals = {
+        title: forms.title,
+        first_name: forms.first_name,
+        middle_name: forms.middle_name,
+        last_name: forms.last_name,
+        gender: forms.gender,
+        date_of_birth: forms.date_of_birth,
+        email_address: forms.email_address,
+        phoneCode: forms.phoneCode,
+        phone: forms.phone,
+    }
+    if(active) {
+        passports = {
+            passport_number: forms.passport_number,
+            issue_date: forms.issue_date,
+            expiry_date: forms.expiry_date,
+            issuing_authority: forms.issuing_authority,
+        }
+    }else {
+        passports = {}
+    }
         try {
             const formbody = {
-                ...forms,
+                ...personals,
                 phone: `${forms.phoneCode} ${forms.phone}`,
-                organization: user.id
+                organization: user.id,
+                ...passports
             }
             const response = data?.id ? await AuthPutApi(`${MainApi.passengers.update}/${data?.id}`, formbody) : await AuthPostApi(MainApi.passengers.create, formbody)
             if(response.status === 201 || response.status === 200) {
@@ -94,12 +119,11 @@ const PassengersModal = ({ onclose, refetch, data }) => {
         setLoading(true)
         try {
             const response =  await AuthDeleteApi(`${MainApi.passengers.delete}/${data?.id}`)
-            console.log(response)
-            // if(response.status === 201 || response.status === 200) {
-            //     GoodAlert(`${response.message}`)
-            //     onclose()
-            //     refetch()
-            // }
+            if(response.status === 201 || response.status === 200) {
+                GoodAlert(`${response.message}`)
+                onclose()
+                refetch()
+            }
         } catch (error) {
             return AlertError(`${error.message}`)
         } finally {
@@ -113,7 +137,7 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                 <form onSubmit={handleSubmission}>
                     <div className="mb-4 p-4 flex items-center gap-5">
                         <div className="font-bold text-xl">Personal Details (Required)</div>
-                        {/* <button type="button" onClick={() => setScreen(2)} className="bg-red-400 py-1 px-4 rounded-md text-white">delete</button> */}
+                        <button type="button" onClick={() => setScreen(2)} className="bg-red-400 py-1 px-4 rounded-md text-white">delete</button>
                     </div>
                     <div className="mb-3">
                         <SelectInput
@@ -219,15 +243,17 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                             />
                         </div>
                     </div>
-                    <div className="mb-4 p-4 cursor-pointer border-b">
+                    <div onClick={() => setActive(!active)} className="mb-4 p-4 cursor-pointer border-b">
                         <div className="grid grid-cols-7">
                             <div className="col-span-6">
                                 <div className="font-bold text-xl">Passport Details (Optional)</div>
                                 <div className="font-light text-sm">Please provide accurate details as you will be liable for inaccurate information you share</div>
                             </div>
+                            <div className=""> <Icon /> </div>
                         </div>
                     </div>
                     
+                     {active && <>
                         <div className="mb-3">
                             <div className="relative">
                                 <div className="text-slate-500">Country of Origin</div>
@@ -309,6 +335,7 @@ const PassengersModal = ({ onclose, refetch, data }) => {
                                 }}
                             />
                         </div>
+                     </>}
                     <div className="w-fit ml-auto mt-10">
                         <button className="w-full bg-mainblue py-3 px-5 rounded-lg text-white capitalize text-sm">save details</button>
                     </div>

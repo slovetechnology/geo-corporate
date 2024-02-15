@@ -308,7 +308,7 @@ function Flight({ onDeals }) {
       const res = await HttpServices.get(
         ApiRoutes.addons.get_addons
       )
-      const response = await AuthGetApi(MainApi.passengers.list)
+      const response = await AuthGetApi(`${MainApi.passengers.list}?orgainzation=${user.id}`)
       dispatch(fetchAllAddons(res.data.data.addons))
       dispatch(dispatchPDetails(response.data))
     } catch (error) {
