@@ -39,8 +39,8 @@ export const Login = () => {
       const mainRes = await ClientPostApi(MainApi.auth.login, data)
       if (mainRes.status === 200) {
         Cookies.set(MainToken, mainRes.data.tokens.access)
-        Cookies.set(USERID, mainRes.data.tokens.organization_id)
-        Cookies.set(USERNAME, mainRes.data.tokens.username)
+        Cookies.set(USERID, mainRes.data.tokens.user_id)
+        Cookies.set(USERNAME, mainRes.data.tokens.organization_id)
         GoodAlert(`Account Logged in Successfully`)
         navigate(`/geo/board`)
       } else {

@@ -30,8 +30,8 @@ const RouteLayout = ({ children }) => {
       return navigate('/')
     }
     try {
-      const response = await AuthGetApi(`${MainApi.auth.profile}/${user}`)
-      const res = await AuthGetApi(`${MainApi.auth.user}/${username}/`)
+      const response = await AuthGetApi(`${MainApi.auth.profile}/${username}`)
+      const res = await AuthGetApi(`${MainApi.auth.user}/${user}/`)
       if (response.status === 200) {
         dispatch(setUserData(response.data))
         dispatch(dispatchProfile(res.data))
