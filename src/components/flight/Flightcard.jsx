@@ -87,7 +87,7 @@ function Flightcard(props) {
     adults: parseInt(localFlight?.adults) || 1,
     children: parseInt(localFlight?.children) || 0,
     infants: parseInt(localFlight?.infants) || 0,
-    flighttype: localFlight?.flighttype || "return",
+    flighttype: localTrip || flightData.flighttype || 'return',
   });
 
   useEffect(() => {
