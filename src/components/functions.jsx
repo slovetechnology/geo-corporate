@@ -185,7 +185,7 @@ export const PackageEnum = (num) => {
   if (num > 2) return `Trip for ${num}`
 }
 
-export const WebDateFormat = 'ddd MMM Do YYYYF'
+export const WebDateFormat = 'ddd MMM Do YYYY'
 
 // format normal airport details
 export const formatAirport = (value) => {
