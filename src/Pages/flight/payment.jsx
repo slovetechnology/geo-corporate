@@ -26,7 +26,7 @@ function Payment({changePage, flightDetails}) {
   const copyref = useRef()
   const [booked, setBooked] = useState(false)
   const priceLimit = 500000
-  const priceAction =  parseInt(flightDetails.pricing.payable) > priceLimit
+  const priceAction =  parseInt(flightDetails.amount) > priceLimit
   const [activeTab, setActiveTab] = useState(!priceAction ? { tag: 1, text: "Make Payment" } : { tag: 2, text: "Submit request" });
 
   const [forms, setForms] = useState({
@@ -275,10 +275,10 @@ function Payment({changePage, flightDetails}) {
               <BankSection>
                 <CardContent>
                   <Cost>
-                    {NairaSign}{parseInt(flightDetails.pricing.payable).toLocaleString()}
+                    {NairaSign}{parseInt(flightDetails.amount).toLocaleString()}
                   </Cost>
                   <Desc className="text-center">
-                  Please pay the total amount of <span className="text-mainblue">{NairaSign}{parseInt(flightDetails.pricing.payable).toLocaleString()}</span> to the provided bank details and share the payment confirmation via WhatsApp to 09087675823. Kindly note that this reservation will be valid for 1 hour
+                  Please pay the total amount of <span className="text-mainblue">{NairaSign}{parseInt(flightDetails.amount).toLocaleString()}</span> to the provided bank details and share the payment confirmation via WhatsApp to 09087675823. Kindly note that this reservation will be valid for 1 hour
                   </Desc>
 
                   <DetailsWrapper>
@@ -331,7 +331,7 @@ function Payment({changePage, flightDetails}) {
                   <div>Awaiting payment confirmation.</div>
                   <Cost>
                     {NairaSign}
-                    {parseInt(flightDetails.pricing.payable).toLocaleString()}
+                    {parseInt(flightDetails.amount).toLocaleString()}
                   </Cost>
 
                   <div className="bg-slate-100 p-3 rounded-md">

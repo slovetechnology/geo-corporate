@@ -28,7 +28,7 @@ const Passengers = () => {
     const FetchPassengers = useCallback(async () => {
         setLoading(true)
         try {
-            const response = await AuthGetApi(`${MainApi.passengers.list}?organization=${user.id}`)
+            const response = await AuthGetApi(`${MainApi.passengers.list}?orgainzation=${user.id}`)
             if (response.status === 200) {
                 setItems(response.data)
             }

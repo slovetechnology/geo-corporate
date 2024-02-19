@@ -162,7 +162,7 @@ function Flight({ onDeals }) {
 
 
   const displayFlight = async (flight) => {
-    if(user.account_type === 'POSTPAID' && user.post_paid_balance <= flight.pricing.payable) return setPaymodal(true)
+    if(user.account_type === 'POSTPAID' && user.post_paid_balance <= flight.amount) return setPaymodal(true)
     let isRefundable;
     setSingleFlight({})
     if (localTrip !== 'multi-city') {

@@ -27,13 +27,14 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
 
   React.useEffect(() => {
     const UpdateAmount = () => {
-      setTotal(flightDetails.pricing.payable)
+      setTotal(flightDetails.amount)
     }
     UpdateAmount()
   }, [flightDetails])
 
   const getFormDetails = () => {
-    setView(!view)
+    console.log(pdetails, localData)
+    // setView(!view)
   }
   const handleManagement = (tag) => {
     try {
@@ -93,7 +94,7 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
     filtered.map((item) => {
       return calc += convertKoboToNaira(item.price)
     })
-    setTotal(calc + flightDetails.pricing.payable)
+    setTotal(calc + flightDetails.amount)
   }
   const unhandleSelection = item => {
     setAddonscheck([...addonscheck, item])

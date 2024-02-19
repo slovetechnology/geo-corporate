@@ -148,7 +148,7 @@ const FlightOffer = (props) => {
                       {flight.deal?._id && <div className="bg-teal-300 text-sm rounded-lg shadow-xl uppercase py-1.5 px-5">{flight.deal?.discountValue}% off</div>}
                       <div className="text-xl font-semibold">
                         &#8358;
-                        {parseInt(flight.pricing.payable).toLocaleString()}
+                        {parseInt(flight.amount).toLocaleString()}
                       </div>
                       <div className="text-slate-600 capitalize">{flight?.inbound?.length > 0 ? flight.inbound[0].refundable ? 'refundable' : 'non-refundable' : flight.outbound[flight?.outbound?.length - 1].refundable ? 'refundable' : 'non-refundable'}</div>
                       <button onClick={() => handleOpen(flight)} className="bg-mainblue py-3 px-10 text-sm rounded-lg text-white capitalize">view</button>
@@ -204,7 +204,7 @@ const FlightOffer = (props) => {
                         {/* {flight.deal?._id && <div className="bg-teal-300 text-sm rounded-lg shadow-xl uppercase py-1.5 px-5">{flight.deal?.discountValue}% off</div>} */}
                         <div className="text-xl font-semibold">
                           &#8358;
-                          {parseInt(flightRoute.pricing.payable).toLocaleString()}
+                          {parseInt(flightRoute.amount).toLocaleString()}
                         </div>
                         <div className="text-slate-600 capitalize">{FilterMultiCityRefundables(flightRoute)}</div>
                         <button onClick={() => handleOpen(flightRoute)} className="bg-mainblue py-3 px-10 text-sm rounded-lg text-white capitalize">view</button>

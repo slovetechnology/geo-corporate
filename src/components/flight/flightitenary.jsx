@@ -239,7 +239,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
                   <div className='col-span-3'>
                     <div className=''>
                       <div className="text-slate-200 text-lg mb-3">This flight price has changed from  </div>
-                      <div className="text-slate-100 text-xl"> <span className="text-orange-200">{NairaSign}{parseInt(singleFlight.pricing.payable)?.toLocaleString()}</span> to <span className="text-orange-200">{NairaSign}{parseInt(currentflight.pricing.payable)?.toLocaleString()}</span> </div>
+                      <div className="text-slate-100 text-xl"> <span className="text-orange-200">{NairaSign}{parseInt(singleFlight.amount)?.toLocaleString()}</span> to <span className="text-orange-200">{NairaSign}{parseInt(currentFlight.amount)?.toLocaleString()}</span> </div>
                     </div>
                   </div>
                   <div className='col-span-2 text-right'>
@@ -257,7 +257,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
                     <div className='col-span-3'>
                       <div className=''>
                         <div className="text-slate-300">Total Costs</div>
-                        <div className="text-slate-100 text-xl">&#8358; {parseInt(singleFlight.pricing.payable).toLocaleString()}</div>
+                        <div className="text-slate-100 text-xl">&#8358; {parseInt(singleFlight.amount).toLocaleString()}</div>
                       </div>
                     </div>
                     <div className='col-span-2 text-right'>
@@ -343,7 +343,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
                   <div className='col-span-3'>
                     <div className=''>
                       <div className="text-slate-200 text-lg mb-3">This flight price has changed from  </div>
-                      <div className="text-slate-100 text-xl"> <span className="text-orange-200">{NairaSign}{parseInt(singleFlight.pricing.payable)?.toLocaleString()}</span> to <span className="text-orange-200">{NairaSign}{parseInt(currentflight.pricing.payable)?.toLocaleString()}</span> </div>
+                      <div className="text-slate-100 text-xl"> <span className="text-orange-200">{NairaSign}{parseInt(singleFlight.amount)?.toLocaleString()}</span> to <span className="text-orange-200">{NairaSign}{parseInt(currentFlight.amount)?.toLocaleString()}</span> </div>
                     </div>
                   </div>
                   <div className='col-span-2 text-right'>
@@ -361,7 +361,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
                     <div className='col-span-3'>
                       <div className=''>
                         <div className="text-slate-300">Total Costs</div>
-                        <div className="text-slate-100 text-xl">{NairaSign}{parseInt(singleFlight.pricing.payable).toLocaleString()}</div>
+                        <div className="text-slate-100 text-xl">{NairaSign}{parseInt(singleFlight.amount).toLocaleString()}</div>
                       </div>
                     </div>
                     <div className='col-span-2 text-right'>

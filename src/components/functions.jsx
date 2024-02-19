@@ -7,6 +7,7 @@ export const USERNAME = 'ssn'
 export const MainToken = 'geo-main'
 export const toastId = "toastId";
 export const updateId = "toastId";
+export const FlightMode = 'md'
 
 
 export const EditorModules = {

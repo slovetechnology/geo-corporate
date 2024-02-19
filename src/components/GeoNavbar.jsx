@@ -7,16 +7,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loading from './Loading'
 import { ImUser } from 'react-icons/im'
-import { AlertError, MainToken } from './functions'
+import { AlertError, FlightMode, MainToken } from './functions'
 import Disconnect from './Disconnect'
 
-const TYPES = [
+export const TYPES = [
   {
     account_type: 'PREPAID',
+    access: ['PREPAID'],
     color: 'left-[0.2rem] bg-orange-400'
   },
   {
     account_type: 'POSTPAID',
+    access: ['PREPAID', 'POSTPAID'],
     color: 'right-[0.2rem] bg-mainblue'
   },
   {
@@ -32,13 +34,19 @@ const GeoNavbar = (props) => {
   const logref = useRef()
   const logref2 = useRef()
   const [loading, setLoading] = useState(false)
+  const mode = Cookies.get(FlightMode)
+  const [usermode, setUsermode] = useState(mode)
   const [view, setView] = useState({
     status: false,
     title: ''
   })
+  const [open, setOpen] = useState(usermode === TYPES[1].account_type ? true : false)
   const [types, setTypes] = useState(TYPES.find(ele => ele.account_type === user.account_type))
 
   useEffect(() => {
+    if (user.account_type === TYPES[1].account_type && !mode) {
+      Cookies.set(FlightMode, TYPES[1].account_type)
+    }
     logref && window.addEventListener('click', (e) => {
       logref.current !== null && !logref.current?.contains(e.target) && setLogs(false)
     }, true)
@@ -59,15 +67,23 @@ const GeoNavbar = (props) => {
   }
 
   const HandleToggling = () => {
-    // setTypes(!types)
-    if(user.account_type === TYPES[0].account_type) return setView({ status: true, title:`Sorry, your organization is not enabled for Postpaid booking. Please click here to start the process for Postpaid`})
-    if(user.account_type === TYPES[1].account_type) return setView({ status: true, title:`Sorry, your organization is not enabled for Prepaid booking. Please click here to start the process for Prepaid`})
-    console.log('halo', user, types)
+    if (user.account_type === TYPES[0].account_type) return setView({ status: true, title: `Sorry, your organization is not enabled for Postpaid booking. Please click here to start the process for Postpaid` })
+    const locals = Cookies.get(FlightMode)
+  let current;
+    if (locals === TYPES[1].account_type) {
+      current = TYPES[0].account_type
+      Cookies.set(FlightMode, current)
+    } else {
+      current = TYPES[1].account_type
+      Cookies.set(FlightMode, current)
+    }
+    setUsermode(current)
+    setOpen(locals !== TYPES[1].account_type ? true : false)
   }
   return (
     <div className='flex items-center justify-between p-6'>
       {loading && <Loading />}
-     {view.status && <Disconnect closeView={() => setView({...view, status: !view.status})} title={view.title} />}
+      {view.status && <Disconnect closeView={() => setView({ ...view, status: !view.status })} title={view.title} />}
       {/* modal to confirm admin logout */}
       <div className={`bg-black/50 fixed w-full h-screen top-0 left-0 z-[15] flex items-center justify-center ${logs2 ? '' : 'hidden'}`}>
         <div ref={logref2} className='w-11/12 max-w-xl mx-auto rounded-lg bg-white p-4'>
@@ -98,9 +114,11 @@ const GeoNavbar = (props) => {
       </div>
       <div className='flex items-center gap-8'>
         <div className="flex items-center gap-4">
-          <div className="transition-all">{types.account_type}</div>
+          <div className="transition-all">{user.account_type === TYPES[0].account_type ? types.account_type : usermode || user.account_type}</div>
           <div title="Toggle Account Type" className="relative w-[4.2rem] h-[1.8rem] border border-slate-400 rounded-full">
-            <div onClick={() => HandleToggling()} className={`absolute top-[1px] ${types.color} transition-all w-6 cursor-pointer h-6 rounded-full `}></div>
+            {TYPES[0].account_type === user.account_type && <div onClick={() => HandleToggling()} className={`absolute top-[1px] $left-[0.2rem] bg-orange-400 transition-all w-6 cursor-pointer h-6 rounded-full `}></div>}
+
+            {TYPES[1].account_type === user.account_type && <div onClick={() => HandleToggling()} className={`absolute top-[1px] ${usermode === TYPES[0].account_type ? 'left-[0.2rem] bg-orange-400' : 'right-[0.2rem] bg-mainblue'} transition-all w-6 cursor-pointer h-6 rounded-full `}></div>}
           </div>
         </div>
         <div onClick={() => setLogs(!logs)} className='flex items-center gap-5 cursor-pointer'>

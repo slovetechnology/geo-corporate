@@ -59,6 +59,7 @@ const Dashboard = () => {
                 <img src={man} alt="" className="w-16 rounded-full object-cover shadow-2xl" />
                 <div className="">
                     <div className="text-2xl text-zinc-500"><span className="font-bold text-black">{user.organization_name || 'Not Available'}</span> </div>
+                    <div className="">Account Type: {user.account_type}</div>
                 </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 mt-10 w-11/12 mx-auto gap-8">

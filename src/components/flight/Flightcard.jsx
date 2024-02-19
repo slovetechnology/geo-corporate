@@ -165,9 +165,6 @@ function Flightcard(props) {
   return (
     <Wrapper className="z-[99]">
       <CardHolder>
-        <div className="border border-mainblue mb-5 text-mainblue rounded-lg py-1.5 px-3 text-sm w-fit">
-          {user.account_type}
-        </div>
         <RoutesWrapper className='mb-6'>
           <RouteItem>
             <SelectDiv onClick={() => setTripState(!tripState)} className=''>

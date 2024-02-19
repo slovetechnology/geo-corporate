@@ -195,7 +195,7 @@ const FlightInvoice = (props) => {
                             <div className='col-span-3'>
                                 <div className=''>
                                     <div className="text-slate-300">Total Costs</div>
-                                    <div className="text-slate-100 text-xl">&#8358; {flightBooked.pricing.payable.toLocaleString()}</div>
+                                    <div className="text-slate-100 text-xl">&#8358; {flightBooked.amount.toLocaleString()}</div>
                                 </div>
                             </div>
                             <div className='col-span-2 text-right'>
