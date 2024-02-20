@@ -137,19 +137,19 @@ const PassengersFlightForm = (props) => {
             if (val.length > 2 && val.length < 4) {
                 let result;
                 if (tag === 1) {
-                    result = pdetails.find(ele => ele.first_name.toLowerCase().startsWith(val.toLowerCase()))
+                    result = pdetails.find(ele => ele.first_name?.toLowerCase().startsWith(val?.toLowerCase()))
                 }
                 if (tag === 2) {
-                    result = pdetails.find(ele => ele.middle_name.toLowerCase().startsWith(val.toLowerCase()))
+                    result = pdetails.find(ele => ele.middle_name?.toLowerCase().startsWith(val?.toLowerCase()))
                 }
                 if (tag === 3) {
-                    result = pdetails.find(ele => ele.last_name.toLowerCase().startsWith(val.toLowerCase()))
+                    result = pdetails.find(ele => ele.last_name?.toLowerCase().startsWith(val?.toLowerCase()))
                 }
                 if (tag === 4) {
-                    result = pdetails.find(ele => ele.email_address.toLowerCase().startsWith(val.toLowerCase()))
+                    result = pdetails.find(ele => ele.email_address?.toLowerCase().startsWith(val?.toLowerCase()))
                 }
                 if (tag === 5) {
-                    result = pdetails.find(ele => ele.phone_number.toLowerCase().startsWith(`${personalData.phoneNumber} ${val.toLowerCase()}`))
+                    result = pdetails.find(ele => ele.phone.startsWith(val))
                 }
                 if (result && Object.keys(result).length > 0) {
                     setOpen({
@@ -177,7 +177,7 @@ const PassengersFlightForm = (props) => {
                 firstName: data?.first_name || '',
                 middleName: data?.middle_name || '',
                 lastName: data?.last_name || '',
-                dob: dayjs(data?.date_of_birth, 'YYYY-MM-DD') || '',
+                dob: data?.date_of_birth || '',
                 gender: data?.gender || '',
                 title: data?.title || '',
                 email: data?.email_address || '',
@@ -288,7 +288,7 @@ const PassengersFlightForm = (props) => {
                                     className='h-[54px] bg-white border rounded-2 my-3 px-7 w-full outline-none'
                                     placeholder={`${personalData?.dob || findData?.dob || `Date-of-Birth ${moment().format('YYYY-MM-DD')}`}`}
                                     name="dob"
-                                    value={personalData?.dob || ''}
+                                    value={personalData?.dob ? dayjs(personalData?.dob, dateFormat) : ''}
                                     format={dateFormat}
                                     onChange={(e) => {
                                         const val = moment(new Date(e)).format('YYYY-MM-DD');

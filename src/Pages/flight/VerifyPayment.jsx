@@ -13,6 +13,9 @@ import GeoLayout from "/src/components/GeoLayout";
 import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 import { useSelector } from 'react-redux'
 import { AuthGetApi } from "/src/services/Geoapi";
+import { TYPES } from "/src/components/GeoNavbar";
+import { FlightMode } from "/src/components/functions";
+import Cookies from "js-cookie";
 
 
 const VerifyPayment = () => {
@@ -24,6 +27,7 @@ const VerifyPayment = () => {
   const [flight, setFlight] = useState({})
   const { bookingCode } = useParams()
   const { user } = useSelector(state => state.data)
+  const mode = Cookies.get(FlightMode)
 
   const getSearchParams = useCallback(
     (val = "") => {
@@ -34,7 +38,7 @@ const VerifyPayment = () => {
   );
 
   const confirmTransaction = useCallback(async () => {
-    if (user.account_type === 'PREPAID') {
+    if(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
       if (getSearchParams("status") === "cancelled") {
         return setTimeout(() => {
           setLoading(false);
@@ -56,7 +60,7 @@ const VerifyPayment = () => {
           setLoaded("success");
           setDetail(payload);
           // call geo payment api for prepaid account on bank transfer
-          if (user.account_type === 'PREPAID') {
+    if(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
             const formbody = {
               amount: parseInt(res.data.data.amount),
               email: payload.passengers[0].email || "",

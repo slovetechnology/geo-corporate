@@ -19,9 +19,13 @@ import ApiRoutes from "/src/services/ApiRoutes";
 import Loading from "/src/components/Loading";
 import { onlinesitename } from "/src/services/Geoapi";
 import { AuthPostApi, MainApi } from "/src/services/Geoapi";
+import { TYPES } from "/src/components/GeoNavbar";
+import { FlightMode } from "/src/components/functions";
+import Cookies from "js-cookie";
 
 function Payment({changePage, flightDetails}) {
   const [loading, setLoading] = useState(false);
+  const mode = Cookies.get(FlightMode)
   const { selectedAddons, passengers, user } = useSelector(state => state.data);
   const copyref = useRef()
   const [booked, setBooked] = useState(false)
@@ -126,7 +130,7 @@ function Payment({changePage, flightDetails}) {
       await HttpServices.post(ApiRoutes.payment.initialize_payment, info);
 
       // call geo payment api for prepaid account on bank transfer
-      if(user.account_type === 'PREPAID') {
+    if(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
         const formbody = {
           amount: parseInt(invoiceData.amount),
           email: passengers[0].email || "",

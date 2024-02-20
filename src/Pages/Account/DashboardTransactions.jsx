@@ -14,7 +14,7 @@ const TableHeaders = [
     "Destination",
     "Origin Date/Time",
     "Initiated By",
-    "Approved By",
+    "Payment Status",
     "---",
 ]
 const DashboardTransactions = () => {

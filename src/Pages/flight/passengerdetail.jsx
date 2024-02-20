@@ -16,9 +16,11 @@ import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 
 function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
   const [localData, setLocalData] = useState([])
-  const { alladdons, pdetails } = useSelector(state => state.data)
+  const { alladdons, pdetails, user, profile } = useSelector(state => state.data)
   const [addonscheck, setAddonscheck] = useState([])
   const localTrip = JSON.parse(localStorage.getItem(TripName))
+  const [newInfo, setNewInfo] = useState([])
+  const [msg, setMsg] = useState(``)
   const [view, setView] = useState(false)
 
   const dispatch = useDispatch();
@@ -32,14 +34,88 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
     UpdateAmount()
   }, [flightDetails])
 
+  function findDifference(arr1, arr2) {
+    return arr2.filter(obj2 => {
+      return !arr1.some(obj1 => {
+        return obj1.email_address === obj2.email;
+      });
+    });
+  }
+  function SaveAndContinue(){
+    // make sure there is a passenger detail filled
+    let dataArr = []
+    let addonsArr = []
+    flightDetails.priceSummary.map((item) => {
+      return new Array(item.quantity).fill().map((item, i) => {
+        return dataArr.push(i)
+      })
+    })
+    if (localData.length > dataArr.length) return AlertError(`Invalid Extra passenger's information detected`)
+    if (localData.length < dataArr.length) return AlertError(`Incomplete passenger's information detected, kindly fill out all passengers information to proceed`)
+    if (localData.length < 1) return AlertError('Your passenger\'s information is required to be filled out')
+    // book this flight
+    addonscheck.map((item) => {
+      return addonsArr.push(item._id)
+    })
+    dispatch(dispatchSelectedAddons(addonscheck))
+    setFlightDetails({ ...flightDetails, amount: total, addons: addonsArr })
+    dispatch(storePassenger(localData))
+    changePage(2)
+    BackToTop()
+    setView(false)
+  }
+
+
   const getFormDetails = () => {
-    console.log(pdetails, localData)
-    // setView(!view)
+    let allforms = [];
+    pdetails.map(ele => {
+      let personalform, passportform;
+      personalform = {
+        title: ele.title,
+        first_name: ele.first_name,
+        last_name: ele.last_name,
+        middle_name: ele?.middle_name,
+        gender: ele.gender,
+        date_of_birth: ele.date_of_birth,
+        email_address: ele.email_address,
+        phone: ele.phone,
+      }
+      passportform = {
+        country_of_origin: ele.country_of_origin,
+        passport_number: ele.passport_number,
+        issue_date: ele.issue_date,
+        expiry_date: ele.expiry_date,
+        issuing_authority: ele.issuing_authority,
+      }
+      let finals;
+      if (!flightDetails.documentRequired) {
+        finals = {
+          ...personalform
+        }
+        allforms.push(finals)
+      } else {
+        finals = {
+          ...personalform,
+          ...passportform
+        }
+        allforms.push(finals)
+      }
+    })
+    const result = findDifference(allforms, localData)
+    // return console.log(pdetails, localData, result, flightDetails.documentRequired, allforms);
+    if(result.length > 0) {
+      setNewInfo(result)
+      setMsg(`<div style="font-weight:light; display:flex;align-items:center;justify-content:center;gap: 2;flex-direction:column; text-align:center;"> <span style="font-weight: bold">Hi ${profile.username}, </span> we found ${result.length} ${result.length === 1 ? 'passenger is' : 'passengers are'} not on your saved lists, Do you want to store ${result.length === 1 ? 'this passenger' : 'these passengers'} details for future use?</div>
+      `)
+      setView(!view)
+    }else {
+      SaveAndContinue()
+    }
   }
   const handleManagement = (tag) => {
     try {
-      if(tag === 'yes') {
-        localData.map(async ele => {
+      if (tag === 'yes') {
+        newInfo.map(async ele => {
           const body = {
             title: ele.title,
             first_name: ele.firstName,
@@ -59,31 +135,9 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
           await AuthPostApi(MainApi.passengers.create, body)
         })
       }
-      // make sure there is a passenger detail filled
-      let dataArr = []
-      let addonsArr = []
-      flightDetails.priceSummary.map((item) => {
-        return new Array(item.quantity).fill().map((item, i) => {
-          return dataArr.push(i)
-        })
-      })
-      if (localData.length > dataArr.length) return AlertError(`Invalid Extra passenger's information detected`)
-      if (localData.length < dataArr.length) return AlertError(`Incomplete passenger's information detected, kindly fill out all passengers information to proceed`)
-      if (localData.length < 1) return AlertError('Your passenger\'s information is required to be filled out')
-      // book this flight
-      addonscheck.map((item) => {
-        return addonsArr.push(item._id)
-      })
-      dispatch(dispatchSelectedAddons(addonscheck))
-      setFlightDetails({ ...flightDetails, amount: total, addons: addonsArr })
-      dispatch(storePassenger(localData))
-      // if tag === yes then save details
+      SaveAndContinue()
     } catch (error) {
       console.log(error)
-    }finally {
-      changePage(2)
-      BackToTop()
-      setView(false)
     }
   }
 
@@ -109,7 +163,7 @@ function Passengerdetail({ changePage, flightDetails, setFlightDetails }) {
 
   return (
     <div>
-     {view && <ConfirmPassengersStorage onclose={() => setView(!view)} handleManagement={handleManagement} />}
+      {view && <ConfirmPassengersStorage text={msg} onclose={() => setView(!view)} handleManagement={handleManagement} />}
       <Wrapper>
         <WrapContent>Passenger Details</WrapContent>
       </Wrapper>

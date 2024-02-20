@@ -6,7 +6,7 @@ import ReturnPlaneIcon from "/src/assets/images/returnplane.svg";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { WebDateFormat, timeFormat } from "/src/components/functions";
-import { FaMinus } from "react-icons/fa";
+import { FaMinus, FaTimes } from "react-icons/fa";
 import { AlertError } from "/src/components/functions";
 import Loading from "/src/components/Loading";
 import { NairaSign } from "/src/components/functions";
@@ -14,6 +14,7 @@ import { TripName } from "/src/components/flight/Flightcard";
 import { formatAirportName, formatAirportTitle } from "/src/components/functions";
 import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
+import { Link } from "react-router-dom";
 
 function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlight, currs }) {
   const localTrip = JSON.parse(localStorage.getItem(TripName))
@@ -24,10 +25,17 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
   };
-  const { refundable } = useSelector(state => state.data)
+  const { refundable, user } = useSelector(state => state.data)
 
   const ContinueBooking = () => {
     setSingleFlight(currentFlight);
+    // check if the average aging max has been exceeded
+    if (user.average_aging > user.average_aging_max) {
+      return setActiveTab(3)
+    }
+    if (user.post_paid_balance < currentFlight.amount) {
+      return setActiveTab(4)
+    }
     return changePage()
   }
 
@@ -45,9 +53,17 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
           } else {
             setScreen(false)
             setSingleFlight(result)
+            // check if the average aging max has been exceeded
+            if (user.average_aging > user.average_aging_max) {
+              return setActiveTab(3)
+            }
+            if (user.post_paid_balance < currentFlight.amount) {
+              return setActiveTab(4)
+            }
             return changePage()
+            // return changePage()
           }
-        }else {
+        } else {
           AlertError(`This route is currently not available`)
           return close()
         }
@@ -58,6 +74,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
       setLoading(false)
     }
   }
+
   return (
     <Wrapper Wrapper className="_blurSearchmodal">
       {loading && <Loading />}
@@ -276,7 +293,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
               {/* ====================================   testing multi flight search result   =========================================   */}
               <div className="scrolls" style={{ overflow: "auto", padding: "20px" }}>
                 {singleFlight?.routes?.map((flight, index) => (
-                 <div key={index}>
+                  <div key={index}>
                     <div className="py-3 border-b mb-3">
                       <div className="flex gap-3">
                         <img src={index === 0 ? DepartPlaneIcon : ReturnPlaneIcon} alt="ReturnPlaneIcon" className="self-start w-7" />
@@ -331,7 +348,7 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
                           <div className="col-span-5">
                             <div className="font-bold">{formatAirportTitle(item.airportTo)} {formatAirportName(item.airportTo)}</div>
                           </div>
-                                <b className="font-bold col-span-2 text-sm text-right">{timeFormat(item.layover)}</b>
+                          <b className="font-bold col-span-2 text-sm text-right">{timeFormat(item.layover)}</b>
                         </div>
                       </div>
                     ))}
@@ -394,6 +411,21 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
             </div>
           </div>
         )}
+
+        {activeTab === 3 && (
+          <div className="p-5">
+            <div className="w-fit mx-auto text-8xl p-3 rounded-full border text-slate-300"> <FaTimes /> </div>
+            <div className="text-center my-5 text-3xl">Oops!...</div>
+            <div className="text-center mb-10">there seem to be some unpaid transactions that have exceeded agreed aging duration. Kindly click <Link to="/geo/transactions" className="text-mainblue">here</Link> to pay for the transactions</div>
+          </div>
+        )}
+        {activeTab === 4 && (
+          <div className="p-5">
+            <div className="w-fit mx-auto text-8xl p-3 rounded-full border text-slate-300"> <FaTimes /> </div>
+            <div className="text-center my-5 text-3xl">Unable to book Ticket</div>
+            <div className="text-center">Please fund <Link to="/geo/transactions" className="text-mainblue">here</Link>  to offset you postpaid bill</div>
+          </div>
+        )}
       </ModalWrapper>{" "}
     </Wrapper>
   );
@@ -419,7 +451,7 @@ const ModalWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   overflow-y: auto;
-  height: 600px;
+  max-height: 600px;
   @media only screen and (max-width: 615px) {
     height: 100%;
     padding: 70px 10px;

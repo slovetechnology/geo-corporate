@@ -16,6 +16,9 @@ import { AlertError } from "/src/components/functions";
 import { AuthPostApi, MainApi } from "/src/services/Geoapi";
 import Loading from "/src/components/Loading";
 import {useNavigate} from 'react-router-dom'
+import Cookies from "js-cookie";
+import { TYPES } from "/src/components/GeoNavbar";
+import { FlightMode } from "/src/components/functions";
 
 function Costcard(props) {
   const { activeTab, changePage, flightDetails } = props
@@ -24,9 +27,10 @@ function Costcard(props) {
   const [booked, setBooked] = useState(false)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const mode = Cookies.get(FlightMode)
 
   const HandleButtonEvent = async () => {
-    if(user.account_type === 'PREPAID') {
+    if(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
       changePage(3)
       return BackToTop()
     }
@@ -263,7 +267,7 @@ function Costcard(props) {
           <TotalCost>&#8358; {parseInt(flightDetails.amount).toLocaleString()}</TotalCost>
         </AmountWrapper>
 
-        {activeTab.tag !== 3 ? <AmountBtn className='flex items-center gap-3' onClick={HandleButtonEvent}> {user.account_type === 'PREPAID' ? activeTab?.text : 'Book Now'} </AmountBtn> : null}
+        {activeTab.tag !== 3 ? <AmountBtn className='flex items-center gap-3' onClick={HandleButtonEvent}> {(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) ? activeTab?.text : 'Book Now'} </AmountBtn> : null}
       </RightContentItem>
     </div>
   );

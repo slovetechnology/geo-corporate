@@ -30,6 +30,7 @@ const auth_urls = {
     user: `/authenticate/staff/info`,
     all_payments: auth + `organization/payments`,
     payment: auth+`corporate-payment/`,
+    offset_bill: auth+`offset/payment/`,
 }
 
 const passenger_urls = {
