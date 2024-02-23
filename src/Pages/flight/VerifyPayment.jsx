@@ -38,7 +38,7 @@ const VerifyPayment = () => {
   );
 
   const confirmTransaction = useCallback(async () => {
-    if(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
+    if (user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
       if (getSearchParams("status") === "cancelled") {
         return setTimeout(() => {
           setLoading(false);
@@ -60,7 +60,7 @@ const VerifyPayment = () => {
           setLoaded("success");
           setDetail(payload);
           // call geo payment api for prepaid account on bank transfer
-    if(user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
+          if (user.account_type === TYPES[0].account_type || mode === TYPES[0].account_type) {
             const formbody = {
               amount: parseInt(res.data.data.amount),
               email: payload.passengers[0].email || "",
@@ -74,9 +74,9 @@ const VerifyPayment = () => {
             }
             const allres = await AuthGetApi(`${MainApi.auth.all_payments}/${user.id}`)
             const findRes = allres.data.find(ele => ele.book_code === payload.bookingCode)
-            if(!findRes) {
+            if (!findRes) {
               await AuthPostApi(MainApi.auth.payment, formbody)
-            } 
+            }
           }
         }
       } catch (error) {
@@ -84,7 +84,7 @@ const VerifyPayment = () => {
       } finally {
         setLoading(false)
       }
-    }else {
+    } else {
       const result = await HttpServices.get(
         `${ApiRoutes.flights.manage_booking}/${bookingCode}`
       );

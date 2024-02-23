@@ -31,6 +31,7 @@ const auth_urls = {
     all_payments: auth + `organization/payments`,
     payment: auth+`corporate-payment/`,
     offset_bill: auth+`offset/payment/`,
+    verify_offset_bill: auth+`payment/flutterwave/verify`,
 }
 
 const passenger_urls = {
