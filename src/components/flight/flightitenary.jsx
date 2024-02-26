@@ -15,6 +15,7 @@ import { formatAirportName, formatAirportTitle } from "/src/components/functions
 import HttpServices from "/src/services/Tiqwaapi";
 import ApiRoutes from "/src/services/ApiRoutes";
 import { Link } from "react-router-dom";
+import { TYPES } from "/src/components/GeoNavbar";
 
 function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlight, currs }) {
   const localTrip = JSON.parse(localStorage.getItem(TripName))
@@ -29,12 +30,14 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
 
   const ContinueBooking = () => {
     setSingleFlight(currentFlight);
-    // check if the average aging max has been exceeded
-    if (user.average_aging > user.average_aging_max) {
-      return setActiveTab(3)
-    }
-    if (user.post_paid_balance < currentFlight.amount) {
-      return setActiveTab(4)
+    if (user.account_type === TYPES[1].account_type) {
+      // check if the average aging max has been exceeded
+      if (user.average_aging > user.average_aging_max) {
+        return setActiveTab(3)
+      }
+      if (user.post_paid_balance < currentFlight.amount) {
+        return setActiveTab(4)
+      }
     }
     return changePage()
   }
@@ -53,12 +56,14 @@ function Flightitenary({ close, onDeals, changePage, singleFlight, setSingleFlig
           } else {
             setScreen(false)
             setSingleFlight(result)
-            // check if the average aging max has been exceeded
-            if (user.average_aging > user.average_aging_max) {
-              return setActiveTab(3)
-            }
-            if (user.post_paid_balance < currentFlight.amount) {
-              return setActiveTab(4)
+            if (user.account_type === TYPES[1].account_type) {
+              // check if the average aging max has been exceeded
+              if (user.average_aging > user.average_aging_max) {
+                return setActiveTab(3)
+              }
+              if (user.post_paid_balance < currentFlight.amount) {
+                return setActiveTab(4)
+              }
             }
             return changePage()
             // return changePage()
