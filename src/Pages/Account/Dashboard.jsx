@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GeoLayout from '../../components/GeoLayout'
 import { NairaSign } from '../../components/functions'
 import { SlPhone, SlUser, SlWallet } from 'react-icons/sl'
@@ -7,7 +7,7 @@ import man from '../../assets/images/man.png'
 import { BsHourglassSplit } from 'react-icons/bs'
 import { GiReceiveMoney } from 'react-icons/gi'
 import { IoStatsChartOutline } from 'react-icons/io5'
-import Flightcard from '../../components/flight/Flightcard'
+import Flightcard, { FlightRequest } from '../../components/flight/Flightcard'
 import DashboardTransactions from './DashboardTransactions'
 import { PiUserLight } from 'react-icons/pi'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
@@ -53,6 +53,13 @@ const COLORTYPES = [
 const Dashboard = () => {
     const { user, profile } = useSelector(state => state.data)
     const [agingColor, setAgingColor] = useState(COLORTYPES.find(ele => ele.min <= user.aging_percentage && ele.max >= user.aging_percentage))
+    
+    
+  useEffect(() => {
+    if(JSON.parse(localStorage.getItem(FlightRequest))) {
+      localStorage.removeItem(FlightRequest)
+    }
+  }, [])
     return (
         <GeoLayout>
             <div className="flex items-center pt-8 px-4 rounded-xl w-11/12 mx-auto gap-3">
