@@ -21,6 +21,7 @@ if (window.location.origin.includes('corporate.gowithgeo.com')) {
 
 const auth = `/corporates/`,
 pass = `/passengers/`
+const reset = `/reset/password/`
 
 
 
@@ -33,6 +34,11 @@ const auth_urls = {
     offset_bill: auth+`offset/payment/`,
     verify_offset_bill: auth+`payment/flutterwave/verify`,
 }
+const reset_urls = {
+    send_email: reset+`request-reset-email/`,
+    reset_password: reset+`password-reset-complete`,
+}
+
 
 const passenger_urls = {
     create: pass + `create`,
@@ -45,6 +51,7 @@ const passenger_urls = {
 export const MainApi = {
     auth: auth_urls,
     passengers: passenger_urls,
+    forgot_password: reset_urls,
 }
 
 
@@ -55,6 +62,11 @@ export const ClientGetApi = async (endpoint) => {
 
 export const ClientPostApi = async (endpoint, data) => {
     const res = await axios.post(`${baseUrl}${endpoint}`, data)
+    return res.data
+}
+
+export const ClientPatchApi = async (endpoint, data) => {
+    const res = await axios.patch(`${baseUrl}${endpoint}`, data)
     return res.data
 }
 
