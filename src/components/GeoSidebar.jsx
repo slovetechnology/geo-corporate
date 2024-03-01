@@ -11,8 +11,7 @@ const GeoSidebar = () => {
 
 
   const handleActive = val => {
-    if(val === '/settings') return 
-    // if(val === '/settings') return navigate('/geo/settings')
+    if(val === '/settings') return navigate('/geo/settings')
     if (!val.hasMenu) return navigate(`${val.url}`)
     if (active !== val.all) return setActive(val.all)
     setActive('')
@@ -22,7 +21,7 @@ const GeoSidebar = () => {
 
   return (
     <div className=''>
-      <div className='border-b px-10 font-semibold py-10 text-slate-600 text-xs'>
+      <div className='px-10 py-10 text-xs font-semibold border-b text-slate-600'>
         <div className='tracking-widest'>GEO TRAVEL CORPORATE</div>
       </div>
       <div className='min-h-[70vh] px-6 space-y-1'>
@@ -41,7 +40,7 @@ const GeoSidebar = () => {
                     <Link
                       to={`${link.url}`}
                       key={index}
-                      className='capitalize p-2 text-sm hover:text-indigo-600'
+                      className='p-2 text-sm capitalize hover:text-indigo-600'
                     >
                       {link.title}
                     </Link>

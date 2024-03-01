@@ -33,6 +33,7 @@ const auth_urls = {
     payment: auth+`corporate-payment/`,
     offset_bill: auth+`offset/payment/`,
     verify_offset_bill: auth+`payment/flutterwave/verify`,
+    edit_organization: auth+`organization-information/edit`,
 }
 const reset_urls = {
     send_email: reset+`request-reset-email/`,

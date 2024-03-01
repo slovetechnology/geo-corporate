@@ -11,6 +11,7 @@ import VerifyBillOffset from '/src/Pages/Transactions/VerifyBillOffset'
 import ResetEmail from '/src/Pages/ResetEmail'
 import EmailSent from '/src/Pages/EmailSent'
 import ConfirmEmailAccount from '/src/Pages/ConfirmEmailAccount'
+import Profile from '/src/Pages/Settings/Profile/Profile'
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/geo/selectflight" element={<RouteLayout><Flight /></RouteLayout>} />
           <Route path="/geo/verify-payment/:bookingCode" element={<RouteLayout><VerifyPayment /></RouteLayout>} />
         <Route path="/geo/transactions" element={<RouteLayout><Transaction /></RouteLayout>} />
+        <Route path="/geo/settings" element={<RouteLayout><Profile /></RouteLayout>} />
       </Routes>
     </BrowserRouter>
   )
