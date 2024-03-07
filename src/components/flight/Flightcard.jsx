@@ -87,7 +87,7 @@ function Flightcard(props) {
     adults: parseInt(localFlight?.adults) || 1,
     children: parseInt(localFlight?.children) || 0,
     infants: parseInt(localFlight?.infants) || 0,
-    flighttype: localTrip || flightData.flighttype || 'return',
+    flighttype: localTrip || localFlight?.flighttype || 'return',
   });
 
   useEffect(() => {
@@ -168,7 +168,7 @@ function Flightcard(props) {
         <RoutesWrapper className='mb-6'>
           <RouteItem>
             <SelectDiv onClick={() => setTripState(!tripState)} className=''>
-              <span>{localTrip?.replace('-', ' ') || flightData.flighttype?.replace('-', ' ') || "return"}</span>
+              <span>{localTrip?.replace('-', ' ') || flightData?.flighttype?.replace('-', ' ') || "return"}</span>
               <Img src={downarrow} alt="GeoTravel" />
             </SelectDiv>
             <SelectedDiv0
@@ -177,27 +177,27 @@ function Flightcard(props) {
             >
               <div
                 onClick={() => handleTripType("return")}
-                className={`flex items-center p-2 gap-3 ${(localTrip || flightData.flighttype) === "return" ? tripactive : null
+                className={`flex items-center p-2 gap-3 ${(localTrip || flightData?.flighttype) === "return" ? tripactive : null
                   }`}
               >
 
-                {(localTrip || flightData.flighttype) === "return" && <BsCheckLg className='text-xl' />} Return
+                {(localTrip || flightData?.flighttype) === "return" && <BsCheckLg className='text-xl' />} Return
               </div>
               <div
                 onClick={() => handleTripType("one-way")}
-                className={`flex items-center p-2 gap-3 ${(localTrip || flightData.flighttype) === "one-way" ? tripactive : null
+                className={`flex items-center p-2 gap-3 ${(localTrip || flightData?.flighttype) === "one-way" ? tripactive : null
                   }`}
               >
 
-                {(localTrip || flightData.flighttype) === "one-way" && <BsCheckLg className='text-xl' />} One Way
+                {(localTrip || flightData?.flighttype) === "one-way" && <BsCheckLg className='text-xl' />} One Way
               </div>
               <div
                 onClick={() => handleTripType("multi-city")}
-                className={`flex items-center p-2 gap-3 ${(localTrip || flightData.flighttype) === "multi-city" ? tripactive : null
+                className={`flex items-center p-2 gap-3 ${(localTrip || flightData?.flighttype) === "multi-city" ? tripactive : null
                   }`}
               >
 
-                {(localTrip || flightData.flighttype) === "multi-city" && <BsCheckLg className='text-xl' />} Multi city
+                {(localTrip || flightData?.flighttype) === "multi-city" && <BsCheckLg className='text-xl' />} Multi city
               </div>
             </SelectedDiv0>
           </RouteItem>
@@ -258,12 +258,12 @@ function Flightcard(props) {
         {localTrip === 'multi-city' ? <FlightcardMultiOptions
           exploreFlight={exploreFlight}
           localTrip={localTrip}
-          flightDatatype={flightData.flighttype}
+          flightDatatype={flightData?.flighttype}
         /> :
           <FlightcardMainOptions
             exploreFlight={exploreFlight}
             localTrip={localTrip}
-            flightDatatype={flightData.flighttype}
+            flightDatatype={flightData?.flighttype}
             color="text-white"
           />}
 
@@ -271,7 +271,7 @@ function Flightcard(props) {
           <div className='mt-10'>
             <div
               onClick={handleFilterForMobile}
-              className='text-indigo-600 lg:hidden cursor-pointer capitalize flex items-center gap-3'
+              className='flex items-center gap-3 text-indigo-600 capitalize cursor-pointer lg:hidden'
             >
               filter flight results <SlArrowRight className='text-xs' />
             </div>

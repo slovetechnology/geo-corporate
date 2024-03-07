@@ -211,7 +211,7 @@ function Flight({ onDeals }) {
           returnDate: localMulties.returnDate || '',
           passenger: people,
           cabin: localMulties.cabin,
-          type: localMulties.flighttype,
+          type: localMulties?.flighttype,
         },
       };
     });
