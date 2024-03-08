@@ -18,9 +18,9 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/reset/:id" element={<ResetEmail />} />
+        <Route path="/reset_password" element={<ResetEmail />} />
         <Route path="/email_successfully_sent" element={<EmailSent />} />
-          <Route path="/account/:uuid/:token" element={<ConfirmEmailAccount />} />
+          <Route path="/geo/reset/:uuid/:token" element={<ConfirmEmailAccount />} />
         <Route path="/geo/board" element={<RouteLayout><Dashboard /> </RouteLayout>} />
         <Route path="/geo/verify-request/" element={<RouteLayout><VerifyBillOffset /> </RouteLayout>} />
         <Route path="/geo/passengers" element={<RouteLayout><Passengers /> </RouteLayout>} />
