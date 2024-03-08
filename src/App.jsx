@@ -21,13 +21,14 @@ const App = () => {
         <Route path="/reset_password" element={<ResetEmail />} />
         <Route path="/email_successfully_sent" element={<EmailSent />} />
           <Route path="/geo/reset/:uuid/:token" element={<ConfirmEmailAccount />} />
+
         <Route path="/geo/board" element={<RouteLayout><Dashboard /> </RouteLayout>} />
         <Route path="/geo/verify-request/" element={<RouteLayout><VerifyBillOffset /> </RouteLayout>} />
         <Route path="/geo/passengers" element={<RouteLayout><Passengers /> </RouteLayout>} />
           <Route path="/geo/selectflight" element={<RouteLayout><Flight /></RouteLayout>} />
           <Route path="/geo/verify-payment/:bookingCode" element={<RouteLayout><VerifyPayment /></RouteLayout>} />
         <Route path="/geo/transactions" element={<RouteLayout><Transaction /></RouteLayout>} />
-        <Route path="/geo/settings" element={<RouteLayout><Profile /></RouteLayout>} />
+        <Route path="/geo/setting" element={<RouteLayout><Profile /></RouteLayout>} />
       </Routes>
     </BrowserRouter>
   )

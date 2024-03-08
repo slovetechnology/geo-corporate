@@ -10,6 +10,7 @@ import { setUserData } from '/src/app/dataSlice'
 import { AuthGetApi, MainApi } from './Geoapi'
 import { USERNAME } from '/src/components/functions'
 import { dispatchProfile } from '/src/app/dataSlice'
+import { dispatchCompany } from '/src/app/dataSlice'
 
 const RouteLayout = ({ children }) => {
   const [login, setLogin] = useState(false)
@@ -31,9 +32,11 @@ const RouteLayout = ({ children }) => {
     }
     try {
       const response = await AuthGetApi(`${MainApi.auth.profile}/${username}`)
+      const result = await AuthGetApi(`${MainApi.auth.company}/${username}`)
       const res = await AuthGetApi(`${MainApi.auth.user}/${user}/`)
       if (response.status === 200) {
         dispatch(setUserData(response.data))
+        dispatch(dispatchCompany(result.data))
         dispatch(dispatchProfile(res.data))
         return setLogin(true)
       } else {

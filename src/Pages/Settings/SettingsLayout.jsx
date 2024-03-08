@@ -26,7 +26,7 @@ const SettingsLayout = ({ children }) => {
 
     const sidelinks = [
         {
-            title: `profile`,
+            title: `Organization details`,
             link: `/geo/setting`,
         },
     ]

@@ -10,6 +10,7 @@ const initialState = {
     invoice: {},
     user: {},
     profile: {},
+    company: {},
     trip: {},
     addons: {},
     alladdons: [],
@@ -28,6 +29,9 @@ export const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
+    dispatchCompany: (state, action) => {
+      state.company = action.payload
+    },
     dispatchPageItem: (state, action) => {
       state.pageItem = action.payload
     },
@@ -95,6 +99,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { storeFlightDetail, dispatchPDetails, storePassenger, dispatchProfile, storePackageImages, setFlightBooked, setFlightDetails, setUserData, setBookedInvoice, setTripDetails, setSingleAddons, fetchAllAddons, dispatchRecentCity, dispatchVisaInfo, dispatchSelectedAddons, dispatchRoles, dispatchBlog, dispatchActivity, dispatchLoader, dispatchPageItem, dispatchRefundable } = counterSlice.actions
+export const { storeFlightDetail, dispatchCompany, dispatchPDetails, storePassenger, dispatchProfile, storePackageImages, setFlightBooked, setFlightDetails, setUserData, setBookedInvoice, setTripDetails, setSingleAddons, fetchAllAddons, dispatchRecentCity, dispatchVisaInfo, dispatchSelectedAddons, dispatchRoles, dispatchBlog, dispatchActivity, dispatchLoader, dispatchPageItem, dispatchRefundable } = counterSlice.actions
 
 export default counterSlice.reducer
