@@ -11,7 +11,7 @@ const GeoSidebar = () => {
 
 
   const handleActive = val => {
-    if(val === '/settings') return navigate('/geo/settings')
+    if(val === '/setting') return navigate('/geo/setting')
     if (!val.hasMenu) return navigate(`${val.url}`)
     if (active !== val.all) return setActive(val.all)
     setActive('')
@@ -51,9 +51,9 @@ const GeoSidebar = () => {
         })}
       </div>
       <div className="">
-      <div onClick={() => handleActive('/settings')} className={`flex px-10 cursor-pointer justify-between capitalize hover:bg-[#2E61E6] hover:text-white py-3 text-[#171B4A] items-center gap-2 rounded-lg ${active.includes('/settings') ? activeclass : ""}`}>
+      <div onClick={() => handleActive('/setting')} className={`flex px-10 cursor-pointer justify-between capitalize hover:bg-[#2E61E6] hover:text-white py-3 text-[#171B4A] items-center gap-2 rounded-lg ${active.includes('/setting') ? activeclass : ""}`}>
         <div className="flex items-center gap-2"><SlSettings /> <span className='mt-1'>Settings</span></div>
-        {active.includes('/settings')  ? <SlArrowUp /> : <SlArrowDown />}
+        {active.includes('/setting')  ? <SlArrowUp /> : <SlArrowDown />}
       </div>
       </div>
     </div>
