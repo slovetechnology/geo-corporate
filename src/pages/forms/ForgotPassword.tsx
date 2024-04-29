@@ -1,10 +1,10 @@
 
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import FormPage from '/src/layouts/FormPage'
 import { Form, Formik } from 'formik'
 import Formbutton from '/src/components/utils/Formbutton'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Forminput from '/src/components/utils/Forminput'
 import validator from 'validator'
 import arrowleft from '/src/assets/images/arrowleft.svg'

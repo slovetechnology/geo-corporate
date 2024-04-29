@@ -1,5 +1,4 @@
 
-import React from 'react'
 import Layout from '/src/layouts/Layout'
 import Table from '/src/components/utils/Table'
 import Header from '/src/components/components/Header'

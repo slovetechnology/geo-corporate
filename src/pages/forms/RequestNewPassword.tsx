@@ -1,14 +1,13 @@
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import FormPage from '/src/layouts/FormPage'
 import { Form, Formik } from 'formik'
 import Formbutton from '/src/components/utils/Formbutton'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Forminput from '/src/components/utils/Forminput'
-import validator from 'validator'
 import arrowleft from '/src/assets/images/arrowleft.svg'
 import pswd from '/src/assets/images/pass.svg'
-import { Apis, ClientPatchApi, ClientPostApi } from '/src/components/services/Api'
+import { Apis, ClientPatchApi } from '/src/components/services/Api'
 import Alert from '/src/components/utils/Alert'
 
 type FormProps = {
