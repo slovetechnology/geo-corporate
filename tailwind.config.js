@@ -1,17 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
-      backgroundColor: {
-        mainblue: "#2e61e6",
-        textblue: "#171B4A",
-      },
       colors: {
-        mainblue: "#2e61e6",
-        textblue: "#171B4A"
-      }
+        "primary": "#4272F6"
+      },
     },
   },
-  plugins: [require("tailwind-scrollbar")],
-};
+  plugins: [],
+}
+
