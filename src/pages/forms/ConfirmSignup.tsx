@@ -1,38 +1,37 @@
 
-import React from 'react'
 import FormPage from '/src/layouts/FormPage'
-import { Form, Formik } from 'formik'
-import Formbutton from '/src/components/utils/Formbutton'
-import { Link } from 'react-router-dom'
-import Forminput from '/src/components/utils/Forminput'
-import validator from 'validator'
-import arrowleft from '/src/assets/images/arrowleft.svg'
+// import { Form, Formik } from 'formik'
+// import Formbutton from '/src/components/utils/Formbutton'
+// import { Link } from 'react-router-dom'
+// import Forminput from '/src/components/utils/Forminput'
+// import validator from 'validator'
+// import arrowleft from '/src/assets/images/arrowleft.svg'
 import mail from '/src/assets/images/mail.svg'
-import Otpform from '/src/components/utils/Otpform'
+// import Otpform from '/src/components/utils/Otpform'
 
-type FormProps = {
-    email: string,
-    password: string
-}
+// type FormProps = {
+//     email: string,
+//     password: string
+// }
 export default function ConfirmSignup() {
-    const setup = (val: any) => {
-        //
-    }
-    const handleSubmission = (values: FormProps) => {
-        //
-    }
-    const validateForm = (values: FormProps) => {
-        const errors: any = {}
-        if (!values.email) {
-            errors.email = "Email is required";
-        } else if (!validator.isEmail(values.email)) {
-            errors.email = 'Invalid email address'
-        }
-        if (!values.password) {
-            errors.password = 'Password is required';
-        }
-        return errors
-    }
+    // const setup = (val: any) => {
+    //     //
+    // }
+    // const handleSubmission = (values: FormProps) => {
+    //     //
+    // }
+    // const validateForm = (values: FormProps) => {
+    //     const errors: any = {}
+    //     if (!values.email) {
+    //         errors.email = "Email is required";
+    //     } else if (!validator.isEmail(values.email)) {
+    //         errors.email = 'Invalid email address'
+    //     }
+    //     if (!values.password) {
+    //         errors.password = 'Password is required';
+    //     }
+    //     return errors
+    // }
     return (
         <FormPage>
             <div className="w-full">

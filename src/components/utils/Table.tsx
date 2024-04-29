@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 type Props = {
@@ -46,7 +45,7 @@ function Table({ keys, values, data, title }: Props) {
                         </thead>
                         <tbody>
                             {data.map((item: string, index: number) => (
-                                <tr className='tr-extra' key={index}>
+                                <tr id={item} className='tr-extra' key={index}>
                                     {values.map((ele: string, i: number) => (
                                         <td key={i}>{Valued(ele, index)}</td>
                                     ))}

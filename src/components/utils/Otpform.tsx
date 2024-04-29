@@ -1,8 +1,7 @@
 
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
-type Props = {
-}
+
 export default function Otpform () {
   const [pinParts, setPinParts] = useState(['', '', '', '']);
   const inputRefs = useRef<any>([]);

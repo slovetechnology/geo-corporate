@@ -1,10 +1,7 @@
 import { Field } from 'formik'
-import React from 'react'
 import DailcodeOptions from './DailcodeOptions'
 import { ApiCountries } from './ApiCountries'
-type SetupTypes = {
-    dial_code: string
-}
+
 type Props = {
     type?: string
     placeholder: string

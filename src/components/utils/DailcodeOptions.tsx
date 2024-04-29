@@ -1,6 +1,6 @@
 
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ApiCountries, ApiCountryFlags } from './ApiCountries'
 
 type SetupTypes = {
