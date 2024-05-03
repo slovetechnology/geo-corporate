@@ -1,3 +1,4 @@
+import ErrorPage from "./pages/ErrorPage";
 import ConfirmSignup from "./pages/forms/ConfirmSignup";
 import ForgotPassword from "./pages/forms/ForgotPassword";
 import Login from "./pages/forms/Login";
@@ -10,6 +11,7 @@ import Transactions from "./pages/user/Transactions";
 
 export const FormsRoutes = [
     {path: `/login`, element: Login},
+    {path: `/*`, element: ErrorPage},
     {path: `/signup`, element: Signup},
     {path: `/confirm_signup`, element: ConfirmSignup}, // for signup
     {path: `/confirm_email`, element: ConfirmSignup}, // for forgot password
