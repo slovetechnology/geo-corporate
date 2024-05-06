@@ -4,7 +4,6 @@ import Formbutton from '/src/components/utils/Formbutton'
 import { Link, useNavigate } from 'react-router-dom'
 import Forminput from '/src/components/utils/Forminput'
 import validator from 'validator'
-import arrowleft from '/src/assets/images/arrowleft.svg'
 import { useState } from 'react'
 import Alert from '/src/components/utils/Alert'
 import { Apis, ClientPostApi } from '/src/components/services/Api'
@@ -40,7 +39,7 @@ export default function Signup() {
         try {
             response = await ClientPostApi(Apis.signup, formdata)
             if (response.status === 201) {
-                navigate('/verify_email')
+                navigate(`/verify_email?v=${values.email}`)
             } else {
                 console.log(response.error.error)
                 setMsg({status: 'error', message: `${response?.data?.message || response.error.error}`})
@@ -83,7 +82,6 @@ export default function Signup() {
             {msg.message && <Alert status={msg.status} message={msg.message} /> }
             <div className="w-full">
                 <div className="flex items-center justify-center gap-5 mb-7">
-                    <img src={arrowleft} alt="GeoTravel" />
                 <div className="font-bold text-center text-2xl capitalize">create account</div>
                 </div>
                 <Formik

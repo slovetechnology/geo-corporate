@@ -24,6 +24,7 @@ export const Apis = {
     reset_password: reset + `password-reset-complete`,
     validate_signup_email: corp + `validate-email/`,
     validate_signup_email_otp: corp + `validate-otp/`,
+    resend_signup_email_otp: corp + `resend-otp/`,
     view_org: org + `view`,
 }
 

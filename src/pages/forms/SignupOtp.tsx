@@ -11,7 +11,7 @@ import pswd from '/src/assets/images/pass.svg'
 import { Form, Formik } from 'formik'
 import Forminput from '/src/components/utils/Forminput'
 import { Apis, ClientPostApi } from '/src/components/services/Api'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 
 type FormProps = {
@@ -20,11 +20,38 @@ type FormProps = {
 }
 
 export default function SignupOtp() {
+    const [search,] = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [pinParts, setPinParts] = useState(['', '', '', '', '', '']);
     const [screen, setScreen] = useState(1)
     const [msg, setMsg] = useState({ status: '', message: '' })
     const navigate = useNavigate()
+    const [sendtext, setSendtext] = useState('Resend Code')
+
+    const ResendOTPCode = async () => {
+        const email = search.get('v')
+        if(!email)  return setMsg({ status: 'error', message: `Invalid Email address assigned` }) 
+        setSendtext('Resending code, hold on....')
+        const forms = {
+            email
+        }
+        try {
+            const response = await ClientPostApi(Apis.resend_signup_email_otp, forms)
+            console.log(response)
+            setSendtext('Code sent, check your Email..')
+            setTimeout(() => {
+                setSendtext('Resend Code')
+            }, 4000);
+        } catch (error: any) {
+            setSendtext(`Sending code failed`)
+            setTimeout(() => {
+                setSendtext('Resend Code')
+            }, 4000);
+            return setMsg({ status: 'error', message: `${error.message}` })
+        } finally {
+            //
+        }
+    }
 
 
     const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +61,7 @@ export default function SignupOtp() {
             if (ele === '') err = 'provide a valid otp code'
         })
         if (err) return setMsg({ status: 'error', message: `${err}` })
-        setMsg({...msg, message: ''})
+        setMsg({ ...msg, message: '' })
         setScreen(2)
     }
 
@@ -49,7 +76,7 @@ export default function SignupOtp() {
             if (response.status === 200) {
                 setMsg({ status: 'success', message: response.message })
                 setTimeout(() => navigate('/login'), 2000)
-            }else {
+            } else {
                 setMsg({ status: 'error', message: response.message })
             }
         } catch (error: any) {
@@ -88,7 +115,12 @@ export default function SignupOtp() {
                         pinParts={pinParts}
                         setPinParts={setPinParts}
                     />
-                    <div className="text-slate-400 flex items-center justify-center gap-2 mb-3 mt-6">Didn’t receive a code? <button className="underline capitalize text-black">resend code</button> </div>
+                    <div className="text-slate-400 flex items-center justify-center gap-2 my-10">Didn’t receive a code?
+                        <button
+                            disabled={sendtext === 'Resend Code' ? false : true}
+                            type="button"
+                            onClick={ResendOTPCode}
+                            className="underline text-black">{sendtext}</button> </div>
                     <div className="">
                         <Formbutton type="submit" title="Next" loading={loading} />
                     </div>
