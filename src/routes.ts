@@ -1,4 +1,5 @@
 import ErrorPage from "./pages/ErrorPage";
+import AccountConfirmed from "./pages/forms/AccountConfirmed";
 import ConfirmSignup from "./pages/forms/ConfirmSignup";
 import ForgotPassword from "./pages/forms/ForgotPassword";
 import Login from "./pages/forms/Login";
@@ -15,6 +16,7 @@ export const FormsRoutes = [
     {path: `/*`, element: ErrorPage},
     {path: `/signup`, element: Signup},
     {path: `/verify_email`, element: SignupOtp},
+    {path: `/account_confirmed`, element: AccountConfirmed},
     {path: `/confirm_signup`, element: ConfirmSignup}, // for signup
     {path: `/confirm_email`, element: ConfirmSignup}, // for forgot password
     {path: `/forgot_password`, element: ForgotPassword},

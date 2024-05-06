@@ -31,7 +31,7 @@ export default function RequestNewPassword() {
             const response = await ClientPatchApi(Apis.reset_password, forms)
             if (response.success) {
                 setMsg({ status: 'success', message: response.message })
-                setTimeout(() => navigate('/login'), 2000)
+                setTimeout(() => navigate('/account_confirmed'), 2000)
             }
         } catch (error: any) {
             setMsg({ status: 'error', message: `${error.message}` })
