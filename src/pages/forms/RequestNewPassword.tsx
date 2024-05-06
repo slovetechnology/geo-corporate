@@ -18,7 +18,7 @@ export default function RequestNewPassword() {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [msg, setMsg] = useState({ status: '', message: '' })
-    const {uuid, token}: any = useParams()
+    const { uuid, token }: any = useParams()
 
     const handleSubmission = async (values: FormProps) => {
         const forms = {
@@ -29,13 +29,13 @@ export default function RequestNewPassword() {
         setLoading(true)
         try {
             const response = await ClientPatchApi(Apis.reset_password, forms)
-            if(response.success) {
-                setMsg({status:'success', message: response.message})
+            if (response.success) {
+                setMsg({ status: 'success', message: response.message })
                 setTimeout(() => navigate('/login'), 2000)
             }
         } catch (error: any) {
-            setMsg({status: 'error', message: `${error.message}`})
-        }finally {
+            setMsg({ status: 'error', message: `${error.message}` })
+        } finally {
             setLoading(false)
         }
     }
@@ -55,7 +55,7 @@ export default function RequestNewPassword() {
     return (
         <FormPage>
             <div className="w-full">
-{msg.message && <Alert status={msg.status} message={msg.message} /> }
+                {msg.message && <Alert status={msg.status} message={msg.message} />}
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
                         <img src={arrowleft} alt="GeoTravel" />
@@ -71,17 +71,17 @@ export default function RequestNewPassword() {
                 >
                     {(formik) => (
                         <Form>
-                            <Forminput 
-                            placeholder='New Password' 
-                            name="password"
-                            type="password"
-                            error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
+                            <Forminput
+                                placeholder='New Password'
+                                name="password"
+                                type="password"
+                                error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
                             />
-                            <Forminput 
-                            placeholder='Confirm Password' 
-                            name="confirm_password"
-                            type="password"
-                            error={formik.touched.confirm_password && formik.errors.confirm_password ? formik.errors.confirm_password : ''}
+                            <Forminput
+                                placeholder='Confirm Password'
+                                name="confirm_password"
+                                type="password"
+                                error={formik.touched.confirm_password && formik.errors.confirm_password ? formik.errors.confirm_password : ''}
                             />
                             <Formbutton loading={loading} title="Save" type="submit" />
                         </Form>

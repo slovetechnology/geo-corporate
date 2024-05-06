@@ -23,6 +23,7 @@ export const Apis = {
     send_email: reset + `request-reset-email/`,
     reset_password: reset + `password-reset-complete`,
     validate_signup_email: corp + `validate-email/`,
+    validate_signup_email_otp: corp + `validate-otp/`,
     view_org: org + `view`,
 }
 

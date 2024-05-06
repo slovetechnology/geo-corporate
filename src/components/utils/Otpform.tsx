@@ -1,9 +1,12 @@
 
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
+type Props = {
+  pinParts: string[],
+  setPinParts: (pinParts: string[]) => void
+}
 
-export default function Otpform () {
-  const [pinParts, setPinParts] = useState(['', '', '', '']);
+export default function Otpform ({pinParts, setPinParts}: Props) {
   const inputRefs = useRef<any>([]);
 
 //   const handleSubmission = () => {
@@ -19,7 +22,7 @@ export default function Otpform () {
     const newPinParts = [...pinParts];
     newPinParts[index] = value;
 
-    if (index < 3 && value !== '') {
+    if (index < 5 && value !== '') {
       inputRefs.current[index + 1].focus();
     }
 
@@ -35,13 +38,13 @@ export default function Otpform () {
   const handlePaste = (event: any) => {
     event.preventDefault();
     const pastedText = event.clipboardData.getData('text/plain').slice(0, 6);
-    const newPinParts = pastedText.split('').concat(['', '', '', '']).slice(0, 6);
+    const newPinParts = pastedText.split('').concat(['', '', '', '', '', '']).slice(0, 6);
     setPinParts(newPinParts);
 
     for (let i = 0; i < newPinParts.length; i++) {
       if (newPinParts[i]) {
         inputRefs.current[i].value = newPinParts[i];
-        if (i < 5) {
+        if (i < 7) {
           inputRefs.current[i + 1].focus();
         }
       }
@@ -52,13 +55,13 @@ export default function Otpform () {
 
   return (
     <div>
-      <div className='grid grid-cols-4 gap-7'>
+      <div className='grid grid-cols-6 gap-5'>
         {pinParts.map((part, index) => (
           <input
             key={index}
             type="password"
             maxLength={1}
-            className='input h-20'
+            className='input !h-20 !border-zinc-400 !text-center'
             defaultValue={part}
             onChange={(e) => handleInputChange(index, e.target.value)}
             onKeyDown={(e) => handleInputBackspace(index, e)}

@@ -34,14 +34,16 @@ export default function Signup() {
             address: values.address,
             organization_name: values.organization_name
         }
+        let response: any;
         setLoading(true)
         setMsg({...msg, message: ''})
         try {
-            const response: any = await ClientPostApi(Apis.signup, formdata)
+            response = await ClientPostApi(Apis.signup, formdata)
             if (response.status === 201) {
-                navigate('/confirm_signup')
+                navigate('/verify_email')
             } else {
-                setMsg({status: 'error', message: response.data.message})
+                console.log(response.error.error)
+                setMsg({status: 'error', message: `${response?.data?.message || response.error.error}`})
             }
         } catch (error: any) {
             setMsg({status: 'error', message: `${error.response.data.message}`})
@@ -91,7 +93,7 @@ export default function Signup() {
                 >
                     {(formik) => (
                         <Form>
-                            <Forminput 
+                            <Forminput
                             placeholder='Organization' 
                             name="organization_name"
                             error={formik.touched.organization_name && formik.errors.organization_name ? formik.errors.organization_name : ''}

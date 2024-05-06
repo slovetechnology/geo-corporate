@@ -4,6 +4,7 @@ import ForgotPassword from "./pages/forms/ForgotPassword";
 import Login from "./pages/forms/Login";
 import RequestNewPassword from "./pages/forms/RequestNewPassword";
 import Signup from "./pages/forms/Signup";
+import SignupOtp from "./pages/forms/SignupOtp";
 import ValidateSignupEmail from "./pages/forms/ValidateSignupEmail";
 import Dashboard from "./pages/user/Dashboard";
 import Passengers from "./pages/user/Passengers";
@@ -13,6 +14,7 @@ export const FormsRoutes = [
     {path: `/login`, element: Login},
     {path: `/*`, element: ErrorPage},
     {path: `/signup`, element: Signup},
+    {path: `/verify_email`, element: SignupOtp},
     {path: `/confirm_signup`, element: ConfirmSignup}, // for signup
     {path: `/confirm_email`, element: ConfirmSignup}, // for forgot password
     {path: `/forgot_password`, element: ForgotPassword},
