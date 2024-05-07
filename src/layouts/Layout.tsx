@@ -17,8 +17,8 @@ type Props = {
 }
 
 const SideLinks = [
-  { title: `dashboard`, url: `/dashboard`, img: img1, sec: img5 },
-  { title: `book flight`, url: ``, img: img2, sec: img6 },
+  { title: `dashboard`, url: `/board`, img: img1, sec: img5 },
+  { title: `book flight`, url: `/book-flight`, img: img2, sec: img6 },
   { title: `transactions`, url: `/transactions`, img: img3, sec: img7 },
   { title: `passengers`, url: `/passengers`, img: img4, sec: img8 },
 ]

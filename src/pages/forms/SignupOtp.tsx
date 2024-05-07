@@ -37,7 +37,7 @@ export default function SignupOtp() {
         }
         try {
             const response = await ClientPostApi(Apis.resend_signup_email_otp, forms)
-            console.log(response)
+            if(response.status === 200)
             setSendtext('Code sent, check your Email..')
             setTimeout(() => {
                 setSendtext('Resend Code')

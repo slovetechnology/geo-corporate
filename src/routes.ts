@@ -12,7 +12,7 @@ import Passengers from "./pages/user/Passengers";
 import Transactions from "./pages/user/Transactions";
 
 export const FormsRoutes = [
-    {path: `/login`, element: Login},
+    {path: `/`, element: Login},
     {path: `/*`, element: ErrorPage},
     {path: `/signup`, element: Signup},
     {path: `/verify_email`, element: SignupOtp},
@@ -25,7 +25,7 @@ export const FormsRoutes = [
 ]
 
 export const UserRoutes = [
-    {path: "/dashboard", element: Dashboard},
+    {path: "/board", element: Dashboard},
     {path: "/passengers", element: Passengers},
     {path: "/transactions", element: Transactions},
 ]

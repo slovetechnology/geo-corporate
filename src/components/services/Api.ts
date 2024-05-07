@@ -42,10 +42,11 @@ export const ClientPostApi = async (endpoint: string, data: any) => {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": 'application/json'
         }
     })
-    return res.json()
+    const result = await res.json()
+    return result
 }
 export const ClientPutApi = async (endpoint: string, data: any) => {
     const res: any = await fetch(`${baseUrl}${endpoint}`, {
@@ -55,7 +56,8 @@ export const ClientPutApi = async (endpoint: string, data: any) => {
             'Content-Type': 'application/json',
         }
     })
-    return res.json()
+    const result = await res.json()
+    return result
 }
 export const ClientPatchApi = async (endpoint: string, data: any) => {
     const res = await axios.patch(`${baseUrl}${endpoint}`, data, {

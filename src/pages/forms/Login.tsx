@@ -30,7 +30,7 @@ function Login() {
                 Cookies.set(MainToken, response.data.tokens.access)
                 Cookies.set(OrgID, response.data.tokens.organization_id)
                     setMsg({ status: "success", message: `${response.message}` })
-                        setTimeout(() => navigate('/dashboard'), 2000)
+                        setTimeout(() => navigate('/board'), 2000)
             }else {
                     setMsg({ status: "error", message: `${response.message}` })
             }
