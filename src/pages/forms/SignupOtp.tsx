@@ -12,6 +12,8 @@ import { Form, Formik } from 'formik'
 import Forminput from '/src/components/utils/Forminput'
 import { Apis, ClientPostApi } from '/src/components/services/Api'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { SlExclamation } from 'react-icons/sl'
+import { Popover } from 'antd';
 
 
 type FormProps = {
@@ -23,22 +25,22 @@ export default function SignupOtp() {
     const [search,] = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [pinParts, setPinParts] = useState(['', '', '', '', '', '']);
-    const [screen, setScreen] = useState(1)
+    const [screen, setScreen] = useState(2)
     const [msg, setMsg] = useState({ status: '', message: '' })
     const navigate = useNavigate()
     const [sendtext, setSendtext] = useState('Resend Code')
 
     const ResendOTPCode = async () => {
         const email = search.get('v')
-        if(!email)  return setMsg({ status: 'error', message: `Invalid Email address assigned` }) 
+        if (!email) return setMsg({ status: 'error', message: `Invalid Email address assigned` })
         setSendtext('Resending code, hold on....')
         const forms = {
             email
         }
         try {
             const response = await ClientPostApi(Apis.resend_signup_email_otp, forms)
-            if(response.status === 200)
-            setSendtext('Code sent, check your Email..')
+            if (response.status === 200)
+                setSendtext('Code sent, check your Email..')
             setTimeout(() => {
                 setSendtext('Resend Code')
             }, 4000);
@@ -90,6 +92,22 @@ export default function SignupOtp() {
         if (!values.password) {
             errors.password = 'Password is required';
         }
+        if (values.password && values.password.length <= 12) {
+            errors.password = 'Password must be at least 12 characters';
+        }
+        if (values.password && !values.password.match(/[A-Z]/)) {
+            errors.password = 'Password must contain a capital letter';
+        }
+        if (values.password && !values.password.match(/[a-z]/)) {
+            errors.password = 'Password must contain an alphabet';
+        }
+        if (values.password && !values.password.match(/[0-9]/)) {
+            errors.password = 'Password must contain a number';
+        }
+        if (values.password && !values.password.match(/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/)) {
+            errors.password = 'Password must contain a special character';
+        }
+
         if (!values.confirm_password) {
             errors.confirm_password = 'Confirm Password is required';
         }
@@ -98,6 +116,16 @@ export default function SignupOtp() {
         }
         return errors
     }
+
+    const content = (
+        <div>
+            <div className="flex items-center gap-2 pb-2"> <div className="w-2 h-2 btn rounded-full"></div> Password must be up to 12 characters </div>
+            <div className="flex items-center gap-2 pb-2"> <div className="w-2 h-2 btn rounded-full"></div> Password must contain a capital letter </div>
+            <div className="flex items-center gap-2 pb-2"> <div className="w-2 h-2 btn rounded-full"></div> Password must contain an alphabet </div>
+            <div className="flex items-center gap-2 pb-2"> <div className="w-2 h-2 btn rounded-full"></div> Password must contain a number </div>
+            <div className="flex items-center gap-2 pb-2"> <div className="w-2 h-2 btn rounded-full"></div> Password must contain a special character </div>
+        </div>
+    )
 
     return (
         <FormPage>
@@ -143,12 +171,19 @@ export default function SignupOtp() {
                 >
                     {(formik) => (
                         <Form>
-                            <Forminput
-                                placeholder='New Password'
-                                name="password"
-                                type="password"
-                                error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
-                            />
+                            <div className="relative">
+                                <Forminput
+                                    placeholder='New Password'
+                                    name="password"
+                                    type="password"
+                                    error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
+                                />
+                                <button type="button" className='absolute top-5 right-3'>
+                                    <Popover content={content} title="Password Requirements" trigger="click">
+                                        <SlExclamation />
+                                    </Popover>
+                                </button>
+                            </div>
                             <Forminput
                                 placeholder='Confirm Password'
                                 name="confirm_password"
