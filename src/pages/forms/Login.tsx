@@ -8,7 +8,7 @@ import validator from 'validator'
 import { Apis, ClientPostApi } from '/src/components/services/Api'
 import Alert from '/src/components/utils/Alert'
 import Cookies from 'js-cookie'
-import { MainToken, OrgID } from '/src/components/services/functions'
+import { MainToken, OrgID, UserID } from '/src/components/services/functions'
 
 type FormProps = {
     email: string,
@@ -29,6 +29,7 @@ function Login() {
             if(response.status === 200) {
                 Cookies.set(MainToken, response.data.tokens.access)
                 Cookies.set(OrgID, response.data.tokens.organization_id)
+                Cookies.set(UserID, response.data.tokens.user_id)
                     setMsg({ status: "success", message: `${response.message}` })
                         setTimeout(() => navigate('/board'), 2000)
             }else {

@@ -13,9 +13,17 @@ if (window.location.origin.includes('gowithgeo.com')) {
     baseUrl = `https://geo-travel-e8d032e3dc4f.herokuapp.com`
 }
 
+export let webUrl:string;
+if (window.location.origin.includes('gowithgeo.com')) {
+  webUrl = `https://prod.geotravel.travelcham.com`
+} else {
+  webUrl = `https://sandbox.geotravel.travelcham.com`
+}
+
 const corp = `/corporates/`
 const org = `/corporates/organization/`
 const reset = `/reset/password/`
+
 
 export const Apis = {
     signup: org + `onboard`,
@@ -25,7 +33,18 @@ export const Apis = {
     validate_signup_email: corp + `validate-email/`,
     validate_signup_email_otp: corp + `validate-otp/`,
     resend_signup_email_otp: corp + `resend-otp/`,
+    all_payments: corp + `all-payments`,
     view_org: org + `view`,
+    manage_bookings: `flights/bookings`
+}
+
+export const TiqwaGetApi = async (endpoint: string) => {
+    const res = await fetch(`${webUrl}/${endpoint}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    return res.json()
 }
 
 export const ClientGetApi = async (endpoint: string) => {

@@ -1,36 +1,62 @@
 
 import Layout from '/src/layouts/Layout'
-import Table from '/src/components/utils/Table'
 import Header from '/src/components/components/Header'
 import { SlMagnifier } from 'react-icons/sl'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Apis, AuthGetApi } from '/src/components/services/Api'
+import ViewTicket from '/src/components/components/ViewTicket'
+import Alert from '/src/components/utils/Alert'
+import SingleTransaction from './SingleTransaction'
 
 const dataKeys = [
     "",
-    "name",
-    "amount",
-    "origin",
-    "airport",
-    "date created",
-    "origin",
-    "airport",
-    "date created",
-    ".......",
+    "Traveller's Name",
+    "Amount Paid",
+    "Origin",
+    "Destination",
+    "Origin Date/Time",
+    "Initiated By",
+    "Approved By",
+    "Payment Status",
+    "---",
 ]
-const dataValues = [
-    "name",
-    "amount",
-    "origin",
-    "date created",
-    "name",
-    "amount",
-    "paid|status",
-    "origin",
-    "date created",
-    "view ticket",
-]
+
 export default function Transactions() {
+    const [msg, setMsg] = useState({ status: '', message: '' })
+    const [single, setSingle] = useState({ status: false, data: {} })
+
+    const { data, isLoading } = useQuery({
+        queryKey: ['dsh-payments'],
+        queryFn: async () => {
+            const response = await AuthGetApi(`${Apis.all_payments}`)
+            if (response.status === 200) return response.data
+        },
+        staleTime: 0
+    })
+
+    function HandleTicketViewing(value: any) {
+        if (value?.amount) {
+            return setSingle({ status: true, data: value })
+        }
+        setTimeout(() => {
+            setMsg({ status: "", message: "" })
+        }, 2000);
+        return setMsg({ message: 'Looks like this transaction is not connected to a flight ticket', status: "error" })
+    }
+
+    if (isLoading) return (
+        <Layout>
+            <Header />
+
+        </Layout>
+    )
+
     return (
         <Layout>
+            {single.status && <ViewTicket flight={single.data} closeView={() => setSingle({ ...single, status: false })} />}
+
+            {msg.message && <Alert status={msg.status} message={msg.message} />}
             <Header />
             <div className="grid grid-cols-2 w-11/12 mx-auto">
                 <div className="">
@@ -44,7 +70,29 @@ export default function Transactions() {
                 </div>
             </div>
             <div className="mt-10">
-                <Table keys={dataKeys} values={dataValues} data={new Array(10).fill(0)} />
+                    <div className="overflow-x-auto p-5">
+                        <div className=' w-fit lg:w-full'>
+                            <div className="tablediv">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            {dataKeys.map((ele: string, index: number) => (
+                                                <th key={index}>{ele}</th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data?.length > 0 && data?.map((item: any, index: number) => (
+                                            <SingleTransaction
+                                                item={item}
+                                                key={index}
+                                                HandleTicketViewing={HandleTicketViewing} />
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </Layout>
     )
