@@ -31,8 +31,8 @@ export default function Dashboard() {
     const { data, isLoading } = useQuery({
         queryKey: ['dsh-payments'],
         queryFn: async () => {
-            const response = await AuthGetApi(`${Apis.all_payments}`)
-            if (response.status === 200) return response.data.splice(0, 5)
+            const response = await AuthGetApi(`${Apis.all_payments}?page_size=5`)
+            if (response.status === 200) return response.data
         },
     staleTime: 0
     })
