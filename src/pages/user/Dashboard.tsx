@@ -6,8 +6,13 @@ import SingleTransaction from "./SingleTransaction";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Alert from "/src/components/utils/Alert";
+import img from '/src/assets/images/dd.svg'
 import ViewTicket from "/src/components/components/ViewTicket";
 import { useQuery } from "@tanstack/react-query";
+import UploadDocument from "./UploadDocument";
+
+
+
 
 
 const dataKeys = [
@@ -27,6 +32,24 @@ export default function Dashboard() {
     const [comp,] = useAtom(Company)
     const [msg, setMsg] = useState({ status: '', message: '' })
     const [single, setSingle] = useState({ status: false, data: {} })
+    const [image, setImage] = useState<any>({ img: null, file: '' })
+    const [views, setViews] = useState(false)
+
+
+    const handlePreview = (e: any) => {
+        const value = e.target.files[0]
+        if (value) {
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                setImage({
+                    img: fileReader.result,
+                    file: value
+                });
+            };
+            fileReader.readAsDataURL(value);
+            setViews(true)
+        }
+    };
 
     const { data, isLoading } = useQuery({
         queryKey: ['dsh-payments'],
@@ -34,9 +57,9 @@ export default function Dashboard() {
             const response = await AuthGetApi(`${Apis.all_payments}?page_size=5`)
             if (response.status === 200) return response.data
         },
-    staleTime: 0
+        staleTime: 0
     })
-    
+
     function HandleTicketViewing(value: any) {
         if (value?.amount) {
             return setSingle({ status: true, data: value })
@@ -59,12 +82,22 @@ export default function Dashboard() {
     return (
         <>
             {single.status && <ViewTicket flight={single.data} closeView={() => setSingle({ ...single, status: false })} />}
-
+            {views && <UploadDocument
+            image={image}
+                closeView={() => setViews(false)}
+            />}
             {msg.message && <Alert status={msg.status} message={msg.message} />}
             <Layout>
                 <div className="font-extrabold text-[2.85rem]">Hello, {comp?.organization_name}</div>
                 <div className="text-zinc-500">Welcome back!</div>
-                <div className="mt-20">
+                <label className="w-fit cursor-pointer">
+                    <div className="h-[16.2rem] border-2 bg-[#76B3F933] mt-10 cursor-pointer border-dashed border-primary w-full rounded-lg flex items-center justify-center flex-col gap-6">
+                        <img src={img} alt="" />
+                        <div className="w-2/5 mx-auto text-center px-4">Select or drag your company’s identity document (CAC) to upload</div>
+                    </div>
+                    <input type="file" hidden onChange={handlePreview} />
+                </label>
+                <div className="mt-16">
                     <div className="overflow-x-auto p-5">
                         <div className=' w-fit lg:w-full'>
                             <div className="tablediv">

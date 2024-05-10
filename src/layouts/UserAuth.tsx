@@ -20,10 +20,10 @@ function UserAuth({ children }: Props) {
 
   useEffect(() => {
     const HandleAuth = async () => {
-      if (!token) return navigate('/login')
-      if (isExpired(token)) return navigate('/login')
+      if (!token) return navigate('/')
+      if (isExpired(token)) return navigate('/')
       const response = await AuthGetApi(`${Apis.view_org}/${Cookies.get(OrgID)}`)
-      if (response.status !== 200) return navigate('/login')
+      if (response.status !== 200) return navigate('/')
       setComp(response.data)
       setAuth(true)
     }

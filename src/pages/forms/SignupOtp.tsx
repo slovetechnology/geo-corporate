@@ -25,7 +25,7 @@ export default function SignupOtp() {
     const [search,] = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [pinParts, setPinParts] = useState(['', '', '', '', '', '']);
-    const [screen, setScreen] = useState(2)
+    const [screen, setScreen] = useState(1)
     const [msg, setMsg] = useState({ status: '', message: '' })
     const navigate = useNavigate()
     const [sendtext, setSendtext] = useState('Resend Code')
@@ -64,7 +64,11 @@ export default function SignupOtp() {
         })
         if (err) return setMsg({ status: 'error', message: `${err}` })
         setMsg({ ...msg, message: '' })
+    setLoading(true)
+    setTimeout(() => {
+        setLoading(false)
         setScreen(2)
+    }, 4000);
     }
 
     const handleSubmit = async (values: FormProps) => {
@@ -77,7 +81,7 @@ export default function SignupOtp() {
             const response = await ClientPostApi(Apis.validate_signup_email_otp, forms)
             if (response.status === 200) {
                 setMsg({ status: 'success', message: response.message })
-                setTimeout(() => navigate('/login'), 2000)
+                setTimeout(() => navigate('/'), 2000)
             } else {
                 setMsg({ status: 'error', message: response.message })
             }

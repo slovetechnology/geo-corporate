@@ -142,7 +142,7 @@ export default function Signup() {
                             error={formik.touched.confirm_password && formik.errors.confirm_password ? formik.errors.confirm_password : ''}
                             /> */}
                             <Formbutton loading={loading} title="Create Account" type="submit" />
-                            <div className="text-slate-500 font-light flex items-center mt-5 justify-center gap-3">Already have an account? <Link to="/login" className='text-black font-bold underline'>Login</Link> </div>
+                            <div className="text-slate-500 font-light flex items-center mt-5 justify-center gap-3">Already have an account? <Link to="/" className='text-black font-bold underline'>Login</Link> </div>
                         </Form>
                     )}
                 </Formik>

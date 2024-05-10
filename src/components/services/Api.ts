@@ -35,7 +35,8 @@ export const Apis = {
     resend_signup_email_otp: corp + `resend-otp/`,
     all_payments: corp + `all-payments`,
     view_org: org + `view`,
-    manage_bookings: `flights/bookings`
+    manage_bookings: `flights/bookings`,
+    upload_document: corp + `documents/uploads`,
 }
 
 export const TiqwaGetApi = async (endpoint: string) => {
@@ -82,7 +83,6 @@ export const ClientPatchApi = async (endpoint: string, data: any) => {
     const res = await axios.patch(`${baseUrl}${endpoint}`, data, {
         headers: {
             // 'Content-Type': 'application/json-patch+json'
-            "Content-Type": "application/json",
         }
     })
     return res.data
@@ -92,7 +92,6 @@ export const AuthGetApi = async (endpoint: string) => {
     const webToken = Cookies.get(MainToken)
     const res = await fetch(`${baseUrl}${endpoint}`, {
         headers: {
-            "Content-Type": "application/json",
             authorization: `Bearer ${webToken}`,
         }
     })
@@ -103,7 +102,6 @@ export const AuthPostApi = async (endpoint: string, data: any) => {
     const webToken = Cookies.get(MainToken)
     const res = await axios.post(`${baseUrl}${endpoint}`, data, {
         headers: {
-            "Content-Type": "application/json",
             authorization: `Bearer ${webToken}`,
         }
     })
@@ -114,7 +112,6 @@ export const AuthPutApi = async (endpoint: string, data: any) => {
     const webToken = Cookies.get(MainToken)
     const res = await axios.put(`${baseUrl}${endpoint}`, data, {
         headers: {
-            "Content-Type": "application/json",
             authorization: `Bearer ${webToken}`,
         }
     })

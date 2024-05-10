@@ -21,9 +21,19 @@ const {data, isLoading} = useQuery({
         return response.data
     }
 })
+const OpenSingleRecord = (value: any) => {
+    console.log(value)
+}
+
+const OpenTicket = (e: any) => {
+    e.stopPropagation()
+    HandleTicketViewing(data)
+}
 if(isLoading) return null
     return (
-        <tr className='tr-extra'>
+        <tr className='tr-extra'
+        onClick={() => OpenSingleRecord({item, data})}
+        >
             <td>{item.name}</td>
             <td>{NairaSign}{parseInt(item?.amount)?.toLocaleString()}</td>
             <td>{Object.keys(data).length > 0 ? formatAirportTitle(data?.outbound[0]?.airportFrom) : ''}</td>
@@ -32,7 +42,7 @@ if(isLoading) return null
             <td>{item.organization_name || '--'}</td>
             <td>--</td>
             <td className="uppercase" ><span className={Status.find((ele: any) => ele.stat.includes(item.status))?.cl}>{item.status}</span></td>
-            <td className="cursor-pointer" onClick={() => HandleTicketViewing(data)}>View Ticket</td>
+            <td className="cursor-pointer" onClick={OpenTicket}>View Ticket</td>
         </tr>
     )
 }

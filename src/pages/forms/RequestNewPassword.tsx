@@ -47,6 +47,21 @@ export default function RequestNewPassword() {
         if (!values.confirm_password) {
             errors.confirm_password = 'Confirm Password is required';
         }
+        if (values.password && values.password.length <= 12) {
+            errors.password = 'Password must be at least 12 characters';
+        }
+        if (values.password && !values.password.match(/[A-Z]/)) {
+            errors.password = 'Password must contain a capital letter';
+        }
+        if (values.password && !values.password.match(/[a-z]/)) {
+            errors.password = 'Password must contain an alphabet';
+        }
+        if (values.password && !values.password.match(/[0-9]/)) {
+            errors.password = 'Password must contain a number';
+        }
+        if (values.password && !values.password.match(/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/)) {
+            errors.password = 'Password must contain a special character';
+        }
         if (values.confirm_password && values.confirm_password !== values.password) {
             errors.confirm_password = 'Password(s) mismatched';
         }

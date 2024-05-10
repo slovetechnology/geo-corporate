@@ -32,7 +32,7 @@ export default function ValidateSignupEmail() {
             console.log(response)
             if(response.status === 200) {
                 setMsg({status:'success', message: response.message})
-                setTimeout(() => navigate('/login'), 2000)
+                setTimeout(() => navigate('/'), 2000)
             }
         } catch (error: any) {
             setMsg({status: 'error', message: `${error.message}`})
