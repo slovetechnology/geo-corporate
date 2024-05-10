@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { usePDF } from "react-to-pdf";
 import ReservationTicket from "./ReservationTicket";
-import { FaTimes } from "react-icons/fa";
 import ModalLayout from "./ModalLayout";
 
 type Props = {
