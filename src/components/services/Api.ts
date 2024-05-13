@@ -35,6 +35,7 @@ export const Apis = {
     resend_signup_email_otp: corp + `resend-otp/`,
     all_payments: corp + `all-payments`,
     view_org: org + `view`,
+    org: org + `list`,
     manage_bookings: `flights/bookings`,
     upload_document: corp + `documents/uploads`,
 }

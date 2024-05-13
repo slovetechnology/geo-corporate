@@ -5,6 +5,7 @@ import { Apis, AuthPostApi } from "/src/components/services/Api";
 import Cookies from "js-cookie";
 import { OrgID } from "/src/components/services/functions";
 import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
     closeView: () => void
@@ -15,18 +16,28 @@ type Props = {
 }
 export default function UploadDocument({ closeView, image }: Props) {
     const [loading, setLoading] = useState(false)
+    const queryClient = useQueryClient();
+
 
     const handleUpload = async (e: any) => {
         e.preventDefault()
         setLoading(true)
         const formdata = new FormData()
-        formdata.append('file', image.file)
+        formdata.append('sla_report', image.file)
         formdata.append('name', "SLA REPORT")
         formdata.append('is_approved', "false")
         formdata.append('organization', `${Cookies.get(OrgID)}`)
         try {
             const response = await AuthPostApi(Apis.upload_document, formdata)
-            console.log(response)
+            if(response.status === 201) {
+                queryClient.refetchQueries({ queryKey: [`auth`] });
+                toast.success(`${response.message}`)
+                closeView()
+                return
+            }else {
+                toast.error(`${response.message}`)
+                return
+            }
         } catch (error: any) {
             toast.error(`${error.message}`)
         }finally {

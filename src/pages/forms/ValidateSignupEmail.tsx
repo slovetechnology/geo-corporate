@@ -29,7 +29,6 @@ export default function ValidateSignupEmail() {
         setLoading(true)
         try {
             const response = await ClientPostApi(Apis.validate_signup_email, forms)
-            console.log(response)
             if(response.status === 200) {
                 setMsg({status:'success', message: response.message})
                 setTimeout(() => navigate('/'), 2000)

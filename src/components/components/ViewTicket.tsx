@@ -3,6 +3,8 @@ import { usePDF } from "react-to-pdf";
 import ReservationTicket from "./ReservationTicket";
 import ModalLayout from "./ModalLayout";
 
+
+
 type Props = {
     flight: any
     closeView: () => void

@@ -1,11 +1,12 @@
 import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { MainToken, OrgID } from '../components/services/functions'
 import { useNavigate } from 'react-router-dom'
 import { isExpired } from 'react-jwt'
 import { Apis, AuthGetApi } from '../components/services/Api'
 import { useAtom } from 'jotai'
-import { Company } from './layoutStore'
+import { Company, OrgProfile } from './layoutStore'
+import { useQuery } from '@tanstack/react-query'
 
 
 type Props = {
@@ -17,18 +18,23 @@ function UserAuth({ children }: Props) {
   const navigate = useNavigate()
   const [auth, setAuth] = useState(false)
   const [, setComp] = useAtom(Company)
+  const [, setOrgProfile] = useAtom(OrgProfile)
 
-  useEffect(() => {
-    const HandleAuth = async () => {
+  const { } = useQuery({
+    queryKey: ['auth'],
+    queryFn: async () => {
       if (!token) return navigate('/')
       if (isExpired(token)) return navigate('/')
       const response = await AuthGetApi(`${Apis.view_org}/${Cookies.get(OrgID)}`)
+      const res = await AuthGetApi(`${Apis.org}/${Cookies.get(OrgID)}`)
       if (response.status !== 200) return navigate('/')
       setComp(response.data)
+      setOrgProfile(res.data)
       setAuth(true)
+      return response.data
     }
-    HandleAuth()
-  }, [])
+  })
+
   if (auth) return (children)
 }
 

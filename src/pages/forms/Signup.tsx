@@ -41,7 +41,6 @@ export default function Signup() {
             if (response.status === 201) {
                 navigate(`/verify_email?v=${values.email}`)
             } else {
-                console.log(response.error.error)
                 setMsg({status: 'error', message: `${response?.data?.message || response.error.error}`})
             }
         } catch (error: any) {

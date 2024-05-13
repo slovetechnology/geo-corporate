@@ -1,15 +1,17 @@
 import { useAtom } from "jotai";
 import Layout from "/src/layouts/Layout";
-import { Company } from "/src/layouts/layoutStore";
+import { Company, OrgProfile } from "/src/layouts/layoutStore";
 import { Apis, AuthGetApi } from "/src/components/services/Api";
 import SingleTransaction from "./SingleTransaction";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Alert from "/src/components/utils/Alert";
 import img from '/src/assets/images/dd.svg'
 import ViewTicket from "/src/components/components/ViewTicket";
 import { useQuery } from "@tanstack/react-query";
 import UploadDocument from "./UploadDocument";
+import Flightcard, { FlightRequest } from "/src/components/components/flights/Flightcard";
+import { FlightcardUsers } from "/src/components/services/functions";
 
 
 
@@ -30,10 +32,16 @@ const dataKeys = [
 
 export default function Dashboard() {
     const [comp,] = useAtom(Company)
+    const [profile,] = useAtom(OrgProfile)
     const [msg, setMsg] = useState({ status: '', message: '' })
     const [single, setSingle] = useState({ status: false, data: {} })
     const [image, setImage] = useState<any>({ img: null, file: '' })
     const [views, setViews] = useState(false)
+    const locals = JSON.parse(localStorage.getItem(FlightRequest) || "null")
+
+    useEffect(() => {
+        if(locals) return localStorage.removeItem(FlightRequest)
+    }, [])
 
 
     const handlePreview = (e: any) => {
@@ -83,21 +91,29 @@ export default function Dashboard() {
         <>
             {single.status && <ViewTicket flight={single.data} closeView={() => setSingle({ ...single, status: false })} />}
             {views && <UploadDocument
-            image={image}
+                image={image}
                 closeView={() => setViews(false)}
             />}
             {msg.message && <Alert status={msg.status} message={msg.message} />}
             <Layout>
                 <div className="font-extrabold text-[2.85rem]">Hello, {comp?.organization_name}</div>
                 <div className="text-zinc-500">Welcome back!</div>
-                <label className="w-fit cursor-pointer">
-                    <div className="h-[16.2rem] border-2 bg-[#76B3F933] mt-10 cursor-pointer border-dashed border-primary w-full rounded-lg flex items-center justify-center flex-col gap-6">
-                        <img src={img} alt="" />
-                        <div className="w-2/5 mx-auto text-center px-4">Select or drag your company’s identity document (CAC) to upload</div>
-                    </div>
-                    <input type="file" hidden onChange={handlePreview} />
-                </label>
-                <div className="mt-16">
+                {profile.documents?.length < 1 && <div className="">
+                    <label className="w-fit cursor-pointer">
+                        <div className="h-[16.2rem] border-2 bg-[#76B3F933] mt-10 cursor-pointer border-dashed border-primary w-full rounded-lg flex items-center justify-center flex-col gap-6">
+                            <img src={img} alt="" />
+                            <div className="w-2/5 mx-auto text-center px-4">Select or drag your company’s identity document (CAC) to upload</div>
+                        </div>
+                        <input type="file" hidden onChange={handlePreview} />
+                    </label>
+                </div>}
+                <div className="mt-10">
+                    <Flightcard
+                    reloadFlight={() => null}
+                        userType={FlightcardUsers.home}
+                    />
+                </div>
+                <div className="mt-16 -z-[99]">
                     <div className="overflow-x-auto p-5">
                         <div className=' w-fit lg:w-full'>
                             <div className="tablediv">
