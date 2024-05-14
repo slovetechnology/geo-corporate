@@ -56,7 +56,7 @@ export default function SignupOtp() {
     }
 
 
-    const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         let err: string = "";
         pinParts.map(ele => {
@@ -64,11 +64,19 @@ export default function SignupOtp() {
         })
         if (err) return setMsg({ status: 'error', message: `${err}` })
         setMsg({ ...msg, message: '' })
-    setLoading(true)
-    setTimeout(() => {
-        setLoading(false)
-        setScreen(2)
-    }, 4000);
+        setLoading(true)
+        try {
+            const response = await ClientPostApi(Apis.query_otp, { otp: pinParts })
+            if (response.status === 201) {
+                setScreen(2)
+            } else {
+                setMsg({ status: 'error', message: response.message || response.otp[0] })
+            }
+        } catch (error: any) {
+            setMsg({ status: 'error', message: `${error.message.message}` })
+        } finally {
+            setLoading(false)
+        }
     }
 
     const handleSubmit = async (values: FormProps) => {
