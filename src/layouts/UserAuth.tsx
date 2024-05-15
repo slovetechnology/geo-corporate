@@ -7,6 +7,8 @@ import { Apis, AuthGetApi } from '../components/services/Api'
 import { useAtom } from 'jotai'
 import { Company, OrgProfile } from './layoutStore'
 import { useQuery } from '@tanstack/react-query'
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 type Props = {
@@ -20,7 +22,7 @@ function UserAuth({ children }: Props) {
   const [, setComp] = useAtom(Company)
   const [, setOrgProfile] = useAtom(OrgProfile)
 
-  const { } = useQuery({
+  const { isLoading} = useQuery({
     queryKey: ['auth'],
     queryFn: async () => {
       if (!token) return navigate('/')
@@ -35,6 +37,15 @@ function UserAuth({ children }: Props) {
     }
   })
 
+  if(isLoading) return (
+    <div className="w-full h-screen flex items-center justify-center">
+        <div className="w-11/12 max-w-xs">
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        </div>
+      </div>
+  )
   if (auth) return (children)
 }
 

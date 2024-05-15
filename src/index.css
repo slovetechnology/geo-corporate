@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "telegraf";   /*Can be any text*/
+  src: local("pp-telegraf"),
+    url("./assets/pp-telegraf.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "telegraf-bold";   /*Can be any text*/
+  src: local("pp-telegraf-ultra"),
+    url("./assets/pp-telegraf-ultra.ttf") format("truetype");
+}
+
+.tts {
+  font-family: telegraf-bold;
+}
 
 * {
   margin: 0;
@@ -27,7 +42,8 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Nunito Sans', sans-serif !important;
+  /* font-family: 'Nunito Sans', sans-serif !important; */
+  font-family: telegraf;
 }
 
 .bgs {
@@ -40,6 +56,9 @@ body {
 
 .btn {
   background: linear-gradient(180deg, #76B3F9 0%, #4272F6 100%);
+}
+.btn2 {
+  background: linear-gradient(90deg, #76B3F9 6.37%, #4272F6 100%);
 }
 
 .input {

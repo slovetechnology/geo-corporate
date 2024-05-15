@@ -15,6 +15,11 @@ type AirportProps = {
     name: string,
 }
 
+export const AccountType = {
+  postpaid: "POSTPAID",
+  prepaid: "PREPAID",
+}
+
 export const FlightcardUsers = {
   affiliate: 'AFFILIATE',
   home: 'home'

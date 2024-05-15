@@ -11,7 +11,8 @@ import ViewTicket from "/src/components/components/ViewTicket";
 import { useQuery } from "@tanstack/react-query";
 import UploadDocument from "./UploadDocument";
 import Flightcard, { FlightRequest } from "/src/components/components/flights/Flightcard";
-import { FlightcardUsers } from "/src/components/services/functions";
+import { AccountType, FlightcardUsers } from "/src/components/services/functions";
+import DashboardWallet from "/src/components/components/DashboardWallet";
 
 
 
@@ -96,7 +97,7 @@ export default function Dashboard() {
             />}
             {msg.message && <Alert status={msg.status} message={msg.message} />}
             <Layout>
-                <div className="font-extrabold text-[2.85rem]">Hello, {comp?.organization_name}</div>
+                <div className="font-extrabold text-[2.85rem] tts">Hello, {comp?.organization_name}</div>
                 <div className="text-zinc-500">Welcome back!</div>
                 {profile.documents?.length < 1 && <div className="">
                     <label className="w-fit cursor-pointer">
@@ -107,6 +108,7 @@ export default function Dashboard() {
                         <input type="file" hidden onChange={handlePreview} />
                     </label>
                 </div>}
+              {comp.account_type === AccountType.postpaid &&  <DashboardWallet />}
                 <div className="mt-10">
                     <Flightcard
                     reloadFlight={() => null}
