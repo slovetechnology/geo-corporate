@@ -66,8 +66,8 @@ export default function SignupOtp() {
         setMsg({ ...msg, message: '' })
         setLoading(true)
         try {
-            const response = await ClientPostApi(Apis.query_otp, { otp: pinParts })
-            if (response.status === 201) {
+            const response = await ClientPostApi(Apis.query_otp, { otp: pinParts.join('') })
+            if (response.status === 200) {
                 setScreen(2)
             } else {
                 setMsg({ status: 'error', message: response.message || response.otp[0] })
