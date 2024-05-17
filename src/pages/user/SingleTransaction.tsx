@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { Apis, TiqwaGetApi } from "/src/components/services/Api"
-import { NairaSign, WebDateFormat, formatAirportTitle } from "/src/components/services/functions"
+import { NairaSign, formatAirportTitle } from "/src/components/services/functions"
 import moment from "moment"
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
 }
 
 const Status = [
-    { stat: ['PAID', 'paid'], cl: 'text-[#57b014] bg-[#e9f8e9] rounded-lg font-bold py-1.5 px-4' },
-    { stat: ['APPROVED UNPAID'], cl: 'text-[#f5b334] bg-[#fff8df] rounded-lg font-bold py-1.5 px-4' },
+    { stat: ['PAID', 'paid'], cl: 'text-[#57b014] bg-[#e9f8e9] text-xs rounded-lg font-bold py-1.5 px-4' },
+    { stat: ['APPROVED UNPAID'], cl: 'text-[#f5b334] bg-[#fff8df] text-xs rounded-lg font-bold py-1.5 px-4' },
 ]
 
 export default function SingleTransaction({ item, HandleTicketViewing }: Props) {
@@ -34,15 +34,13 @@ if(isLoading) return null
         <tr className='tr-extra'
         onClick={() => OpenSingleRecord({item, data})}
         >
-            <td>{item.name}</td>
-            <td>{NairaSign}{parseInt(item?.amount)?.toLocaleString()}</td>
-            <td>{Object.keys(data).length > 0 ? formatAirportTitle(data?.outbound[0]?.airportFrom) : ''}</td>
-            <td>{Object.keys(data).length > 0 ? formatAirportTitle(data?.outbound[0]?.airportTo) : ''}</td>
-            <td>{Object.keys(data).length > 0 ? moment(data?.outbound[0]?.departureTime).format(WebDateFormat) : ''}</td>
-            <td>{item.organization_name || '--'}</td>
-            <td>--</td>
-            <td className="uppercase" ><span className={Status.find((ele: any) => ele.stat.includes(item.status))?.cl}>{item.status}</span></td>
-            <td className="cursor-pointer" onClick={OpenTicket}>View Ticket</td>
+            <td className="truncate">{item.name}</td>
+            <td className="truncate">{NairaSign}{parseInt(item?.amount)?.toLocaleString()}</td>
+            <td className="truncate">{Object.keys(data).length > 0 ? formatAirportTitle(data?.outbound[0]?.airportFrom) : ''}</td>
+            <td className="truncate">{Object.keys(data).length > 0 ? formatAirportTitle(data?.outbound[0]?.airportTo) : ''}</td>
+            <td className="truncate">{Object.keys(data).length > 0 ? moment(data?.outbound[0]?.departureTime).format('MMM MM, YYYY') : ''}</td>
+            <td className="uppercase truncate text-sm" ><span className={Status.find((ele: any) => ele.stat.includes(item.status))?.cl}>{item.status}</span></td>
+            <td className="cursor-pointer truncate underline" onClick={OpenTicket}>View Ticket</td>
         </tr>
     )
 }

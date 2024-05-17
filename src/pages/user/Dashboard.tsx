@@ -25,8 +25,6 @@ const dataKeys = [
     "Origin",
     "Destination",
     "Origin Date/Time",
-    "Initiated By",
-    "Approved By",
     "Payment Status",
     "---",
 ]
@@ -60,7 +58,7 @@ export default function Dashboard() {
         }
     };
 
-    const { data, isLoading } = useQuery({
+    const { isLoading } = useQuery({
         queryKey: ['dsh-payments'],
         queryFn: async () => {
             const response = await AuthGetApi(`${Apis.all_payments}?page_size=5`)
@@ -121,25 +119,31 @@ export default function Dashboard() {
                             <div className="tablediv">
                                 <div className="w-11/12 mx-auto grid grid-cols-5 pb-5">
                                     <div className="font-bold text-2xl col-span-4">Recent Transactions</div>
-                                    <div className="col-span-1">
-                                        <Link to="/transactions" className='text-primary underline capitalize'>view more</Link>
+                                    <div className="col-span-1 w-fit ml-auto">
+                                        <Link to="/transactions" className='text-[#A7A0FF] underline capitalize'>view more</Link>
                                     </div>
                                 </div>
                                 <table>
                                     <thead>
                                         <tr>
                                             {dataKeys.map((ele: string, index: number) => (
-                                                <th key={index}>{ele}</th>
+                                                <th className="truncate" key={index}>{ele}</th>
                                             ))}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.length > 0 && data?.map((item: any, index: number) => (
+                                        {profile.payment_history?.length > 0 ? profile.payment_history?.map((item: any, index: number) => (
                                             <SingleTransaction
                                                 item={item}
                                                 key={index}
                                                 HandleTicketViewing={HandleTicketViewing} />
-                                        ))}
+                                        )) : 
+                                        <tr className="tr-extra">
+                                            {dataKeys.slice(0, -1).map((ele: string, index: number) => (
+                                              <th className="" key={index}> <div className="w-10 mx-auto mt-5 h-1 bg-slate-500 rounded-lg" id={ele}></div></th>
+                                            ))}
+                                        </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>

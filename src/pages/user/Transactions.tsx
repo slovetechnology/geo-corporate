@@ -8,6 +8,8 @@ import { Apis, AuthGetApi } from '/src/components/services/Api'
 import ViewTicket from '/src/components/components/ViewTicket'
 import Alert from '/src/components/utils/Alert'
 import SingleTransaction from './SingleTransaction'
+import { useAtom } from 'jotai'
+import { OrgProfile } from '/src/layouts/layoutStore'
 
 const dataKeys = [
     "",
@@ -16,8 +18,6 @@ const dataKeys = [
     "Origin",
     "Destination",
     "Origin Date/Time",
-    "Initiated By",
-    "Approved By",
     "Payment Status",
     "---",
 ]
@@ -25,8 +25,9 @@ const dataKeys = [
 export default function Transactions() {
     const [msg, setMsg] = useState({ status: '', message: '' })
     const [single, setSingle] = useState({ status: false, data: {} })
+    const [profile,] = useAtom(OrgProfile)
 
-    const { data, isLoading } = useQuery({
+    const { isLoading } = useQuery({
         queryKey: ['dsh-payments'],
         queryFn: async () => {
             const response = await AuthGetApi(`${Apis.all_payments}`)
@@ -77,17 +78,24 @@ export default function Transactions() {
                                     <thead>
                                         <tr>
                                             {dataKeys.map((ele: string, index: number) => (
-                                                <th key={index}>{ele}</th>
+                                                <th className='truncate' key={index}>{ele}</th>
                                             ))}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data?.length > 0 && data?.map((item: any, index: number) => (
+                                    {profile.payment_history?.length > 0 ? profile.payment_history?.map((item: any, index: number) => (
+                                        // {data?.length > 0 && data?.map((item: any, index: number) => (
                                             <SingleTransaction
                                                 item={item}
                                                 key={index}
                                                 HandleTicketViewing={HandleTicketViewing} />
-                                        ))}
+                                        )) : 
+                                        <tr className="tr-extra">
+                                            {dataKeys.slice(0, -1).map((ele: string, index: number) => (
+                                              <th className="" key={index}> <div className="w-10 mx-auto mt-5 h-1 bg-slate-500 rounded-lg" id={ele}></div></th>
+                                            ))}
+                                        </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
