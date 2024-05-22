@@ -47,7 +47,7 @@ export default function RequestNewPassword() {
         if (!values.confirm_password) {
             errors.confirm_password = 'Confirm Password is required';
         }
-        if (values.password && values.password.length <= 12) {
+        if (values.password && values.password.length < 12) {
             errors.password = 'Password must be at least 12 characters';
         }
         if (values.password && !values.password.match(/[A-Z]/)) {

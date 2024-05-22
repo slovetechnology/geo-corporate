@@ -51,7 +51,7 @@ function Login() {
         if(!values.password) {
             errors.password = 'Password is required';
         }
-        if (values.password && values.password.length <= 12) {
+        if (values.password && values.password.length < 12) {
             errors.password = 'Password must be at least 12 characters';
         }
         if (values.password && !values.password.match(/[A-Z]/)) {

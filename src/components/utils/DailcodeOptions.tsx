@@ -43,7 +43,11 @@ const DailcodeOptions = ({ title, setup, defaultValue }: Props) => {
     const handleChange = (val: any) => {
         setText(val)
         if (val.length > 0) {
-            const findText = ApiCountries.filter(ele => ele.name.toLowerCase().includes(val?.toLowerCase()) || ele.dial_code.toLowerCase().includes(val?.toLowerCase()))
+            const findText = ApiCountries.filter(ele => 
+                ele.name.toLowerCase().includes(val?.toLowerCase()) || 
+                ele.dial_code.toLowerCase().includes(val?.toLowerCase()) ||
+                ele.code.toLowerCase().includes(val?.toLowerCase())
+                )
             setCodes(findText)
         } else {
             setCodes(ApiCountries)
@@ -60,10 +64,10 @@ const DailcodeOptions = ({ title, setup, defaultValue }: Props) => {
     }
     return (
         <div className='relative'>
-            <div ref={togref} className={`${view ? '' : 'hidden'} absolute top-[4rem] z-10 left-0 w-full bg-white border shadow-2xl`}>
+            <div ref={togref} className={`${view ? '' : 'hidden'} absolute top-[2.6rem] z-10 left-0 w-full bg-white border shadow-2xl`}>
                 <div className="w-11/12 mx-auto mt-3">
                     <input value={text} onChange={(e: any) => handleChange(e.target.value)} placeholder='Search here!...' type="text" className="w-full p-2 text-sm border rounded-sm" />
-                    <div className="h-[20rem] overflow-y-auto scrolls scrollsdown">
+                    <div className="h-[10rem] overflow-y-auto scrolls scrollsdown">
                         {codes.map((item, i) => {
                             const itemflag = ApiCountryFlags.find((ele: any) => ele.name?.toLocaleLowerCase() === item.code?.toLocaleLowerCase())
                             return (

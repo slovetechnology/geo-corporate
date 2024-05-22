@@ -3,8 +3,6 @@ import Layout from '/src/layouts/Layout'
 import Header from '/src/components/components/Header'
 import { SlMagnifier } from 'react-icons/sl'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Apis, AuthGetApi } from '/src/components/services/Api'
 import ViewTicket from '/src/components/components/ViewTicket'
 import Alert from '/src/components/utils/Alert'
 import SingleTransaction from './SingleTransaction'
@@ -27,15 +25,6 @@ export default function Transactions() {
     const [single, setSingle] = useState({ status: false, data: {} })
     const [profile,] = useAtom(OrgProfile)
 
-    const { isLoading } = useQuery({
-        queryKey: ['dsh-payments'],
-        queryFn: async () => {
-            const response = await AuthGetApi(`${Apis.all_payments}`)
-            if (response.status === 200) return response.data
-        },
-        staleTime: 0
-    })
-
     function HandleTicketViewing(value: any) {
         if (value?.amount) {
             return setSingle({ status: true, data: value })
@@ -45,13 +34,6 @@ export default function Transactions() {
         }, 2000);
         return setMsg({ message: 'Looks like this transaction is not connected to a flight ticket', status: "error" })
     }
-
-    if (isLoading) return (
-        <Layout>
-            <Header />
-
-        </Layout>
-    )
 
     return (
         <Layout>
@@ -84,8 +66,7 @@ export default function Transactions() {
                                     </thead>
                                     <tbody>
                                     {profile.payment_history?.length > 0 ? profile.payment_history?.map((item: any, index: number) => (
-                                        // {data?.length > 0 && data?.map((item: any, index: number) => (
-                                            <SingleTransaction
+                                         item.booking_code !== null && <SingleTransaction
                                                 item={item}
                                                 key={index}
                                                 HandleTicketViewing={HandleTicketViewing} />
