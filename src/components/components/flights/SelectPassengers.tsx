@@ -1,14 +1,10 @@
 import { useState } from 'react'
 import people from "/src/assets/images/people.svg";
 import {
-    IncrementBtn,
     IncrementWrap,
     PassengerSpan,
     PassengerSpan1,
     Passengers,
-    DecrementBtn,
-    DoneBtn,
-    Group,
     Icon2,
     RouteItem
 } from './Styles'
@@ -16,15 +12,17 @@ import { AlertError } from '../../services/functions';
 
 
 type Props = {
-  flightData: any,
-  setFlightData: (val: any) => void,
-  tripState2: any,
-  setTripState2: any,
-  handlePassengers: () => void,
-  togpass: any
+    flightData: any,
+    setFlightData: (val: any) => void,
+    tripState2: any,
+    setTripState2: any,
+    handlePassengers: () => void,
+    togpass: any
 }
 
-export default function SelectPassengers ({flightData, setFlightData, tripState2, setTripState2, togpass }: Props) {
+export default function SelectPassengers({ flightData, setFlightData, tripState2, setTripState2, togpass }: Props) {
+    const dbutton = `border rounded-full pb-1 w-6 h-6 text-xl flex items-center justify-center`
+
     const [total, setTotal] = useState(flightData.adults + flightData.children + flightData.infants)
     const maxPassengers = 9
 
@@ -48,11 +46,13 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                 </PassengerSpan>
             </div>
 
-            <div ref={togpass} className={`${tripState2 ? "flex" : "hidden"} shadow-xl border z-10 flex-col gap-5 absolute bg-white w-[15rem] p-5 top-[2.5rem] right-0`}>
+            <div ref={togpass} className={`${tripState2 ? "flex" : "hidden"} shadow-2xl rounded-xl z-10 flex-col gap-5 absolute bg-white w-[15rem] p-5 top-[2.5rem] right-0`}>
                 <Passengers>
-                    <Group>Adult</Group>
+                    <div className="w-full">
+                        <div className='text-base font-thin'>Adults</div>
+                    </div>
                     <IncrementWrap>
-                        <DecrementBtn
+                        <div className={dbutton}
                             onClick={() => {
                                 if (flightData.adults > 0) {
                                     setTotal((prev: number) => prev - 1)
@@ -67,7 +67,7 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }}
                         >
                             -
-                        </DecrementBtn>
+                        </div>
                         <input
                             value={flightData.adults}
                             onChange={e => {
@@ -79,7 +79,7 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                                 });
                             }}
                         />
-                        <IncrementBtn
+                        <div className={dbutton}
                             onClick={() => {
                                 if (total < maxPassengers) {
                                     setFlightData((prevState: any) => {
@@ -95,13 +95,16 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }
                         >
                             +
-                        </IncrementBtn>
+                        </div>
                     </IncrementWrap>
                 </Passengers>
                 <Passengers>
-                    <Group>Children</Group>
+                    <div className="w-full">
+                        <div className='text-base font-thin'>Children</div>
+                        <div className="text-[0.5rem]">(from 2 to 17 years old)</div>
+                    </div>
                     <IncrementWrap>
-                        <DecrementBtn
+                        <div className={dbutton}
                             onClick={() => {
                                 if (flightData.children > 0) {
                                     setFlightData((prevState: any) => {
@@ -116,7 +119,7 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }}
                         >
                             -
-                        </DecrementBtn>
+                        </div>
                         <input
                             value={flightData.children}
                             onChange={e => {
@@ -128,7 +131,7 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                                 });
                             }}
                         />
-                        <IncrementBtn
+                        <div className={dbutton}
                             onClick={() => {
                                 if (total < maxPassengers) {
                                     setFlightData((prevState: any) => {
@@ -143,14 +146,16 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }}
                         >
                             +
-                        </IncrementBtn>
+                        </div>
                     </IncrementWrap>
                 </Passengers>
                 <Passengers>
-                    <Group>Infants</Group>
-
+                    <div className="w-full">
+                        <div className='text-base font-thin'>Infants</div>
+                        <div className="text-[0.5rem]">(less than 2 years old)</div>
+                    </div>
                     <IncrementWrap>
-                        <DecrementBtn
+                        <div className={dbutton}
                             onClick={() => {
                                 if (flightData.infants > 0) {
                                     setFlightData((prevState: any) => {
@@ -165,7 +170,7 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }}
                         >
                             -
-                        </DecrementBtn>
+                        </div>
                         <input
                             value={flightData.infants}
                             onChange={e => {
@@ -178,7 +183,7 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }}
                         />
 
-                        <IncrementBtn
+                        <div className={dbutton}
                             onClick={() => {
                                 if (total < maxPassengers) {
                                     if (flightData.infants < flightData.adults) {
@@ -195,11 +200,14 @@ export default function SelectPassengers ({flightData, setFlightData, tripState2
                             }}
                         >
                             +
-                        </IncrementBtn>
+                        </div>
                     </IncrementWrap>
                 </Passengers>
 
-                <DoneBtn onClick={handlePassengers2}>Close</DoneBtn>
+                <div className="w-fit ml-auto">
+
+                    <button className='btn h-[1.9rem] w-[4.3rem] rounded-lg text-white' onClick={handlePassengers2}>Close</button>
+                </div>
             </div>
         </RouteItem>
     )

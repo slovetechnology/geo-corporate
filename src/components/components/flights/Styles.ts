@@ -84,9 +84,11 @@ export const SelectedDiv0 = styled.div`
   position: absolute;
   z-index: 99;
   background: #fff;
+  padding: 1.5rem 0;
   width: 200px;
   height: fit-content;
-  top: 30px;
+  top: 45px;
+  left: -20px;
   label {
     display: flex;
     width: 100%;

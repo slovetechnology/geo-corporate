@@ -7,6 +7,7 @@ import RequestNewPassword from "./pages/forms/RequestNewPassword";
 import Signup from "./pages/forms/Signup";
 import SignupOtp from "./pages/forms/SignupOtp";
 import ValidateSignupEmail from "./pages/forms/ValidateSignupEmail";
+import SearchBookings from "./pages/user/Booking/SearchBookings";
 import Dashboard from "./pages/user/Dashboard";
 import Passengers from "./pages/user/Passengers";
 import Transactions from "./pages/user/Transactions";
@@ -28,4 +29,5 @@ export const UserRoutes = [
     {path: "/board", element: Dashboard},
     {path: "/passengers", element: Passengers},
     {path: "/transactions", element: Transactions},
+    {path: "/book-flight", element: SearchBookings},
 ]

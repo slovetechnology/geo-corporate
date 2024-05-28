@@ -236,13 +236,13 @@ export default function SingleMultiFlightOption (props: Props) {
         <div className={`grid grid-cols-1 ${i > 0 ? 'md:grid-cols-7' : 'md:grid-cols-6'} col-span-2 gap-3 w-full`}>
             <ItemWrapper className='col-span-3 mb-3'>
                 <SelectWrapper className='relative'>
-                    <DeptDay className='absolute top-0 left-5'>From</DeptDay>
+              <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Origin</div>
                     <Input
                         autoComplete="off"
                         name="origin"
-                        className={item.errors.includes('first') ? 'border border-red-600' : 'border border-[#eaeaea]'}
+                        className={item.errors.includes('first') ? 'border border-red-600' : 'border border-zinc-400'}
                         onClick={() => { setTogview(!togview); setTogview2(false) }}
-                        placeholder="City or Airport"
+                        placeholder=""
                         onKeyUp={(e: any) => {
                             const val = e.target.value
                             const mappedMulties = multies.map(ele => {
@@ -315,12 +315,13 @@ export default function SingleMultiFlightOption (props: Props) {
                 </SelectWrapper>
 
                 <SelectWrapper className='relative'>
+              <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Destination</div>
                     <Input
                         autoComplete="off"
                         name="destination"
-                        className={item.errors.includes('second') ? 'border border-red-600' : 'border border-[#eaeaea]'}
+                        className={item.errors.includes('second') ? 'border border-red-600' : 'border border-zinc-400'}
                         onClick={() => { setTogview2(!togview2); setTogview(false) }}
-                        placeholder="Travelling to?"
+                        placeholder=""
                         onKeyUp={(e: any) => {
                             const val = e.target.value
                             const mappedMulties = multies.map(ele => {
@@ -394,7 +395,7 @@ export default function SingleMultiFlightOption (props: Props) {
                 <DateWrapper className='w-full gap-3'>
                     <DatePicker
                         disabledDate={disabledDates}
-                        className={`${item.errors.includes('third') ? 'border border-red-600' : 'border border-[#eaeaea]'} datepickerclass`}
+                        className={`${item.errors.includes('third') ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl`}
                         placeholder={moment().format('ddd D MMM')}
                         name="departureDate"
                         defaultValue={flightData.departureDate && dayjs(flightData.departureDate, dateFormat)}
@@ -462,20 +463,15 @@ const SelectWrapper = styled.div`
 
 const Input = styled.input`
   font-size: 14px;
+  background: transparent;
   color: #171b4a;
   width: 100%;
-  height: 54px;
-  background: #fff;
-  border-radius: 4px;
-  padding: 0 20px;
+  height: 44px;
+  border-radius: 8px;
+  padding: 1.5rem 20px;
   font-size: 14px;
   color: #171b4a;
 
-  :active,
-  :focus {
-    outline: none;
-    border: 1px solid #eaeaea;
-  }
   @media only screen and (max-width: 568px) {
     width: 100%;
   }
@@ -490,14 +486,6 @@ const DateWrapper = styled.div`
     margin-bottom: 5px;
   }
 `;
-
-
-const DeptDay = styled.span`
-  font-size: 12px;
-  color: #8b8da4;
-  padding: 5px;
-`;
-
 
 const InputSuggest = styled.div`
   padding: 16px;

@@ -230,19 +230,19 @@ const [profile,] = useAtom(OrgProfile)
     setRolls(!rolls)
   }
   return (
-    <div>
+    <div className='mt-10'>
       {/* ================================================== main flight option */}
       <form onSubmit={handleexploreFlight}>
         <DirectionsWrapper>
           <ItemWrapper>
             <SelectWrapper className='relative'>
-              <DeptDay className='absolute top-0 left-5'>From</DeptDay>
+              <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Origin</div>
               <Input
                 autoComplete="off"
                 name="origin"
-                className={flighterror === 'origin' ? 'border border-red-600' : 'border border-[#eaeaea]'}
+                className={`${flighterror === 'origin' ? 'border border-red-600' : 'border border-zinc-400'}`}
                 onClick={() => { setTogview(!togview); setTogview2(false) }}
-                placeholder="City or Airport"
+                placeholder=""
                 onChange={(e) => {
                   fetchOriginAirports(e.target.value);
                   setTogview(false)
@@ -289,12 +289,13 @@ const [profile,] = useAtom(OrgProfile)
             </SelectWrapper>
 
             <SelectWrapper className='relative'>
+            <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Destination</div>
               <Input
                 autoComplete="off"
                 name="destination"
-                className={flighterror === 'destination' ? 'border border-red-600' : 'border border-[#eaeaea]'}
+                className={`${flighterror === 'destination' ? 'border border-red-600' : 'border border-zinc-400'}`}
                 onClick={() => { setTogview2(!togview2); setTogview(false) }}
-                placeholder="Travelling to?"
+                placeholder=""
                 onChange={(e) => {
                   fetchDestAirports(e.target.value);
                   setTogview2(false)
@@ -337,10 +338,11 @@ const [profile,] = useAtom(OrgProfile)
             </SelectWrapper>
           </ItemWrapper>
           <ItemWrapper>
+            <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Date</div>
             <DateWrapper className='w-full gap-3'>
               <DatePicker
                 disabledDate={disabledDate}
-                className={`${flighterror === 'departureDate' ? 'border border-red-600' : 'border border-[#eaeaea]'} datepickerclass w-full`}
+                className={`${flighterror === 'departureDate' ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl`}
                 placeholder={moment().format('ddd D MMM')}
                 name="departureDate"
                 defaultValue={flightData.departureDate && dayjs(flightData.departureDate, dateFormat)}
@@ -358,7 +360,7 @@ const [profile,] = useAtom(OrgProfile)
               {localTrip !== 'one-way' ?
                 <DatePicker
                   disabledDate={disabledDate2}
-                  className={`${flighterror === 'returnDate' ? 'border border-red-600' : 'border border-[#eaeaea]'} datepickerclass w-full`}
+                  className={`${flighterror === 'returnDate' ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl`}
                   placeholder={moment().format('ddd D MMM')}
                   defaultValue={flightData.returnDate && dayjs(flightData.returnDate, dateFormat)}
                   format={dateFormat}
@@ -378,10 +380,10 @@ const [profile,] = useAtom(OrgProfile)
           </ItemWrapper>
           <div className='w-full ml-auto sm:w-fit'>
           {(profile.documents.length < 1 || !profile.documents[0]?.is_approved) && 
-           <button className='flex items-center gap-2 py-3 text-zinc-500 rounded-lg px-7 bg-zinc-300'>Explore{btnloader && <div className="spin"></div>}</button>
+           <button className='flex items-center gap-2 py-3 text-zinc-500 rounded-lg px-7 bg-zinc-300'>Search{btnloader && <div className="spin"></div>}</button>
            }
           {profile.documents.length > 0 && profile.documents[0]?.is_approved && 
-           <button className='flex items-center gap-2 py-3 text-white rounded-lg px-7 btn'>Explore{btnloader && <div className="spin"></div>}</button>
+           <button className='flex items-center gap-2 py-3 text-white rounded-lg px-7 btn'>Search{btnloader && <div className="spin"></div>}</button>
            }
           </div>
         </DirectionsWrapper>
@@ -406,7 +408,7 @@ const InputSuggestWrapper = styled.div`
 
 
 const DirectionsWrapper = styled.div`
-  margin: 5px 0;
+  margin: 30px 0;
   display: flex;
   gap: 10px;
   @media only screen and (max-width: 568px) {
@@ -441,20 +443,15 @@ const SelectWrapper = styled.div`
 
 const Input = styled.input`
   font-size: 14px;
+  background: transparent;
   color: #171b4a;
   width: 100%;
-  height: 54px;
-  background: #fff;
-  border-radius: 4px;
-  padding: 0 20px;
+  height: 44px;
+  border-radius: 8px;
+  padding: 1.5rem 20px;
   font-size: 14px;
   color: #171b4a;
 
-  :active,
-  :focus {
-    outline: none;
-    border: 1px solid #eaeaea;
-  }
   @media only screen and (max-width: 568px) {
     width: 100%;
   }
@@ -467,13 +464,6 @@ const DateWrapper = styled.div`
     width: 100%;
     margin-bottom: 5px;
   }
-`;
-
-
-const DeptDay = styled.span`
-  font-size: 12px;
-  color: #8b8da4;
-  padding: 5px;
 `;
 
 const InputSuggest = styled.div`

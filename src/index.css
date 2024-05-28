@@ -307,11 +307,14 @@ button:focus {
   color: #171b4a;
   width: 100%;
   height: 54px;
-  background: #fff;
   border-radius: 4px;
   padding: 0 20px;
   font-size: 14px;
   color: #171b4a;
+}
+
+input:active, input:focus {
+  outline: none!important;
 }
 
 .datepickerclass {
@@ -319,17 +322,10 @@ button:focus {
   color: #171b4a;
   width: 100%;
   height: 54px;
-  background: #fff;
   border-radius: 4px;
-  padding: 0 20px;
+  padding: 1px 20px;
   font-size: 14px;
   color: #171b4a;
-}
-
-.datepickerclass:active,
-:focus {
-  outline: none;
-  border: 1px solid #eaeaea;
 }
 
 

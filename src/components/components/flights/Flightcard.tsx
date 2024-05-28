@@ -30,6 +30,7 @@ type Props = {
   handleFilterForMobile?: (val: any) => void
   reloadFlight: () => void
   userType: string
+  shadow: boolean
 }
 
 const FlightTripTypes = [
@@ -39,11 +40,11 @@ const FlightTripTypes = [
 ]
 
 
-export default function Flightcard({ handleFilterForMobile, reloadFlight, userType }: Props) {
+export default function Flightcard({ handleFilterForMobile, reloadFlight, userType, shadow }: Props) {
   const location = useLocation();
   const togcabin = useRef<HTMLDivElement>(null);
   const togpass = useRef<HTMLDivElement>(null);
-  const cabinactive = "bg-primary text-white";
+  const cabinactive = "bg-[#AED3FF4D] text-primary";
   const localTrip = JSON.parse(localStorage.getItem(TripName) || "null");
   const recentCities = JSON.parse(localStorage.getItem("recent-cities") || "null");
   const localFlight = JSON.parse(localStorage.getItem(FlightRequest) || "null");
@@ -162,7 +163,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
   return (
     <>
         {profile.documents.length > 0 && !profile.documents[0]?.is_approved && <div className="bg-orange-400 text-white rounded-lg w-fit font-semibold ml-10 mb-5 py-2 px-5">Pending Approval</div>}
-    <div className=" z-[1] bg-white w-[95%] max-w-[65rem] relative py-4 px-3 md:px-5 mx-auto backdrop-blur-md rounded-xl shadow-xl">
+    <div className={` z-[1] relative py-4 px-3 md:px-5 backdrop-blur-md rounded-xl ${shadow ? 'shadow-xl bg-white' : ''}`}>
       <CardHolder>
         <div className='mb-6 flex flex-wrap items-center justify-between gap-10'>
           <RouteItem>
@@ -170,7 +171,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
               {FlightTripTypes.map((ele, i) => (
                 <button
                   onClick={() => handleTripType(ele.tag)}
-                  className={`${localTrip === ele.tag ? 'btn text-white scale-110' : 'bg-zinc-300 text-zinc-500'} transition-all py-2 px-4 rounded-lg`} key={i}>{ele.title}</button>
+                  className={`${localTrip === ele.tag ? 'btn text-white scale-110' : 'bg-white shadow-2xl text-zinc-500'} transition-all py-1.5 px-5 rounded-full`} key={i}>{ele.title}</button>
               ))}
             </div>}
             {(profile.documents.length < 1 || !profile.documents[0]?.is_approved) && <div className="flex gap-4 items-center">
@@ -213,11 +214,11 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
                 </SelectDiv>
                 <SelectedDiv0
                   ref={togcabin}
-                  className={`shadow-lg ${cabinState ? "" : "hidden"} rounded-lg`}
+                  className={`shadow-2xl ${cabinState ? "" : "hidden"} rounded-lg`}
                 >
                   <div
                     onClick={() => handleCabinType("economy")}
-                    className={`flex items-center capitalize p-2 gap-3 ${flightData.cabin === "economy" ? cabinactive : null
+                    className={`flex items-center capitalize py-2 px-6 gap-3 ${flightData.cabin === "economy" ? cabinactive : null
                       }`}
                   >
 
@@ -225,7 +226,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
                   </div>
                   <div
                     onClick={() => handleCabinType("business")}
-                    className={`flex items-center capitalize p-2 gap-3 ${flightData.cabin === "business" ? cabinactive : null
+                    className={`flex items-center capitalize py-2 px-6 gap-3 ${flightData.cabin === "business" ? cabinactive : null
                       }`}
                   >
 
@@ -233,7 +234,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
                   </div>
                   <div
                     onClick={() => handleCabinType("first class")}
-                    className={`flex items-center capitalize p-2 gap-3 ${flightData.cabin === "first class" ? cabinactive : null
+                    className={`flex items-center capitalize py-2 px-6 gap-3 ${flightData.cabin === "first class" ? cabinactive : null
                       }`}
                   >
 
@@ -241,7 +242,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
                   </div>
                   <div
                     onClick={() => handleCabinType("premium")}
-                    className={`flex items-center capitalize p-2 gap-3 ${flightData.cabin === "premium" ? cabinactive : null
+                    className={`flex items-center capitalize py-2 px-6 gap-3 ${flightData.cabin === "premium" ? cabinactive : null
                       }`}
                   >
 

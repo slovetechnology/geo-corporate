@@ -37,7 +37,7 @@ export default function Dashboard() {
     const locals = JSON.parse(localStorage.getItem(FlightRequest) || "null")
 
     useEffect(() => {
-        if(locals) return localStorage.removeItem(FlightRequest)
+        if (locals) return localStorage.removeItem(FlightRequest)
     }, [])
 
 
@@ -95,11 +95,12 @@ export default function Dashboard() {
                         <input type="file" hidden onChange={handlePreview} />
                     </label>
                 </div>}
-              {comp.account_type === AccountType.postpaid &&  <DashboardWallet />}
+                {comp.account_type === AccountType.postpaid && <DashboardWallet />}
                 <div className="mt-10">
                     <Flightcard
-                    reloadFlight={() => null}
+                        reloadFlight={() => null}
                         userType={FlightcardUsers.home}
+                        shadow={true}
                     />
                 </div>
                 <div className="mt-16 -z-[99]">
@@ -122,16 +123,16 @@ export default function Dashboard() {
                                     </thead>
                                     <tbody>
                                         {profile.payment_history?.length > 0 ? profile.payment_history.slice(0, 6)?.map((item: any, index: number) => (
-                                          item.booking_code !== null &&  <SingleTransaction
+                                            item.booking_code !== null && <SingleTransaction
                                                 item={item}
                                                 key={index}
                                                 HandleTicketViewing={HandleTicketViewing} />
-                                        )) : 
-                                        <tr className="tr-extra">
-                                            {dataKeys.slice(0, -1).map((ele: string, index: number) => (
-                                              <th className="" key={index}> <div className="w-10 mx-auto mt-5 h-1 bg-slate-500 rounded-lg" id={ele}></div></th>
-                                            ))}
-                                        </tr>
+                                        )) :
+                                            <tr className="tr-extra">
+                                                {dataKeys.slice(0, -1).map((ele: string, index: number) => (
+                                                    <th className="" key={index}> <div className="w-10 mx-auto mt-5 h-1 bg-slate-500 rounded-lg" id={ele}></div></th>
+                                                ))}
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

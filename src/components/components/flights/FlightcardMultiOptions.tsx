@@ -100,7 +100,7 @@ export default function FlightcardMultiOptions (props: Props) {
         <div>
             {/* ================================================== main flight option */}
             <form onSubmit={handleexploreFlight}>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-3 mt-10'>
                     {multies.map((item: any, index: number) => (
                         <SingleMultiFlightOption
                             key={index}
@@ -121,7 +121,7 @@ export default function FlightcardMultiOptions (props: Props) {
                         </div>
                         <div className="w-fit ml-auto">
                             <div className='w-full sm:w-fit ml-auto'>
-                                <button className='py-4 px-7 rounded-lg btn text-white flex items-center gap-2'>Explore{btnloader && <div className="spin"></div>}</button>
+                                <button className='py-4 px-7 rounded-lg btn text-white flex items-center gap-2'>Search{btnloader && <div className="spin"></div>}</button>
                             </div>
                         </div>
                     </div>
