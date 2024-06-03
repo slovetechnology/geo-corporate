@@ -38,6 +38,7 @@ export default function SignupOtp() {
             email
         }
         try {
+            setMsg({ status: '', message: '' })
             const response = await ClientPostApi(Apis.resend_signup_email_otp, forms)
             if (response.status === 200)
                 setSendtext('Code sent, check your Email..')
@@ -143,7 +144,6 @@ export default function SignupOtp() {
         <FormPage>
             {msg.message && <Alert status={msg.status} message={msg.message} />}
             {screen === 1 && <div className="w-full">
-
                 <form onSubmit={handleSubmission} className="">
                     <div className="flex items-center justify-center gap-5 mb-7">
                         {/* <img src={arrowleft} alt="GeoTravel" /> */}
@@ -162,12 +162,11 @@ export default function SignupOtp() {
                             onClick={ResendOTPCode}
                             className="underline text-black">{sendtext}</button> </div>
                     <div className="">
-                        <Formbutton type="submit" title="Next" loading={loading} />
+                        <Formbutton type="submit" title="Verify" loading={loading} />
                     </div>
                 </form>
             </div>}
             {screen === 2 && <div className='w-full'>
-
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
                         <img onClick={() => setScreen(1)} src={arrowleft} alt="GeoTravel" className='cursor-pointer' />

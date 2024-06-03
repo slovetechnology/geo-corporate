@@ -38,6 +38,7 @@ export const Apis = {
     org: org + `list`,
     manage_bookings: `flights/bookings`,
     upload_document: corp + `documents/uploads`,
+    query_email: corp + `query-email/`,
 }
 
 export const TiqwaGetApi = async (endpoint: string) => {
