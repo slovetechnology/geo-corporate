@@ -26,14 +26,16 @@ function Login() {
                 password: values.password
             }
             const response = await ClientPostApi(Apis.login, forms)
-            if(response.status === 200) {
+            if (response.status === 200) {
                 Cookies.set(MainToken, response.data.tokens.access)
                 Cookies.set(OrgID, response.data.tokens.organization_id)
                 Cookies.set(UserID, response.data.tokens.user_id)
-                    setMsg({ status: "success", message: `${response.message}` })
-                        setTimeout(() => navigate('/board'), 2000)
+                setMsg({ status: "success", message: `${response.message}` })
+                setTimeout(() => navigate('/board'), 2000)
+            } else if(response.message.includes('OTP not validated!')) {
+                navigate(`/request_otp?mail=${forms.username}`)
             }else {
-                    setMsg({ status: "error", message: `${response.message}` })
+                setMsg({ status: "error", message: `${response.message}, Void` })
             }
         } catch (error: any) {
             setMsg({ status: 'error', message: `${error.message}` })
@@ -44,34 +46,34 @@ function Login() {
     const validateForm = (values: FormProps) => {
         const errors: any = {}
         if (!values.email) {
-          errors.email = "Email is required";
+            errors.email = "Email is required";
         } else if (!validator.isEmail(values.email)) {
-          errors.email = 'Invalid email address'
+            errors.email = 'Invalid email address'
         }
-        if(!values.password) {
+        if (!values.password) {
             errors.password = 'Password is required';
         }
-        if (values.password && values.password.length < 12) {
-            errors.password = 'Password must be at least 12 characters';
-        }
-        if (values.password && !values.password.match(/[A-Z]/)) {
-            errors.password = 'Password must contain a capital letter';
-        }
-        if (values.password && !values.password.match(/[a-z]/)) {
-            errors.password = 'Password must contain an alphabet';
-        }
-        if (values.password && !values.password.match(/[0-9]/)) {
-            errors.password = 'Password must contain a number';
-        }
-        if (values.password && !values.password.match(/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/)) {
-            errors.password = 'Password must contain a special character';
-        }
+        // if (values.password && values.password.length < 12) {
+        //     errors.password = 'Password must be at least 12 characters';
+        // }
+        // if (values.password && !values.password.match(/[A-Z]/)) {
+        //     errors.password = 'Password must contain a capital letter';
+        // }
+        // if (values.password && !values.password.match(/[a-z]/)) {
+        //     errors.password = 'Password must contain an alphabet';
+        // }
+        // if (values.password && !values.password.match(/[0-9]/)) {
+        //     errors.password = 'Password must contain a number';
+        // }
+        // if (values.password && !values.password.match(/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/)) {
+        //     errors.password = 'Password must contain a special character';
+        // }
         return errors
     }
     return (
         <FormPage>
             <div className="w-full">
-{msg.message && <Alert status={msg.status} message={msg.message} /> }
+                {msg.message && <Alert status={msg.status} message={msg.message} />}
                 <div className="font-extrabold text-center text-3xl capitalize mb-10">welcome back</div>
                 <Formik
                     initialValues={{ email: '', password: '' }}
@@ -80,16 +82,16 @@ function Login() {
                 >
                     {(formik) => (
                         <Form>
-                            <Forminput 
-                            placeholder='Email Address' 
-                            name="email"
-                            error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
+                            <Forminput
+                                placeholder='Email Address'
+                                name="email"
+                                error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
                             />
-                            <Forminput 
-                            name="password"
-                            type="password"
-                            placeholder='Password' 
-                            error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
+                            <Forminput
+                                name="password"
+                                type="password"
+                                placeholder='Password'
+                                error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
                             />
                             <div className="grid grid-cols-1 md:grid-cols-2 mb-10 mt-8">
                                 <div>

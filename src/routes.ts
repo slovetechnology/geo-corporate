@@ -11,12 +11,15 @@ import SearchBookings from "./pages/user/Booking/SearchBookings";
 import Dashboard from "./pages/user/Dashboard";
 import Passengers from "./pages/user/Passengers";
 import Transactions from "./pages/user/Transactions";
+import LoginOtpRequest from "./pages/forms/LoginOtpRequest";
+import FlightSelector from "./pages/user/Booking/FlightSelector";
 
 export const FormsRoutes = [
     {path: `/`, element: Login},
     {path: `/*`, element: ErrorPage},
     {path: `/signup`, element: Signup},
     {path: `/verify_email`, element: SignupOtp},
+    {path: `/request_otp`, element: LoginOtpRequest},
     {path: `/account_confirmed`, element: AccountConfirmed},
     {path: `/confirm_signup`, element: ConfirmSignup}, // for signup
     {path: `/confirm_email`, element: ConfirmSignup}, // for forgot password
@@ -30,4 +33,5 @@ export const UserRoutes = [
     {path: "/passengers", element: Passengers},
     {path: "/transactions", element: Transactions},
     {path: "/book-flight", element: SearchBookings},
+    {path: "/book-flight/search", element: FlightSelector},
 ]
