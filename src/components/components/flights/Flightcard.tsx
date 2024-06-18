@@ -97,6 +97,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
 
   // handleApi call
   const exploreFlight = async (extravalues: any) => {
+    return navigate('/book-flight/search')
     setNum(0)
     let flightExtra = {}, newLink: string;
     setLoads(true)
@@ -122,11 +123,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, userTy
     localStorage.removeItem(FlightRequest)
     setTimeout(() => {
       localStorage.setItem(FlightRequest, JSON.stringify(flightExtra))
-      if (userType === FlightcardUsers.affiliate) {
-        newLink = `/affiliate/selectFlight`;
-      } else {
-        newLink = `/selectFlight`;
-      }
+        newLink = `/book-flight/search`;
       setTimeout(() => {
         if (location.pathname === newLink) {
           reloadFlight()
