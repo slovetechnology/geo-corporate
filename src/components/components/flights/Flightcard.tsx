@@ -8,7 +8,6 @@ import { useAtom } from "jotai";
 import SelectPassengers from "./SelectPassengers";
 import moment from "moment";
 import { FlightDelay, FlightNumber, OrgProfile } from "/src/layouts/layoutStore";
-import { FlightcardUsers } from "../../services/functions";
 import FlightcardMultiOptions from "./FlightcardMultiOptions";
 import FlightcardMainOptions from "./FlightcardMainOptions";
 import {
@@ -40,7 +39,7 @@ const FlightTripTypes = [
 ]
 
 
-export default function Flightcard({ handleFilterForMobile, reloadFlight, userType, shadow }: Props) {
+export default function Flightcard({ handleFilterForMobile, reloadFlight, shadow }: Props) {
   const location = useLocation();
   const togcabin = useRef<HTMLDivElement>(null);
   const togpass = useRef<HTMLDivElement>(null);

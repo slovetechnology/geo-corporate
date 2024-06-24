@@ -18,7 +18,9 @@ export default function FlightSelector() {
                 <div className="grid grid-cols-1 lg:grid-cols-8 gap-5">
                     <div className="lg:col-span-5">
                         {new Array(10).fill(0).map((item, index) => (
-                            <SingleFlightOffer key={index} />
+                            <div key={index} id={item}>
+                                <SingleFlightOffer />
+                            </div>
                         ))}
                     </div>
                     <div className="lg:col-span-3"></div>

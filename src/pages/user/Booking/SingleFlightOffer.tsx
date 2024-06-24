@@ -141,10 +141,10 @@ export default function SingleFlightOffer() {
                     </div>
                     <div className="col-span-3 border-l border-zinc-300 pl-5">
                         {new Array(2).fill(0).map((ele, index) => (
-                            <div className="mb-4" key={index}>
+                            <div className="mb-4" id={ele} key={index}>
                                 <div className="tts mb-3">{index === 0 ? 'Flight to Kenya' : 'Flight to Lagos'}</div>
                                 {new Array(3).fill(0).map((item, i) => (
-                                    <div className="mb-4" key={i}>
+                                    <div className="mb-4" id={item} key={i}>
                                         <div className="flex items-center gap-5">
                                             <img src={i === 2 ? img : img1} alt="" className="w-7 h-auto" />
                                             <div className="w-full text-xs">
