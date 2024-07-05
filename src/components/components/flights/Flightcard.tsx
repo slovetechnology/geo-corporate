@@ -260,6 +260,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, shadow
               flightDatatype={flightData.flighttype}
               color="text-white"
             />}
+            
 
           {location.pathname === "/selectFlight" && (
             <div className='mt-10'>
