@@ -17,11 +17,11 @@ export default function SideLink({ item }: Props) {
     return (
         <Link
           to={item.url}
-          className={`flex transition-all items-center h-[4.2rem] hover:bg-primary ${item.url.includes(location.pathname) ? 'bg-primary text-white' : ''} hover:text-white rounded-lg justify-center gap-3 py-4 capitalize w-full`}
+          className={`flex transition-all items-center h-[4.2rem] hover:bg-primary ${item.url.includes(location.pathname) ? 'bg-primary text-white' : ''} hover:text-white rounded-lg justify-center gap-3 py-4 capitalize w-full text-[1.125rem]`}
           onMouseEnter={() => setImgSrc(true)}
           onMouseLeave={() => setImgSrc(false)}
         >
-          <img src={item.url.includes(location.pathname) ? item.sec : imgSrc ? item.sec : item.img} alt="" className="" />
+          <img src={item.url.includes(location.pathname) ? item.sec : imgSrc ? item.sec : item.img} alt="" className="w-[1.56] h-[1.56]" />
           {item.title}
         </Link>
     )

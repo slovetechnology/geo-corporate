@@ -35,7 +35,7 @@ export default function Layout({ children }: Props) {
         <div ref={togref} className={`bg-white h-screen w-3/5 sidebar`}>
           <div className="">
             <div className="flex items-center justify-center flex-col w-11/12 mx-auto gap-1">
-              <div className="font-extrabold text-2xl mt-10 mb-20">Geo Travel</div>
+              <div className="text-2xl tts mt-10 mb-20">Geo Travel</div>
               {SideLinks.map((item, index) => (
                 <SideLink key={index} item={item} />
               ))}
@@ -43,16 +43,16 @@ export default function Layout({ children }: Props) {
           </div>
         </div>
       </div>: null}
-      <div className="h-screen overflow-x-hidden bg-zinc-50 flex items-center">
-        <div className="lg:w-[20%] border border-r border-[#B3AFAF] hidden lg:block h-screen">
+      <div className="h-screen overflow-x-hidden bg-white flex items-center">
+        <div className="lg:w-[14.56rem] border border-r border-[#B3AFAF] hidden lg:block h-screen">
           <div className="flex items-center justify-center flex-col w-11/12 mx-auto gap-1">
-            <div className="font-extrabold text-2xl mt-10 mb-20">Geo Travel</div>
+          <div className="text-2xl tts mt-10 mb-20">Geo Travel</div>
             {SideLinks.map((item, index) => (
               <SideLink key={index} item={item} />
             ))}
           </div>
         </div>
-        <div className="h-screen w-full lg:w-[80%] ml-auto">
+        <div className="h-screen w-full lg:w-full ml-auto">
           {/* header */}
           <div className="sticky top-0 left-0 w-full">
             <div className="flex items-center justify-between w-11/12 mx-auto py-2.5">

@@ -206,10 +206,6 @@ table tbody tr:last-child {
   to {transform: translateX(0);}
 }
 
-button:focus {
-  border: none;
-}
-
 .bg-card {
   background-image: linear-gradient(to right top, #c3d16b, #ecb65f, #ff9974, #ff849b, #e380c5, #c28fe5, #92a0f9, #4faeff, #00c4ff, #00d8ff, #19ebfd, #5ffbf1);
 }
@@ -1090,4 +1086,10 @@ height: 7rem;
   to {
     transform: translateY(0rem);
   }
+}
+
+
+/* ============================================================================================== */
+.dropshad {
+  box-shadow: 4px 4px 39px 0px #0000001A;
 }

@@ -84,7 +84,7 @@ export default function Dashboard() {
             />}
             {msg.message && <Alert status={msg.status} message={msg.message} />}
             <Layout>
-                <div className="font-extrabold text-[2.85rem] tts">Hello, {comp?.organization_name}</div>
+                <div className="font-extrabold text-[2.8125rem] tts">Hello, {comp?.organization_name}</div>
                 <div className="text-zinc-500">Welcome back!</div>
                 {profile.documents?.length < 1 && <div className="">
                     <label className="w-fit cursor-pointer">
@@ -108,9 +108,9 @@ export default function Dashboard() {
                         <div className=' w-fit lg:w-full'>
                             <div className="tablediv">
                                 <div className="w-11/12 mx-auto grid grid-cols-5 pb-5">
-                                    <div className="font-bold text-2xl col-span-4">Recent Transactions</div>
+                                    <div className="tts text-2xl col-span-4">Recent Transactions</div>
                                     <div className="col-span-1 w-fit ml-auto">
-                                        <Link to="/transactions" className='text-[#A7A0FF] underline capitalize'>view more</Link>
+                                        <Link to="/transactions" className='text-[#A7A0FF] text-[1.0625rem] underline capitalize'>view more</Link>
                                     </div>
                                 </div>
                                 <table>
