@@ -59,7 +59,7 @@ export default function ValidateSignupEmail() {
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
                         <img src={arrowleft} alt="GeoTravel" />
-                        <div className="font-bold text-center text-2xl capitalize">Setup password</div>
+                        <div className="tts text-center text-2xl capitalize">Setup password</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={pswd} alt="" className="" /> </div>
                     <div className="text-center w-3/5 mx-auto">Setup a password on your account.</div>

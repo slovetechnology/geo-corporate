@@ -4,7 +4,7 @@ import { useState } from 'react'
 import FormPage from '/src/layouts/FormPage'
 import { Form, Formik } from 'formik'
 import Formbutton from '/src/components/utils/Formbutton'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Forminput from '/src/components/utils/Forminput'
 import validator from 'validator'
 import arrowleft from '/src/assets/images/arrowleft.svg'
@@ -50,11 +50,11 @@ export default function ForgotPassword() {
                 {msg.message && <Alert status={msg.status} message={msg.message} />}
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
-                        <img src={arrowleft} alt="GeoTravel" />
-                        <div className="font-bold text-center text-2xl capitalize">forgot password</div>
+                    <Link to="/"><img src={arrowleft} className='' alt="GeoTravel" /></Link>
+                        <div className="tts text-center text-2xl capitalize">forgot password</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={pswd} alt="" className="" /> </div>
-                    <div className="text-center w-3/5 mx-auto">Please enter your email address to receive a verification code</div>
+                    <div className="text-center  mx-auto">Enter your email below to reset password.</div>
                 </div>
                 <Formik
                     initialValues={{ email: '' }}
@@ -64,11 +64,11 @@ export default function ForgotPassword() {
                     {(formik) => (
                         <Form>
                             <Forminput
-                                placeholder='Contact Email'
+                                placeholder='Work Email'
                                 name="email"
                                 error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
                             />
-                            <Formbutton loading={loading} title="Send" type="submit" />
+                            <Formbutton loading={loading} active={!formik.values.email ? false : true} title="Reset Password" type="submit" />
                         </Form>
                     )}
                 </Formik>

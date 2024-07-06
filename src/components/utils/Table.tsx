@@ -8,8 +8,8 @@ type Props = {
 }
 
 const Status = [
-    { stat: 'paid', cl: 'text-[#57b014] bg-[#e9f8e9] rounded-lg font-bold py-1.5 px-4' },
-    { stat: 'unpaid', cl: 'text-[#f5b334] bg-[#fff8df] rounded-lg font-bold py-1.5 px-4' },
+    { stat: 'paid', cl: 'text-[#57b014] bg-[#e9f8e9] rounded-lg tts py-1.5 px-4' },
+    { stat: 'unpaid', cl: 'text-[#f5b334] bg-[#fff8df] rounded-lg tts py-1.5 px-4' },
 ]
 function Table({ keys, values, data, title }: Props) {
 
@@ -30,7 +30,7 @@ function Table({ keys, values, data, title }: Props) {
             <div className=' w-fit lg:w-full'>
                 <div className="tablediv">
                    {title && <div className="w-11/12 mx-auto grid grid-cols-5 pb-5">
-                        <div className="font-bold text-2xl col-span-4">{title}</div>
+                        <div className="tts text-2xl col-span-4">{title}</div>
                         <div className="col-span-1">
                             <Link to="" className='text-primary underline capitalize'>view more</Link>
                         </div>

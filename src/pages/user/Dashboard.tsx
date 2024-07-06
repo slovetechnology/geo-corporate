@@ -68,7 +68,7 @@ export default function Dashboard() {
 
     // if (isLoading) return (
     //     <Layout>
-    //         <div className="font-extrabold text-[2.85rem]">Hello, {comp?.organization_name}</div>
+    //         <div className="tts text-[2.85rem]">Hello, {comp?.organization_name}</div>
     //         <div className="text-zinc-500">Welcome back!</div>
     //         <div className="mt-20">
     //         </div>
@@ -84,7 +84,7 @@ export default function Dashboard() {
             />}
             {msg.message && <Alert status={msg.status} message={msg.message} />}
             <Layout>
-                <div className="font-extrabold text-[2.8125rem] tts">Hello, {comp?.organization_name}</div>
+                <div className="tts text-[2.8125rem] tts">Hello, {comp?.organization_name}</div>
                 <div className="text-zinc-500">Welcome back!</div>
                 {profile.documents?.length < 1 && <div className="">
                     <label className="w-fit cursor-pointer">

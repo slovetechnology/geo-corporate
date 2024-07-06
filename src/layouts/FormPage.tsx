@@ -15,7 +15,7 @@ export default function FormPage({ children }: Props) {
                     <div className="pls w-full h-[90dvh]"></div>
                 </div>
                 <div className="pb-10">
-                    <div className="rounded-xl bg-white h-[40rem] w-11/12 px-10 py-14 max-w-xl mx-auto">
+                    <div className="rounded-xl bg-white h-[40.75rem] min-h-[40.75rem] w-[34.875rem] px-[3.1875rem] py-[3.686rem] mx-auto">
                         <div className="flex items-center justify-center w-full flex-col h-full">
                         {children}
                     </div>

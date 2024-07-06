@@ -11,7 +11,7 @@ export default function SingleFlightOffer() {
     const [open, setOpen] = useState(false)
     return (
 
-        <div className="bg-white rounded-3xl border mb-3">
+        <div className="bg-white dropshad2 rounded-3xl border mb-3">
             <div className="grid grid-cols-1 lg:grid-cols-10">
                 <div className="lg:col-span-7 py-7 pl-7 border-r-2 border-dotted">
                     <div className="grid grid-cols-4 text-sm gap-2">
@@ -59,7 +59,7 @@ export default function SingleFlightOffer() {
                         <img src={img1} alt="" className="" />
                     </div>
                     <div className="text-right text-xs text-zinc-500 mt-1">Included: personal item, carry-on bag, checked bag</div>
-                    <div className="font-extrabold text-xl text-right mt-12 tts">₦3,000,000</div>
+                    <div className="tts text-xl text-right mt-12 tts">₦3,000,000</div>
                     <div className="-mt-3 w-4/5 ml-auto">
                         <Formbutton title={open ? 'Hide Details' : "View Details"} type="button" onClick={() => setOpen(!open)} />
                     </div>

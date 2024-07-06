@@ -59,7 +59,7 @@ function Login() {
         <FormPage>
             <div className="w-full">
                 {msg.message && <Alert status={msg.status} message={msg.message} />}
-                <div className="font-extrabold text-center text-3xl capitalize mb-10">welcome back</div>
+                <div className="tts text-center text-3xl capitalize mb-10">welcome back</div>
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validate={validateForm}
@@ -89,8 +89,8 @@ function Login() {
                                     <Link to="/forgot_password" className=' underline'>Forgot Password</Link>
                                 </div>
                             </div>
-                            <Formbutton loading={loading} title="Login" type="submit" />
-                            <div className="text-slate-500 font-light flex items-center mt-14 justify-center gap-3">Don't have an account? <Link to="/signup" className='text-black font-bold underline'>Signup</Link> </div>
+                            <Formbutton loading={loading} title="Login" type="submit" active={(!formik.values.email || !formik.values.password) ? false : true} />
+                            <div className="text-slate-500 font-light flex items-center mt-14 justify-center gap-3">Don't have an account? <Link to="/signup" className='text-black tts underline'>Signup</Link> </div>
                         </Form>
                     )}
                 </Formik>

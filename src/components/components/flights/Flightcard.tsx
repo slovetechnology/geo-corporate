@@ -167,19 +167,19 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, shadow
                 {FlightTripTypes.map((ele, i) => (
                   <button
                     onClick={() => handleTripType(ele.tag)}
-                    className={`${localTrip === ele.tag ? 'btn text-white scale-110' : 'bg-white shadow-2xl text-zinc-500'} transition-all py-1.5 px-5 rounded-full`} key={i}>{ele.title}</button>
+                    className={`${localTrip === ele.tag ? 'btn text-white scale-110 dropshad2' : 'bg-white dropshad2 text-zinc-500'} transition-all py-1.5 px-5 rounded-full`} key={i}>{ele.title}</button>
                 ))}
               </div>}
               {(profile.documents.length < 1 || !profile.documents[0]?.is_approved) && <div className="flex gap-4 items-center">
                 {FlightTripTypes.map((ele, i) => (
                   <button
-                    className={`bg-zinc-300 text-zinc-500 transition-all py-2 px-4 rounded-lg`} key={i}>{ele.title}</button>
+                    className={`bg-[#F3F4F6] text-zinc-500 transition-all py-2 px-4 rounded-lg`} key={i}>{ele.title}</button>
                 ))}
               </div>}
             </RouteItem>
 
             {(profile.documents.length < 1 || !profile.documents[0]?.is_approved) && <div className="flex items-center gap-5">
-              <div className='flex items-center gap-2.5 text-zinc-500 bg-zinc-300 py-2 px-5 rounded-lg font-light'>
+              <div className='flex items-center gap-2.5 text-zinc-500 bg-[#F3F4F6] py-2 px-5 rounded-lg font-light'>
                 <HiUsers />
                 <PassengerSpan>
                   <PassengerSpan1>Passengers</PassengerSpan1>

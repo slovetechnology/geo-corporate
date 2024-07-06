@@ -9,8 +9,8 @@ type Props = {
 }
 
 const Status = [
-    { stat: ['PAID', 'paid'], cl: 'text-[#57b014] bg-[#e9f8e9] text-xs rounded-lg font-bold py-1.5 px-4' },
-    { stat: ['APPROVED UNPAID'], cl: 'text-[#f5b334] bg-[#fff8df] text-xs rounded-lg font-bold py-1.5 px-4' },
+    { stat: ['PAID', 'paid'], cl: 'text-[#57b014] bg-[#e9f8e9] text-xs rounded-lg tts py-1.5 px-4' },
+    { stat: ['APPROVED UNPAID'], cl: 'text-[#f5b334] bg-[#fff8df] text-xs rounded-lg tts py-1.5 px-4' },
 ]
 
 export default function SingleTransaction({ item, HandleTicketViewing }: Props) {

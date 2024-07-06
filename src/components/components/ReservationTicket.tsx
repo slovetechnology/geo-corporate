@@ -19,7 +19,7 @@ export default function ReservationTicket ({flight}: Props) {
             <FlightWrap key={i}>
               <ContentWrapper>
                 <FlightContent className='relative'>
-                  {!flight.ticketed && <div className="z-[1] absolute top-[50%] -rotate-12 -left-[10%] text-3xl md:text-4xl opacity-40 font-bold text-red-400 text-center w-full">This is only a reservation. <div className="mt-6">It is NOT a flight ticket</div> </div>}
+                  {!flight.ticketed && <div className="z-[1] absolute top-[50%] -rotate-12 -left-[10%] text-3xl md:text-4xl opacity-40 tts text-red-400 text-center w-full">This is only a reservation. <div className="mt-6">It is NOT a flight ticket</div> </div>}
                   <LeftContent className='relative'>
                     {/* <div className={`absolute capitalize text-sm py-1.5 px-4 shadow-xl top-2 right-2  ${moment().isAfter(item.expiresAt) ? 'bg-orange-300' : 'bg-green-300'}`}>{moment().isAfter(item.expiresAt) ? 'expired' : 'not expired'}</div> */}
                     <div className="grid grid-cols-2">
@@ -127,7 +127,7 @@ export default function ReservationTicket ({flight}: Props) {
             <FlightWrap key={i}>
               <ContentWrapper>
                 <FlightContent className='relative'>
-                  {!flight.ticketed && <div className="z-[1] absolute top-[50%] -rotate-12 -left-[10%] text-3xl md:text-4xl opacity-40 font-bold text-red-400 text-center w-full">This is only a reservation. <div className="mt-6">It is NOT a flight ticket</div> </div>}
+                  {!flight.ticketed && <div className="z-[1] absolute top-[50%] -rotate-12 -left-[10%] text-3xl md:text-4xl opacity-40 tts text-red-400 text-center w-full">This is only a reservation. <div className="mt-6">It is NOT a flight ticket</div> </div>}
                   <LeftContent className='relative'>
                     {/* <div className={`absolute capitalize text-sm py-1.5 px-4 shadow-xl top-2 right-2  ${moment().isAfter(item.expiresAt) ? 'bg-orange-300' : 'bg-green-300'}`}>{moment().isAfter(item.expiresAt) ? 'expired' : 'not expired'}</div> */}
                     <div className="grid grid-cols-2">
@@ -236,7 +236,7 @@ export default function ReservationTicket ({flight}: Props) {
             <FlightWrap key={i}>
               <ContentWrapper>
                 <FlightContent className='relative'>
-                  {!flight.ticketed && <div className="z-[1] absolute top-[50%] -rotate-12 -left-[10%] text-3xl md:text-4xl opacity-40 font-bold text-red-400 text-center w-full">This is only a reservation. <div className="mt-6">It is NOT a flight ticket</div> </div>}
+                  {!flight.ticketed && <div className="z-[1] absolute top-[50%] -rotate-12 -left-[10%] text-3xl md:text-4xl opacity-40 tts text-red-400 text-center w-full">This is only a reservation. <div className="mt-6">It is NOT a flight ticket</div> </div>}
                   <LeftContent className='relative'>
                     <div className="grid grid-cols-2">
                       <ImageWrapper>

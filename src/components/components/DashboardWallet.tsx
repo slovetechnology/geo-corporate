@@ -54,7 +54,7 @@ export default function DashboardWallet() {
                             <div className="flex items-center gap-10 mt-6">
                                 <div className="">
                                     <div className={`w-[14rem] border-[1rem] ${ageColor?.color || 'border-[#6cd719]'} h-[14rem] flex flex-col items-center justify-center rounded-full`}>
-                                        <div className="text-5xl font-extrabold"> {comp.average_aging}% </div>
+                                        <div className="text-5xl tts"> {comp.average_aging}% </div>
                                         <div className="">Spent Balance</div>
                                     </div>
                                 </div>

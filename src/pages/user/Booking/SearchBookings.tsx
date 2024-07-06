@@ -18,25 +18,25 @@ type DealType = {
 
 const Deals = [
     {
-        img: img,
+        img: img3,
         title: "Tokyo, Japan",
         deal_price: "₦140,000",
         price: "₦640,000"
     },
     {
-        img: img1,
+        img: img2,
         title: "Barcelona, Spain",
         deal_price: "₦140,000",
         price: "₦640,000"
     },
     {
-        img: img2,
+        img: img1,
         title: "Kingston, Canada",
         deal_price: "₦140,000",
         price: "₦640,000"
     },
     {
-        img: img3,
+        img: img,
         title: "Florence, Italy",
         deal_price: "₦140,000",
         price: "₦640,000"
@@ -53,14 +53,14 @@ export default function SearchBookings() {
                 shadow={false}
             />
             <div
-                style={{ background: `url(${img4})` }}
-                className="h-[22.7rem] w-full rounded-3xl">
+                style={{ background: `url(${img4})center/cover no-repeat` }}
+                className="h-[22.7rem] w-full max-w-[68.81rem] rounded-3xl">
                 <div className="bg-black/30 w-full h-full rounded-3xl">
                     <div className="grid grid-cols-3 w-11/12 mx-auto pt-16">
                         <div className="flex flex-col gap-4">
                             <div className="text-white text-3xl tts">Save at least 25% this spring</div>
                             <div className="text-white text-sm">Travel during school holidays. Save 25% on select hotels. Book before March 25.</div>
-                            <div className="w-3/6">
+                            <div className="w-[7.063rem]">
                                 <Formbutton type="button" title="Book" />
                             </div>
                         </div>
@@ -75,13 +75,13 @@ export default function SearchBookings() {
                 <div className="overflow-x-auto scrollsdown">
                 <div className="flex w-fit items-center gap-10">
                     {Deals.map((item: DealType, index) => (
-                        <div className="w-[15rem]" key={index}>
+                        <div className="w-[16.5rem]" key={index}>
                             <img src={item.img} alt="" className="w-full h-[14.5rem] rounded-xl" />
                             <div className="py-5">
-                            <div className="text-xl font-bold">{item.title}</div>
+                            <div className="text-xl font-extrabold">{item.title}</div>
                             <div className="flex items-center gap-3">
                                 <div className="text-xl">{item.deal_price}</div>
-                                <div className="text-sm line-through">{item.price}</div>
+                                <div className="text-sm line-through text-[#383838]">{item.price}</div>
                             </div>
                             </div>
                         </div>

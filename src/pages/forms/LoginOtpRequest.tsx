@@ -170,7 +170,7 @@ export default function LoginOtpRequest() {
                 <form onSubmit={SendVerificationCode} className="">
                     <div className="flex items-center justify-center gap-5 mb-7">
                         {/* <img src={arrowleft} alt="GeoTravel" /> */}
-                        <div className="font-bold text-center text-2xl capitalize">Email Address not verified?</div>
+                        <div className="tts text-center text-2xl capitalize">Email Address not verified?</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={pswd} alt="" className="w-full h-auto" /> </div>
                     <div className="text-center w-3/5 mx-auto font-light mb-10">Let's help you get verified</div>
@@ -182,7 +182,7 @@ export default function LoginOtpRequest() {
                 <form onSubmit={handleSubmission} className="">
                     <div className="flex items-center justify-center gap-5 mb-7">
                         {/* <img src={arrowleft} alt="GeoTravel" /> */}
-                        <div className="font-bold text-center text-2xl capitalize">Enter Verification Code</div>
+                        <div className="tts text-center text-2xl capitalize">Enter Verification Code</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={mail} alt="" className="w-[3.8rem] h-auto" /> </div>
                     <div className="text-center w-3/5 mx-auto font-light mb-10">Thank you for creating an account. Please enter the code sent to your email</div>
@@ -205,7 +205,7 @@ export default function LoginOtpRequest() {
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
                         <img onClick={() => setScreen(1)} src={arrowleft} alt="GeoTravel" className='cursor-pointer' />
-                        <div className="font-bold text-center text-2xl capitalize">create new password</div>
+                        <div className="tts text-center text-2xl capitalize">create new password</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={pswd} alt="" className="" /> </div>
                     <div className="text-center w-3/5 mx-auto">Your new password must be different from previously used password.</div>

@@ -5,7 +5,6 @@ import { Form, Formik } from 'formik'
 import Formbutton from '/src/components/utils/Formbutton'
 import { useNavigate, useParams } from 'react-router-dom'
 import Forminput from '/src/components/utils/Forminput'
-import arrowleft from '/src/assets/images/arrowleft.svg'
 import pswd from '/src/assets/images/pass.svg'
 import { Apis, ClientPatchApi } from '/src/components/services/Api'
 import Alert from '/src/components/utils/Alert'
@@ -73,11 +72,10 @@ export default function RequestNewPassword() {
                 {msg.message && <Alert status={msg.status} message={msg.message} />}
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
-                        <img src={arrowleft} alt="GeoTravel" />
-                        <div className="font-bold text-center text-2xl capitalize">create new password</div>
+                        <div className="tts text-center text-2xl capitalize">create new password</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={pswd} alt="" className="" /> </div>
-                    <div className="text-center w-3/5 mx-auto">Your new password must be different from previously used password.</div>
+                    <div className="text-center w-[18.8125rem] mx-auto">Your new password must be different from previously used password.</div>
                 </div>
                 <Formik
                     initialValues={{ password: '', confirm_password: '' }}
@@ -98,7 +96,7 @@ export default function RequestNewPassword() {
                                 type="password"
                                 error={formik.touched.confirm_password && formik.errors.confirm_password ? formik.errors.confirm_password : ''}
                             />
-                            <Formbutton loading={loading} title="Save" type="submit" />
+                            <Formbutton loading={loading} title="Save" active={(!formik.values.confirm_password || !formik.values.password) ? false : true} type="submit" />
                         </Form>
                     )}
                 </Formik>

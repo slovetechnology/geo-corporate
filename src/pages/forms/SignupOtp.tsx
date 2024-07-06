@@ -11,9 +11,10 @@ import pswd from '/src/assets/images/pass.svg'
 import { Form, Formik } from 'formik'
 import Forminput from '/src/components/utils/Forminput'
 import { Apis, ClientPostApi } from '/src/components/services/Api'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { SlExclamation } from 'react-icons/sl'
 import { Popover } from 'antd';
+import arrowimg from '/src/assets/images/arrowleft.svg'
 
 
 type FormProps = {
@@ -146,11 +147,11 @@ export default function SignupOtp() {
             {screen === 1 && <div className="w-full">
                 <form onSubmit={handleSubmission} className="">
                     <div className="flex items-center justify-center gap-5 mb-7">
-                        {/* <img src={arrowleft} alt="GeoTravel" /> */}
-                        <div className="font-bold text-center text-2xl capitalize">Enter Verification Code</div>
+                    <Link to="/signup"><img src={arrowimg} className='' alt="GeoTravel" /></Link>
+                        <div className="tts text-center text-2xl capitalize">Enter Verification Code</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={mail} alt="" className="w-[3.8rem] h-auto" /> </div>
-                    <div className="text-center w-3/5 mx-auto font-light mb-10">Thank you for creating an account. Please enter the code sent to your email</div>
+                    <div className="text-center w-[18.81rem] text-[0.9375rem] mx-auto font-light mb-10">Thank you for creating an account. Please enter the code sent to your email</div>
                     <Otpform
                         pinParts={pinParts}
                         setPinParts={setPinParts}
@@ -162,7 +163,7 @@ export default function SignupOtp() {
                             onClick={ResendOTPCode}
                             className="underline text-black">{sendtext}</button> </div>
                     <div className="">
-                        <Formbutton type="submit" title="Verify" loading={loading} />
+                        <Formbutton type="submit" title="Verify Account" loading={loading} />
                     </div>
                 </form>
             </div>}
@@ -170,7 +171,7 @@ export default function SignupOtp() {
                 <div className="mb-10">
                     <div className="flex items-center justify-center gap-5">
                         <img onClick={() => setScreen(1)} src={arrowleft} alt="GeoTravel" className='cursor-pointer' />
-                        <div className="font-bold text-center text-2xl capitalize">create new password</div>
+                        <div className="tts text-center text-2xl capitalize">create new password</div>
                     </div>
                     <div className="w-fit mx-auto my-7"> <img src={pswd} alt="" className="" /> </div>
                     <div className="text-center w-3/5 mx-auto">Your new password must be different from previously used password.</div>
