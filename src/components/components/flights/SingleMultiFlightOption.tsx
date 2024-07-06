@@ -11,6 +11,7 @@ import { DatePicker } from "antd";
 import botharrow from "/src/assets/images/botharrow.svg";
 import PopularAirports from './PopularAirports';
 import { AlertWarning } from '../../services/functions';
+import calendar from '/src/assets/images/calendar.svg'
 dayjs.extend(customParseFormat);
 export const dateFormat = 'YYYY/MM/DD';
 
@@ -19,8 +20,8 @@ export const disabledDate = (current: any) => {
 };
 
 type Props = {
-    i:number 
-    item: any 
+    i: number
+    item: any
     CloseExtra: (val: number) => void
     multies: any[]
     setMulties: (val: any) => void
@@ -33,11 +34,11 @@ type FlightProps = {
     name?: string
     city?: string
     country?: string
-  } 
-  
+}
 
-export default function SingleMultiFlightOption (props: Props) {
-    const { i, item, CloseExtra, multies, setMulties} = props
+
+export default function SingleMultiFlightOption(props: Props) {
+    const { i, item, CloseExtra, multies, setMulties } = props
     const [togview, setTogview] = useState(false)
     const [togview2, setTogview2] = useState(false)
     const origin_ref = useRef<any>("");
@@ -57,11 +58,11 @@ export default function SingleMultiFlightOption (props: Props) {
 
     const disabledDates = (current: any) => {
         const previousDate = multies[i - 1]?.departureDate
-        if(previousDate === undefined)return current < moment().subtract(1, 'day')
+        if (previousDate === undefined) return current < moment().subtract(1, 'day')
         return current < moment(previousDate)
     };
 
-    
+
     const filterPopularAirports = (search: string) => {
         let port = null;
         const airports_found = FilterByAny(search);
@@ -163,11 +164,11 @@ export default function SingleMultiFlightOption (props: Props) {
 
     const fetchOriginAirports = (search: string) => {
         let airports_found: any;
-        if(search.length > 2) {
-          airports_found = FilterByCode(search);
+        if (search.length > 2) {
+            airports_found = FilterByCode(search);
         }
-        if(search.length > 3) {
-          airports_found = FilterByAny(search);
+        if (search.length > 3) {
+            airports_found = FilterByAny(search);
         }
         if (Array.isArray(airports_found) && airports_found.length > 0) {
             set_airport_origin(airports_found);
@@ -178,11 +179,11 @@ export default function SingleMultiFlightOption (props: Props) {
 
     const fetchDestAirports = (search: string) => {
         let airports_found;
-        if(search.length > 2) {
-          airports_found = FilterByCode(search);
+        if (search.length > 2) {
+            airports_found = FilterByCode(search);
         }
-        if(search.length > 3) {
-          airports_found = FilterByAny(search);
+        if (search.length > 3) {
+            airports_found = FilterByAny(search);
         }
         if (Array.isArray(airports_found) && airports_found.length > 0) {
             set_airport_dest(airports_found);
@@ -231,12 +232,12 @@ export default function SingleMultiFlightOption (props: Props) {
         setRolls(!rolls)
     }
 
-    
+
     return (
         <div className={`grid grid-cols-1 ${i > 0 ? 'md:grid-cols-7' : 'md:grid-cols-6'} col-span-2 gap-3 w-full`}>
-            <ItemWrapper className='col-span-3 mb-3'>
+            <ItemWrapper className='col-span-3 mb-3 !gap-10 md:!gap-2.5'>
                 <SelectWrapper className='relative'>
-              <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Origin</div>
+                    <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Origin</div>
                     <Input
                         autoComplete="off"
                         name="origin"
@@ -315,7 +316,7 @@ export default function SingleMultiFlightOption (props: Props) {
                 </SelectWrapper>
 
                 <SelectWrapper className='relative'>
-              <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Destination</div>
+                    <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Destination</div>
                     <Input
                         autoComplete="off"
                         name="destination"
@@ -392,10 +393,11 @@ export default function SingleMultiFlightOption (props: Props) {
                 </SelectWrapper>
             </ItemWrapper>
             <ItemWrapper className='col-span-3 mb-3'>
-                <DateWrapper className='w-full gap-3'>
+                <DateWrapper className='w-full gap-3 relative'>
+                    <img src={calendar} alt="" className="absolute top-3 left-7" />
                     <DatePicker
                         disabledDate={disabledDates}
-                        className={`${item.errors.includes('third') ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl`}
+                        className={`${item.errors.includes('third') ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl !pl-16`}
                         placeholder={moment().format('ddd D MMM')}
                         name="departureDate"
                         defaultValue={flightData.departureDate && dayjs(flightData.departureDate, dateFormat)}

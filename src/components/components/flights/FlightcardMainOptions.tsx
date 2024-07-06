@@ -13,6 +13,7 @@ import { AlertError, AlertWarning } from '../../services/functions';
 import { FlightDelay, OrgProfile } from '/src/layouts/layoutStore';
 import { FlightRequest } from './Flightcard';
 import PopularAirports from './PopularAirports';
+import calendar from '/src/assets/images/calendar.svg'
 
 dayjs.extend(customParseFormat);
 export const dateFormat = 'YYYY/MM/DD';
@@ -33,7 +34,7 @@ type FlightProps = {
   name?: string
   city?: string
   country?: string
-} 
+}
 
 export default function FlightcardMainOptions({ exploreFlight, localTrip }: Props) {
   const [btnloader,] = useAtom(FlightDelay)
@@ -49,7 +50,7 @@ export default function FlightcardMainOptions({ exploreFlight, localTrip }: Prop
   const [flighterror, setFlightError] = useState("")
   const [rolls, setRolls] = useState(false)
   const localFlight = JSON.parse(localStorage.getItem(FlightRequest) || "null")
-const [profile,] = useAtom(OrgProfile)
+  const [profile,] = useAtom(OrgProfile)
 
 
   const [flightData, setFlightData] = useState({
@@ -192,7 +193,7 @@ const [profile,] = useAtom(OrgProfile)
 
   const handleexploreFlight = (e: React.FormEvent) => {
     e.preventDefault()
-   if (profile.documents.length < 1 || !profile.documents[0]?.is_approved) return AlertError("Unable to book flight at the moment")
+    if (profile.documents.length < 1 || !profile.documents[0]?.is_approved) return AlertError("Unable to book flight at the moment")
     // dispatch(dispatchPageItem(0));
     if (!flightData.origin) {
       return setFlightError('origin')
@@ -233,8 +234,8 @@ const [profile,] = useAtom(OrgProfile)
     <div className='mt-10'>
       {/* ================================================== main flight option */}
       <form onSubmit={handleexploreFlight}>
-        <DirectionsWrapper>
-          <ItemWrapper>
+        <DirectionsWrapper className='gap-10 lg:gap-2.5'>
+          <ItemWrapper className='!gap-10 md:!gap-2.5'>
             <SelectWrapper className='relative'>
               <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Origin</div>
               <Input
@@ -283,13 +284,13 @@ const [profile,] = useAtom(OrgProfile)
                   );
                 })}
               </InputSuggestWrapper>
-              {togview ? <PopularAirports 
-              closeView={() => setTogview(false)} 
-              fetchOriginAirportsClick={fetchOriginAirportsClick} /> : null}
+              {togview ? <PopularAirports
+                closeView={() => setTogview(false)}
+                fetchOriginAirportsClick={fetchOriginAirportsClick} /> : null}
             </SelectWrapper>
 
             <SelectWrapper className='relative'>
-            <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Destination</div>
+              <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Destination</div>
               <Input
                 autoComplete="off"
                 name="destination"
@@ -339,11 +340,12 @@ const [profile,] = useAtom(OrgProfile)
           </ItemWrapper>
           <ItemWrapper>
             <div className='absolute -top-7 left-0 text-sm text-zinc-600'>Date</div>
+            <img src={calendar} alt="" className="absolute top-3 left-7" />
             <DateWrapper className='w-full gap-3'>
               <DatePicker
                 disabledDate={disabledDate}
-                className={`${flighterror === 'departureDate' ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl`}
-                placeholder={moment().format('ddd D MMM')}
+                className={`${flighterror === 'departureDate' ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl !pl-16`}
+                placeholder={moment().format('ddd MMMM D')}
                 name="departureDate"
                 defaultValue={flightData.departureDate && dayjs(flightData.departureDate, dateFormat)}
                 format={dateFormat}
@@ -357,34 +359,39 @@ const [profile,] = useAtom(OrgProfile)
                   });
                   setFlightError('')
                 }} />
+            </DateWrapper>
+            <DateWrapper className='w-full gap-3'>
               {localTrip !== 'one-way' ?
-                <DatePicker
-                  disabledDate={disabledDate2}
-                  className={`${flighterror === 'returnDate' ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl`}
-                  placeholder={moment().format('ddd D MMM')}
-                  defaultValue={flightData.returnDate && dayjs(flightData.returnDate, dateFormat)}
-                  format={dateFormat}
-                  name="departureDate"
-                  onChange={(values) => {
-                    const val = moment(new Date(values)).format('YYYY-MM-DD')
-                    setFlightData((prevState) => {
-                      return {
-                        ...prevState,
-                        returnDate: val,
-                      };
-                    });
-                    setFlightError('')
-                  }} />
+                <div className='relative w-full'>
+                  <img src={calendar} alt="" className="absolute top-3 left-7" />
+                  <DatePicker
+                    disabledDate={disabledDate2}
+                    className={`${flighterror === 'returnDate' ? 'border border-red-600' : 'border border-zinc-400'} datepickerclass w-full !bg-transparent !rounded-xl !pl-16`}
+                    placeholder={moment().format('ddd MMM Do')}
+                    defaultValue={flightData.returnDate && dayjs(flightData.returnDate, dateFormat)}
+                    format={dateFormat}
+                    name="departureDate"
+                    onChange={(values) => {
+                      const val = moment(new Date(values)).format('YYYY-MM-DD')
+                      setFlightData((prevState) => {
+                        return {
+                          ...prevState,
+                          returnDate: val,
+                        };
+                      });
+                      setFlightError('')
+                    }} />
+                </div>
                 : null}
             </DateWrapper>
           </ItemWrapper>
           <div className='w-full ml-auto sm:w-fit'>
-          {(profile.documents.length < 1 || !profile.documents[0]?.is_approved) && 
-           <button className='flex items-center gap-2 py-3 text-zinc-500 rounded-lg px-7 bg-zinc-300'>Search{btnloader && <div className="spin"></div>}</button>
-           }
-          {profile.documents.length > 0 && profile.documents[0]?.is_approved && 
-           <button className='flex items-center gap-2 py-3 text-white rounded-lg px-7 btn'>Search{btnloader && <div className="spin"></div>}</button>
-           }
+            {(profile.documents.length < 1 || !profile.documents[0]?.is_approved) &&
+              <button className='flex items-center gap-2 py-3 text-zinc-500 rounded-lg px-7 bg-zinc-300'>Search{btnloader && <div className="spin"></div>}</button>
+            }
+            {profile.documents.length > 0 && profile.documents[0]?.is_approved &&
+              <button className='flex items-center gap-2 py-3 text-white rounded-lg px-7 btn'>Search{btnloader && <div className="spin"></div>}</button>
+            }
           </div>
         </DirectionsWrapper>
       </form>
@@ -410,7 +417,6 @@ const InputSuggestWrapper = styled.div`
 const DirectionsWrapper = styled.div`
   margin: 30px 0;
   display: flex;
-  gap: 10px;
   @media only screen and (max-width: 568px) {
     flex-direction: column;
     align-items: center;

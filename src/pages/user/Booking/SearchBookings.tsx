@@ -56,7 +56,7 @@ export default function SearchBookings() {
                 style={{ background: `url(${img4})center/cover no-repeat` }}
                 className="h-[22.7rem] w-full max-w-[68.81rem] rounded-3xl">
                 <div className="bg-black/30 w-full h-full rounded-3xl">
-                    <div className="grid grid-cols-3 w-11/12 mx-auto pt-16">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 w-11/12 mx-auto pt-16">
                         <div className="flex flex-col gap-4">
                             <div className="text-white text-3xl tts">Save at least 25% this spring</div>
                             <div className="text-white text-sm">Travel during school holidays. Save 25% on select hotels. Book before March 25.</div>

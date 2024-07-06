@@ -159,7 +159,7 @@ export default function Flightcard({ handleFilterForMobile, reloadFlight, shadow
   return (
     <>
       {profile.documents.length > 0 && !profile.documents[0]?.is_approved && <div className="bg-orange-400 text-white rounded-lg w-fit font-semibold ml-10 mb-5 py-2 px-5">Pending Approval</div>}
-      <div className={` z-[1] relative flex flex-col justify-center rounded-[0.635rem] px-[5.6875rem] py-[1.9375rem] min-h-[14.1875rem] ${shadow ? 'dropshad bg-white' : ''}`}>
+      <div className={` z-[1] relative flex flex-col justify-center rounded-[0.635rem] lg:px-[5.6875rem] py-[1.9375rem] min-h-[14.1875rem] ${shadow ? 'dropshad bg-white' : ''}`}>
         <CardHolder>
           <div className='mb-6 flex flex-wrap items-center justify-between gap-10'>
             <RouteItem>
